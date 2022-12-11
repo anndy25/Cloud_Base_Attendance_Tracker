@@ -2,6 +2,7 @@ import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 import Image from "next/image";
+import Head from "next/head";
 
 const validationSchema = yup.object({
   email: yup
@@ -25,6 +26,8 @@ const formInputList = [
 
 const login = () => {
   return (
+    <>
+  <Head><title>Alpha: Log In</title></Head>
     <div className="flex w-screen h-screen font-serif">
       <div className="h-full w-1/2  text-slate-700">
         <div className="w-3/4 mx-auto mt-12 flex  items-center">
@@ -112,6 +115,7 @@ const login = () => {
         />
       </div>
     </div>
+    </>
   );
 };
 
