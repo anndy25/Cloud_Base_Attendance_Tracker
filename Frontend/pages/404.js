@@ -6,7 +6,6 @@ const errorPage = () => {
   return (
     <>
       <Head>
-        {" "}
         <title>Alpha | Page Not Found</title>
       </Head>
       <div className="flex flex-col justify-center items-center h-screen w-screen">

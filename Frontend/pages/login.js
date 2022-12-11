@@ -28,7 +28,7 @@ const login = () => {
   return (
     <>
   <Head><title>Alpha: Log In</title></Head>
-    <div className="flex w-screen h-screen font-serif">
+    <div className="flex w-screen h-screen">
       <div className="h-full w-1/2  text-slate-700">
         <div className="w-3/4 mx-auto mt-12 flex  items-center">
           <div className="h-16 w-12 relative">
@@ -39,7 +39,7 @@ const login = () => {
             />
           </div>
 
-          <div className="font-bold text-4xl ml-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-blue-800">Alpha</div>
+          <div className="font-bold text-4xl ml-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-blue-800 italic">Alpha</div>
         </div>
         <div className="flex flex-col h-3/4 justify-end items-center w-full">
           <h1 className="font-bold text-4xl w-3/4 tracking-wide mb-16">
