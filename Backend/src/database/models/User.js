@@ -42,11 +42,18 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
-    departmentInfo: {
+    department_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "departments",
     },
+    
 
+},{
+    toJSON: {
+        transform(doc, ret){
+            delete ret.__v;
+        }
+    }
 });
 
 UserSchema.statics.isThisEmailInUse = async function(email) {

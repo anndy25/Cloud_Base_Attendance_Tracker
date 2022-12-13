@@ -1,23 +1,26 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
-const AttendanceSchema = new Schema({
-    teacherInfo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'teacherInfo',
-        required: true
+const AttendanceSchema = new Schema(
+  {
+    class_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "classes",
+      required: true,
     },
-    className: {
-        type: String,
-        required: true
+    subject_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "classes",
+      required: true,
     },
-    subjectName: {
-        type: String,
-        required: true
+    attendanceDetails: Schema.Types.Mixed,
+  },
+  {
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.__v;
+      },
     },
-    attendanceDetails: Schema.Types.Mixed
-
-});
-
-const AttendanceInfo = mongoose.model("attendances", AttendanceSchema);
-module.exports = AttendanceInfo;
+  }
+);
+module.exports = mongoose.model("attendances", AttendanceSchema);

@@ -7,7 +7,7 @@ var requestIp = require('request-ip');
 const { getAllClasses, deleteClass, updateClass, addClasses } = require("../services/classService");
 const { getAllSubjects, getSubject, updateSubject, deleteSubject, addSubjects } = require("../services/subjectService");
 const { getAllDepartments, updateDepartment, addDepartments, deleteDepartment } = require("../services/departmentService");
-const { assignLecturesToTeacher } = require("../services/adminService");
+const { assignLecturesToTeacher } = require("../services/admin-service");
 
 adminRouter.post(
     "/department/add",

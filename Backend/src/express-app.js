@@ -17,6 +17,7 @@ module.exports = async (app) => {
     app.use(fileUpload({
         useTempFiles: true,
     }));
+    
     customer(app);
     products(app);
     shopping(app);

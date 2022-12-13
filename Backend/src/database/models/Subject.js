@@ -1,27 +1,33 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
-const SubjectSchema = new Schema({
-
+const SubjectSchema = new Schema(
+  {
     subjectName: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     courseCode: {
-        type: Number,
-        required: true,
-        unique: true,
+      type: Number,
+      required: true,
+      unique: true,
     },
     semester: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
-    departmentInfo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'departments'
-    }
+    department_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "departments",
+    },
+  },
+  {
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.__v;
+      },
+    },
+  }
+);
 
-});
-
-const SubjectInfo = mongoose.model("subjects", SubjectSchema);
-module.exports = SubjectInfo;
+module.exports = mongoose.model("subjects", SubjectSchema);

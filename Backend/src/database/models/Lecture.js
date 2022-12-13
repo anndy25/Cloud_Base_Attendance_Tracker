@@ -1,27 +1,29 @@
 const mongoose = require("mongoose");
+
 const { Schema } = mongoose;
-const StudentSchema = new Schema(
+const LectureSchema = new Schema(
   {
-    student_id: {
+    teacher_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
+      required: true,
     },
-    studentRegNo: {
+    subjectName: {
       type: String,
-      unique: true,
+      required: true,
     },
-    rollNumber: {
-      type: Number,
-      unique: true,
+    className: {
+      type: String,
+      required: true,
     },
     semester: {
       type: Number,
+      required: true,
     },
-    class_id: {
+    attendance_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "classes",
+      ref: "attendances",
     },
-    lectures: [],
   },
   {
     toJSON: {
@@ -32,4 +34,4 @@ const StudentSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("students", StudentSchema);
+module.exports = mongoose.model("Lectures", LectureSchema);
