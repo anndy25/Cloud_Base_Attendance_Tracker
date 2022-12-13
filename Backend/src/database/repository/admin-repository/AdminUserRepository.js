@@ -1,11 +1,11 @@
-const { UserModel,StudentModel,TeacherModel,LectureModel} = require("../../models");
+const { UserModel, StudentModel, TeacherModel, LectureModel } = require("../../models");
 const { APIError, STATUS_CODES } = require("../../../utils/app-errors");
 
 class AdminUserRepository {
   constructor() {
     this.message = null;
   }
-  async UserRegistration({ data }) {
+  async userRegistration({ data }) {
     try {
       const { _id } = await UserModel.create(data);
       if (data.role === "student") {
@@ -35,7 +35,7 @@ class AdminUserRepository {
     }
   }
 
-  async UserDeletion({ _id }) {
+  async userDeletion({ _id }) {
     let role_;
     try {
       const role = await UserModel.findOneAndDelete({ _id }).select('role');;
@@ -58,16 +58,16 @@ class AdminUserRepository {
     }
   }
 
-  async updateStudentDetails({data},params,className=null) {
+  async updateStudentDetails({ data }, params, className = null) {
     try {
-        const class_id = await StudentModel.findOne({student_id:data._id}).select('class_id');
-        if(data.class_id!==class_id) {
-            const lectures=await LectureModel.find({className}).select('_id');
-            console.log(lectures);
-            data.lectures=lectures;
-        }
-        await StudentModel.findByIdAndUpdate(params, { $set: data });
-        return {message:"Student Details Sucessfully Updated"};
+      const class_id = await StudentModel.findOne({ student_id: data._id }).select('class_id');
+      if (data.class_id !== class_id) {
+        const lectures = await LectureModel.find({ className }).select('_id');
+        console.log(lectures);
+        data.lectures = lectures;
+      }
+      await StudentModel.findByIdAndUpdate(params, { $set: data });
+      return { message: "Student Details Sucessfully Updated" };
 
     } catch (err) {
       throw APIError(
