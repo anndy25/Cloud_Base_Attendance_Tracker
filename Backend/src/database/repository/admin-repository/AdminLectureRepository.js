@@ -8,7 +8,7 @@ class AdminLectureRepository{
 
             let attendanceDetails={}
             const { _id } =await AttendanceModel.create({teacher_id,class_id,attendanceDetails});
-            const lecture=await LectureModel.create({teacher_id,semester,className,subjectName});
+            const lecture=await LectureModel.create({teacher_id,semester,className,subjectName,attendance_id:_id});
             
             await TeacherModel.findByIdAndUpdate({_id:teacher_id},{$push:{teachingDetails:lecture._id}})
             await StudentModel.updateMany({class_id},{$push:{lectures:lecture._id}})

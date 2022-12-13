@@ -24,6 +24,7 @@ const LectureSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "attendances",
     },
+    timer: { type:Date}
   },
   {
     toJSON: {
