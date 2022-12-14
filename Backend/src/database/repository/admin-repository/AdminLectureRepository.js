@@ -14,9 +14,10 @@ class AdminLectureRepository{
             await StudentModel.updateMany({class_id},{$push:{lectures:lecture._id}})
             
             return {
-                message: "Lecture assigned!!",
+                message: "Lecture Alloted !!",
                 status: 200
             }
+            
     
         } catch(err){
             throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Product')
