@@ -5,9 +5,10 @@ class AdminUserRepository {
   constructor() {
     this.message = null;
   }
-  async userRegistration({ data }) {
+  async userRegistration(data) {
     try {
       const { _id } = await UserModel.create(data);
+      
       if (data.role === "student") {
         const { class_id, studentRegNo, rollNumber, semester } = data;
         await StudentModel.create({
@@ -17,7 +18,7 @@ class AdminUserRepository {
           class_id,
           semester,
         });
-
+       
         this.message = "Student Registration Successfully Done !!";
       } else {
         const { teacherRegNo } = data;
@@ -27,6 +28,7 @@ class AdminUserRepository {
 
       return { message: this.message };
     } catch (err) {
+      console.log(err);
       throw APIError(
         "API Error",
         STATUS_CODES.INTERNAL_ERROR,

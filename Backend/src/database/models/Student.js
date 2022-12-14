@@ -8,11 +8,9 @@ const StudentSchema = new Schema(
     },
     studentRegNo: {
       type: String,
-      unique: true,
     },
     rollNumber: {
       type: Number,
-      unique: true,
     },
     semester: {
       type: Number,
