@@ -3,6 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from "yup";
 import Image from "next/image";
 import Head from "next/head";
+import Link from "next/link";
 
 const validationSchema = yup.object({
   email: yup
@@ -27,7 +28,7 @@ const formInputList = [
 const login = () => {
   return (
     <>
-  <Head><title>Alpha: Log In</title></Head>
+  <Head><title>Alpha: User Login</title></Head>
     <div className="flex w-screen h-screen">
       <div className="h-full w-1/2  text-slate-700">
         <div className="w-3/4 mx-auto mt-12 flex  items-center">
@@ -43,7 +44,7 @@ const login = () => {
         </div>
         <div className="flex flex-col h-3/4 justify-end items-center w-full">
           <h1 className="font-bold text-4xl w-3/4 tracking-wide mb-16">
-            Login in
+            User Login
           </h1>
 
           <Formik
@@ -96,18 +97,20 @@ const login = () => {
                 className="p-3 w-full mt-5 h-15 text-white font-bold tracking-wider bg-gradient-to-r from-blue-500 to-indigo-700 rounded-2xl hover:drop-shadow-lg"
                 type="submit"
               >
-                Log In
+               Login
               </button>
+              <Link href="/login/admin-login">
               <p className="text-center my-4 text-indigo-500 hover:cursor-pointer">
-                Login as an Admin?
-              </p>
+                      Login as an Admin?
+              </p>                    
+                </Link>
             </Form>
           </Formik>
         </div>
       </div>
       <div className="h-full w-1/2  flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-700">
         <Image
-          src="/login.webp"
+          src="/user-login.svg"
           className="mt-12"
           alt="Picture of the author"
           width={550}
