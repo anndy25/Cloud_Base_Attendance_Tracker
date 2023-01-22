@@ -13,8 +13,8 @@ const LineChart = () => {
           {
             label:"First Dataset",
             data:[10, 20, 30, 42, 51, 82, 31, 59, 61, 73, 91, 58],
-            backgroundColor:'rgb(0,0,255,0.4)',
-            borderColor:'blue',
+            backgroundColor:'rgb(135, 206, 235,.5)',
+            borderColor:'rgba(4, 55, 242,.8)',
             tension:0.4,
             fill:true,
             pointStyle:'rect',

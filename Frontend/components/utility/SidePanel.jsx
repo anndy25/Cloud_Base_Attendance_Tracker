@@ -20,16 +20,17 @@ const SidePanel = () => {
                     </h1>
                 </div>
                 <div className="text-lg  text-gray-700 mt-12 font-bold">
-                    <ul className="py-4 cursor-pointer">
-                        <li className={`pl-6 border-l-4  flex items-center py-2 ${router.pathname=="/student/dashboard" ? "bg-blue-100  border-blue-900":"bg-white"}`}>
+                    <div className="py-4 cursor-pointer">
+                         <Link href="/student/dashboard" className={`pl-6 border-r-4  flex items-center py-2 ${router.pathname=="/student/dashboard" ? "bg-blue-100  border-blue-900":"bg-white"}`}>
                             <RxDashboard className="mr-3" />
+
                             Dashboard
-                        </li>
-                        <li className={`my-2 pl-6 border-l-4 flex items-center py-2 ${router.pathname=="/student/attendance" ? "bg-blue-100 border-blue-900":"bg-white"}`}>
+                        </Link>
+                        <Link href="/student/attendance" className={`my-2 pl-6 border-r-4 flex items-center py-2 ${router.pathname=="/student/attendance" ? "bg-blue-100 border-blue-900":"bg-white"}`}>
                             <BsClockHistory className="mr-3" />
                             Attendance
-                        </li>
-                    </ul>
+                        </Link>
+                    </div>
                 </div>
                 <button
                     className="p-2 mt-auto w-6/12 ml-4 my-4 rounded-lg text-blue-800 border-2 border-blue-800  space-x-1 hover:bg-blue-800 hover:text-white hover:border-blue-500 whitespace-nowrap font-medium "

@@ -1,38 +1,48 @@
 import React from 'react'
-import SidePanel from '../../components/SidePanel'
-import Navtab from '../../components/Navtab';
-import Calender from '../../components/Calender'
-import LineChart from '../../components/LineChart';
+import Head from "next/head";
+import { SidePanel, Navtab, Calender, LineChart } from '../../components/utility';
+import { AttendanceTable } from '../../components/Student';
+
+
 
 const dashboard = () => {
   return (
-    <div>
-      <div className="h-screen flex">
-        <div className="sticky top-0 left-0 w-[18%] h-screen overflow-x-auto shadow-xl border-x-1">
+    <>
+     <Head>
+        <title>Alpha | Student Dashboard</title>
+      </Head>
+      <div className="min-h-screen flex">
+        <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl">
           <SidePanel />
         </div>
-        <div className="w-[82%]">
-          <Navtab />
+        <div className="w-[82%] py-4">
           <div className='flex justify-center'>
             <section className='w-[75%] flex flex-col items-center py-4'>
-              <h1 className="w-[85%] font-bold text-xl text-gray-600">Dashboard</h1>
+              <h1 className="w-[92%] font-bold text-xl text-gray-600">Dashboard</h1>
+              <div className='shadow-md border-t mt-4 p-2'>
               <LineChart className='w-full' />
-              <div className='w-[85%]'>
-              <h1 className="font-bold text-xl text-gray-600 my-4">Attendace</h1>
-      
+              </div>
+              <div className='w-[92%]'>
+                <h1 className="font-bold text-xl text-gray-600 mt-8 mb-4 ">Attendace</h1>
+                <div className='px-4 py-6 shadow-md border-t'>
+                <AttendanceTable />
 
-
+                </div>
               </div>
             </section>
-            <aside className='w-[22%]'>
+            <aside className='w-[22%] border-l pl-2'>
+            <div className='border-b-2'>
+              <Navtab />
+            </div>
               <Calender />
               <div className="pl-2">
                 <h1 className="font-bold text-lg mt-2">Today's Schedule</h1>
-
-                <div>
-                  <div className="shadow-inner shadow-md p-2 my-4"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
-                  <div className="shadow-inner p-2 my-2"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
-                  <div className="shadow-inner p-2 my-2"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
+                <div className='font-bold text-gray-600'>
+                  <div className="shadow-lg p-2 my-4 rounded-md border-2 border-blue-700 bg-white"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
+                  <div className="shadow-md p-2 my-4 rounded-md border-2 border-blue-700 bg-white"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
+                  <div className="shadow-md p-2 my-4 rounded-md border-2 border-blue-700 bg-white"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
+                  <div className="shadow-md p-2 my-4 rounded-md border-2 border-blue-700 bg-white"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
+                  <div className="shadow-md p-2 my-4 rounded-md border-2 border-blue-700 bg-white"><span className="border-r-2 pr-2 py-2">1 PM- 2 PM</span><span className="mx-2">DBMS</span></div>
                 </div>
               </div>
             </aside>
@@ -40,7 +50,7 @@ const dashboard = () => {
 
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

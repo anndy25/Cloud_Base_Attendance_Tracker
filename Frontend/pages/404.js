@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 const errorPage = () => {
   return (
@@ -9,12 +10,19 @@ const errorPage = () => {
         <title>Alpha | Page Not Found</title>
       </Head>
       <div className="flex flex-col justify-center items-center h-screen w-screen">
-        <div className="w-1/2 h-1/2 ">
-          <img
+        <div className="">
+          {/* <img
             src="./404.svg"
             alt="Picture of the author"
             className="w-full h-full"
-          />
+          /> */}
+          <Image
+              src="/404.svg"
+           
+              alt="Picture of the author"
+              width={500}
+              height={500}
+            />
         </div>
 
         <p>Oops! We can't find the page you were looking for.</p>
