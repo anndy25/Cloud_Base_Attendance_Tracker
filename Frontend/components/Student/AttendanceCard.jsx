@@ -27,7 +27,7 @@ const AttendanceCard = (props) => {
 
 
   return (
-    <div className="w-full my-2 flex justify-evenly p-4 text-lg font-semibold text-slate-600 border-2 rounded-md">
+    <div className="w-full bg-white shadow-lg my-2 flex justify-evenly p-4 text-lg font-semibold text-slate-600  rounded-md">
       <div className='flex items-center'><MdOutlineSubject></MdOutlineSubject><span className='ml-2'>Radio and Electronics</span></div>
       <div className='flex items-center'><MdCalendarToday /> <span className='ml-2'>Tuesday, 2021 Jan</span></div>
       <div className='flex items-center'><BsClockHistory /><span className='ml-2'>23.23 Min</span></div>
