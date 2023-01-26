@@ -7,7 +7,7 @@ import { AttendanceTable } from '../../components/student';
 
 const dashboard = () => {
 
-  let link = { dashboard: "/student/dashboard", attendance: "/student/attendance" }
+  let link = { dashboard: "/student/dashboard", attendance: "/student/attendance", flag:true };
 
   return (
     <>

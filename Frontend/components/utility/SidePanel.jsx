@@ -28,10 +28,11 @@ const SidePanel = ({link}) => {
                             <RxDashboard className="mr-3" />
                             Dashboard
                         </Link>
-                        <Link href={link.attendance} className={`my-2 pl-6 border-r-4 flex items-center py-2 ${router.pathname == link.attendance ? "bg-blue-100 border-blue-900" : "bg-white"}`}>
+                       { link.flag && <Link href={link.attendance} className={`my-2 pl-6 border-r-4 flex items-center py-2 ${router.pathname == link.attendance ? "bg-blue-100 border-blue-900" : "bg-white"}`}>
                             <BsClockHistory className="mr-3" />
                             Attendance
                         </Link>
+                         }
                     </div>
                 </div>
                 <button

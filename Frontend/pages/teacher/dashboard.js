@@ -3,10 +3,8 @@ import Head from "next/head";
 import { SidePanel, Navtab, Calender, LineChart, ScheduleCard } from '../../components/utility';
 import { SubjectList } from "../../components/teacher";
 
-
-
 const dashboard = () => {
-    let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance" }
+    let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance",flag:false }
     return (
         <>
             <Head>
@@ -31,20 +29,16 @@ const dashboard = () => {
                         <div className='p-1 border-b-2'>
                             <Navtab />
                         </div>
-                        <div className=''>
+                        <div >
                             <Calender />
                             <div className='font-bold text-gray-600'>
                                 <h1 className="text-lg mt-2">Today's Schedule</h1>
                                 <ScheduleCard />
                             </div>
                         </div>
-
                     </aside>
-
                 </div>
             </div>
-
-
         </>
     )
 }
