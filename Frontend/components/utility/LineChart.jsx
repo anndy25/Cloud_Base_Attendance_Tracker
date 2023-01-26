@@ -25,7 +25,7 @@ const LineChart = () => {
         ]
       })
       return (
-        <div style={{width:"50rem"}}>
+        <div style={{width:"50rem"}} className='shadow-md px-2 py-4'>
           <Line data={data}>Hello</Line>
         </div>
       );

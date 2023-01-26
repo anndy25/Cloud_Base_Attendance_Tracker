@@ -1,11 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Domine&family=Lora&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 @layer base {
     html {
       font-family: Proxima Nova, system-ui, sans-serif;
     }
   }
+
+  /* width */
+::-webkit-scrollbar {
+  width: 12px;
+ 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 25px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}

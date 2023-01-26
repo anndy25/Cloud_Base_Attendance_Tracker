@@ -11,7 +11,6 @@ import { BsClockHistory } from "react-icons/bs";
 
 const SidePanel = ({link}) => {
     const router = useRouter();
-    console.log(link)
     return (
         <>
             <div className="h-full flex flex-col ">

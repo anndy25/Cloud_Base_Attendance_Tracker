@@ -12,7 +12,7 @@ const Message = ({ Component, title }) => {
 
 const AttendanceTable = () => {
     return (
-        <div>
+        <div className='shadow-md p-2'>
             <table style={{ width: '100%' }} className="mx-auto  w-full">
                 <thead className="text-lg text-slate-700 border-t border-b border-gray-400">
                     <tr>
