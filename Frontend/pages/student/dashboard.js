@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Head from "next/head";
 
 import { SidePanel, Navtab, Calender, LineChart, ScheduleCard } from '../../components/utility';
-import { AttendanceTable } from '../../components/student';
+import { AttendanceTable } from './../../components/student';
 
 
 const dashboard = () => {
