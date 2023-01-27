@@ -11,15 +11,15 @@ const attendace = () => {
         <title>Alpha | Student Attendance</title>
       </Head>
       <div className="min-h-screen flex">
-        <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl">
+        <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
           <SidePanel link={link} />
         </div>
         <div className="w-[82%] ">
           <div className='border-b-2'>
             <Navtab />
           </div>
-          <div className='p-6 bg-neutral-50 min-h-screen'>
-            <h1 className="font-bold text-xl text-gray-600">Mark Your Attendace!!</h1>
+          <div className='p-6'>
+            <h1 className="font-semibold text-xl text-gray-600">Mark Your Attendace!!</h1>
             <div className=' py-4'>
               <AttendanceCard />
             </div>

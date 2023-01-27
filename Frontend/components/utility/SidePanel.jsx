@@ -22,9 +22,9 @@ const SidePanel = ({link}) => {
                         Alpha
                     </h1>
                 </div>
-                <div className="text-lg mt-12 font-bold text-gray-700">
+                <div className="text-lg mt-12 font-semibold text-gray-700">
                     <div className="py-4 cursor-pointer">
-                        <Link href={link.dashboard} className={`pl-6 border-r-4  flex items-center py-2 ${router.pathname == link.dashboard ? "bg-blue-100  border-blue-900" : "bg-white "}`}>
+                        <Link href={link.dashboard} className={`pl-6 border-r-4  flex items-center py-2 ${router.pathname == link.dashboard ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
                             <RxDashboard className="mr-3" />
                             Dashboard
                         </Link>

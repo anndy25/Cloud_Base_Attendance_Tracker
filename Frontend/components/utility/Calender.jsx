@@ -41,7 +41,7 @@ export default function Calender() {
   }
 
   return (
-    <div className="my-4 shadow-md p-1">
+    <div className="my-4 shadow-md p-1 rounded-lg">
       <div >
         <div>
           <div >

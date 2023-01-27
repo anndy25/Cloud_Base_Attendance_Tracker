@@ -4,14 +4,14 @@ import { SidePanel, Navtab, Calender, LineChart, ScheduleCard } from '../../comp
 import { SubjectList } from "../../components/teacher";
 
 const dashboard = () => {
-    let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance",flag:false }
+    let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance", flag: false }
     return (
         <>
             <Head>
                 <title>Alpha | Teacher Dashboard</title>
             </Head>
             <div className='min-h-screen flex justify-center'>
-                <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl">
+                <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
                     <SidePanel link={link} />
                 </div>
                 <div className='w-[82%] flex'>
@@ -31,7 +31,7 @@ const dashboard = () => {
                         </div>
                         <div >
                             <Calender />
-                            <div className='font-bold text-gray-600'>
+                            <div >
                                 <h1 className="text-lg mt-2">Today's Schedule</h1>
                                 <ScheduleCard />
                             </div>

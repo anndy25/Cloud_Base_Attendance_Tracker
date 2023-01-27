@@ -9,7 +9,7 @@ const SubjectList = (props) => {
   let list = ['from-cyan-500 to-blue-500','from-indigo-500 to-purple-500','from-pink-500 to-purple-500','from-green-500 to-sky-500','from-rose-500 to-pink-500','from-cyan-500 to-teal-500']
 
   return (
-    <div className='grid grid-cols-3 gap-4  text-white font-bold shadow-lg'>
+    <div className='grid grid-cols-3 gap-4  text-white font-semibold shadow-lg'>
       <div className='h-40 rounded-md shadow-md  bg-gradient-to-r from-cyan-500 to-blue-500 p-4 relative'>
         
         <h1 className='flex items-center'><TbBooks/> <span className='mx-2'>Subject Name </span></h1>
