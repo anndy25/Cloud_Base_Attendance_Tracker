@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import Head from "next/head";
 import { SidePanel, Navtab } from '../../../components/utility';
 import { SubjectAttendanceTable,ShowStudents,TakeAttendance } from '../../../components/teacher'
 import { GrPrevious } from "react-icons/gr";
 import Link from "next/link";
+import React, { useState } from "react";
 
 function switchTab(tab){
     if(tab===1) return <SubjectAttendanceTable/>;
@@ -13,7 +13,7 @@ function switchTab(tab){
     if(tab===3) return <TakeAttendance />;
 }
 
-const tSubject = () => {
+const TSubject = () => {
     let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance", flag: false ,status:true }
    
     let [tab, setTab] = useState(1);
@@ -56,4 +56,4 @@ const tSubject = () => {
     )
 }
 
-export default tSubject
+export default TSubject
