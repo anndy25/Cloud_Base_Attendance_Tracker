@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import Head from "next/head";
 import { SidePanel, Navtab } from '../../../components/utility';
 import { SubjectAttendanceTable,ShowStudents,TakeAttendance } from '../../../components/teacher'
@@ -14,10 +13,10 @@ function switchTab(tab){
     if(tab===3) return <TakeAttendance />;
 }
 
-const tsubject = () => {
+const tSubject = () => {
     let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance", flag: false ,status:true }
-    const router = useRouter();
-    const [tab, setTab] = useState(1);
+   
+    let [tab, setTab] = useState(1);
 
     return (
         <>
@@ -57,4 +56,4 @@ const tsubject = () => {
     )
 }
 
-export default tsubject
+export default tSubject

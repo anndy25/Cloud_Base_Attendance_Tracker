@@ -41,7 +41,7 @@ const dashboard = () => {
               <Calender />
               <div>
                 <div>
-                  <h1 className="text-lg mt-2">Today's Schedule</h1>
+                  <h1 className="text-lg mt-2">{`Today's Schedule`}</h1>
                   <ScheduleCard />
                 </div>
               </div>
