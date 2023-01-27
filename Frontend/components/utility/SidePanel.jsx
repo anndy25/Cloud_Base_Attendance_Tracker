@@ -22,18 +22,20 @@ const SidePanel = ({link}) => {
                         Alpha
                     </h1>
                 </div>
-                <div className="text-lg mt-12 font-semibold text-gray-700">
+                <div className="text-lg mt-12 font-semibold text-gray-800">
+                {!link.status &&
                     <div className="py-4 cursor-pointer">
                         <Link href={link.dashboard} className={`pl-6 border-r-4  flex items-center py-2 ${router.pathname == link.dashboard ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
                             <RxDashboard className="mr-3" />
                             Dashboard
                         </Link>
-                       { link.flag && <Link href={link.attendance} className={`my-2 pl-6 border-r-4 flex items-center py-2 ${router.pathname == link.attendance ? "bg-blue-100 border-blue-900" : "bg-white"}`}>
+                       { link.flag && <Link href={link.attendance} className={`my-2 pl-6 border-r-4 flex items-center py-2 ${router.pathname == link.attendance ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
                             <BsClockHistory className="mr-3" />
                             Attendance
                         </Link>
                          }
                     </div>
+                }
                 </div>
                 <button
                     className="p-2 mt-auto w-6/12 ml-4 my-4 rounded-lg text-blue-800 border-2 border-blue-800  space-x-1 hover:bg-blue-800 hover:text-white hover:border-blue-500 whitespace-nowrap font-medium "

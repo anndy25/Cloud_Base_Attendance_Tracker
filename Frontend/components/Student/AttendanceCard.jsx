@@ -32,7 +32,7 @@ const AttendanceCard = (props) => {
       <div className='flex items-center'><MdCalendarToday /> <span className='ml-2'>Tuesday, 2021 Jan</span></div>
       <div className='flex items-center'><BsClockHistory /><span className='ml-2'>23.23 Min</span></div>
 
-      <button className='p-2 bg-blue-600 text-white w-28 rounded-lg' onClick={executeCaptcha}>check</button>
+      <button className='p-2 bg-indigo-600 text-white w-28 rounded-lg' onClick={executeCaptcha}>check</button>
       <HCaptcha
         ref={captchaRef}
         sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_KEY}

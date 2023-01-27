@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Head from "next/head";
 import { SidePanel, Navtab } from '../../../components/utility';
 import { SubjectAttendanceTable,ShowStudents,TakeAttendance } from '../../../components/teacher'
+import { GrPrevious } from "react-icons/gr";
+import Link from "next/link";
 
 function switchTab(tab){
     if(tab===1) return <SubjectAttendanceTable/>;
@@ -13,9 +15,8 @@ function switchTab(tab){
 }
 
 const tsubject = () => {
-    let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance", flag: false }
+    let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance", flag: false ,status:true }
     const router = useRouter();
-    const [query, setQuery] = useState(router.query.tsubject);
     const [tab, setTab] = useState(1);
 
     return (
@@ -32,6 +33,7 @@ const tsubject = () => {
                         <Navtab />
                     </div>
                     <div className='p-6 min-h-[90%]'>
+                        <Link href='/teacher/dashboard' className='p-2 rounded-lg mb-4 font-semibold justify-center items-center bg-slate-200 flex cursor-pointer w-28'><GrPrevious /> <span className='mx-1'>Go Back</span></Link>
                         <header className='flex font-semibold'>
                             <span className='bg-blue-100 text-blue-800 px-4 py-2 rounded-3xl'>Advanced Java Programing</span>
                             <span className='bg-blue-100 text-blue-800 px-4 py-2 mx-4 rounded-3xl'>Class VI</span>
