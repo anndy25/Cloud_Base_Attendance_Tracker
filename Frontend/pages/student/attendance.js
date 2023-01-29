@@ -19,8 +19,8 @@ const attendace = () => {
             <Navtab />
           </div>
           <div className='p-6'>
-            <h1 className="font-bold text-xl text-gray-600">Mark Your Attendace!!</h1>
-            <div className=' py-4'>
+            <h1 className="font-bold text-2xl text-gray-600">Mark Your Attendace!!</h1>
+            <div className='py-4'>
               <AttendanceCard />
             </div>
           </div>
