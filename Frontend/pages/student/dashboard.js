@@ -18,10 +18,10 @@ const dashboard = () => {
         <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
           <SidePanel link={link} />
         </div>
-        <div className="w-[80%] py-2 ">
+        <div className="w-[82%] pl-2 ">
           <div className='flex justify-center'>
-            <section className='w-[75%] flex flex-col items-center py-4'>
-              <h1 className="font-bold text-2xl text-gray-600 my-4 w-full px-4">Dashboard</h1>
+            <section className='w-[73%] flex flex-col items-center py-4'>
+              <h1 className="font-bold text-2xl text-gray-600 my-6 w-full px-4">Dashboard</h1>
               <div className='shadow-md rounded-xl border'>
                 <h1 className="font-bold text-lg text-gray-600 px-4 mt-4">Attendace Overview</h1>
                 <LineChart />
@@ -35,13 +35,13 @@ const dashboard = () => {
                 </div>
               </div>
             </section>
-            <aside className='w-[24%] border-l'>
+            <aside className='w-[25%] border-l'>
               <div className='border-b-2'>
                 <Navtab />
               </div>
 
 
-              <div className='pl-4'>
+              <div className='pl-5'>
                 <Calender />
                 <h1 className="text-lg mt-2">{`Today's Schedule`}</h1>
                 <ScheduleCard />

@@ -15,7 +15,7 @@ const dashboard = () => {
                     <SidePanel link={link} />
                 </div>
                 <div className='w-[82%] flex'>
-                    <section className='w-[75%] p-2 py-4 flex flex-col items-center'>
+                    <section className='w-[73%] px-2 pl-4 flex flex-col items-center'>
                         <h1 className="font-bold text-2xl text-gray-600 my-6 w-full px-4">Dashboard</h1>
                         <div className='shadow-md rounded-xl border'>
                             <h1 className="font-bold text-lg text-gray-600 px-4 mt-4">Attendace Overview</h1>
@@ -26,13 +26,13 @@ const dashboard = () => {
                             <SubjectList />
                         </div>
                     </section>
-                    <aside className='w-[24%] border-l'>
+                    <aside className='w-[26%] border-l'>
                         <div className='border-b-2'>
                             <Navtab />
                         </div>
 
 
-                        <div className='pl-4'>
+                        <div className='pl-5'>
                             <Calender />
                             <h1 className="text-lg mt-2">{`Today's Schedule`}</h1>
                             <ScheduleCard />
