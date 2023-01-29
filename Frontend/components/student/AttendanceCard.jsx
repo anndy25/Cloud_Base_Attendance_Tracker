@@ -40,7 +40,7 @@ const AttendanceCard = (props) => {
         onExpire={(e) => setToken("")}
         size='invisible'
       />
-      <h1>{token}</h1>
+     
 
     </div>
   )

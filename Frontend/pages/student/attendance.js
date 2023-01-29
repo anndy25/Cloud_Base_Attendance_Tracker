@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from "next/head";
 import { SidePanel, Navtab } from '../../components/utility';
-import { AttendanceCard } from '../../components/Student';
+import { AttendanceCard } from '../../components/student';
 
 const attendace = () => {
   let link={ dashboard: "/student/dashboard", attendance: "/student/attendance",flag:true }
