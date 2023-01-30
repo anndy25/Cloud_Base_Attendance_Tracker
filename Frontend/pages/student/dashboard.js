@@ -7,8 +7,7 @@ import { AttendanceTable } from './../../components/student';
 
 const dashboard = () => {
 
-  let link = { dashboard: "/student/dashboard", attendance: "/student/attendance", flag: true };
-
+  
   return (
     <>
       <Head>
@@ -16,7 +15,7 @@ const dashboard = () => {
       </Head>
       <div className="min-h-screen flex">
         <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
-          <SidePanel link={link} />
+          <SidePanel status={1} />
         </div>
         <div className="w-[82%] pl-2 ">
           <div className='flex justify-center'>

@@ -3,8 +3,6 @@ import { TbBooks } from "react-icons/tb";
 import { SiGoogleclassroom } from "react-icons/si";
 
 
-
-
 const SubjectList = (props) => {
   let list = ['from-cyan-500 to-blue-500','from-indigo-500 to-purple-500','from-pink-500 to-purple-500','from-green-500 to-sky-500','from-rose-500 to-pink-500','from-cyan-500 to-teal-500']
 

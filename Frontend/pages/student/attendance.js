@@ -4,7 +4,7 @@ import { SidePanel, Navtab } from '../../components/utility';
 import { AttendanceCard } from '../../components/student';
 
 const attendace = () => {
-  let link={ dashboard: "/student/dashboard", attendance: "/student/attendance",flag:true }
+ 
   return (
     <>
      <Head>
@@ -12,7 +12,7 @@ const attendace = () => {
       </Head>
       <div className="min-h-screen flex">
         <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
-          <SidePanel link={link} />
+          <SidePanel status={1} />
         </div>
         <div className="w-[82%] ">
           <div className='border-b-2'>

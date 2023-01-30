@@ -5,11 +5,57 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
 import { BsClockHistory } from "react-icons/bs";
+import { GrSchedules } from "react-icons/gr";
 
 
+const listOptions = (flag = 0, pathname) => {
+    if (flag === 1) {
+        return (
+            <>
+                <Link href='/student/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/student/dashboard' ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
+                    <RxDashboard className="mr-3" />
+                    Dashboard
+                </Link>
+                <Link href='/student/attendance' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/student/attendance' ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
+                    <BsClockHistory className="mr-3" />
+                    Attendance
+                </Link>
 
+            </>
+        )
+    }
+    else if (flag === 2) {
 
-const SidePanel = ({link}) => {
+        return (
+            <>
+                <Link href='/teacher/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/teacher/dashboard' ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
+                    <RxDashboard className="mr-3" />
+                    Dashboard
+                </Link>
+            </>
+        )
+    }
+
+    else if (flag === 3) {
+        return (
+            <>
+                <Link href='/admin/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/admin/dashboard' ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
+                    <RxDashboard className="mr-3" />
+                    Dashboard
+                </Link>
+                <Link href='/admin/schedule' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/admin/schedule' ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
+                    <GrSchedules className="mr-3" />
+                    Schedule
+                </Link>
+
+            </>
+        )
+
+    }
+    return ''
+}
+
+const SidePanel = ({ status }) => {
     const router = useRouter();
     return (
         <>
@@ -23,20 +69,10 @@ const SidePanel = ({link}) => {
                     </h1>
                 </div>
                 <div className="mt-12 font-semibold text-gray-800">
-                {!link.status &&
-                    <div className="py-4 cursor-pointer">
-                        <Link href={link.dashboard} className={`pl-6 border-r-4  flex items-center py-2 ${router.pathname == link.dashboard ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
-                            <RxDashboard className="mr-3" />
-                            Dashboard
-                        </Link>
-                       { link.flag && <Link href={link.attendance} className={`my-1 pl-6 border-r-4 flex items-center py-2 ${router.pathname == link.attendance ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
-                            <BsClockHistory className="mr-3" />
-                            Attendance
-                        </Link>
-                         }
-                    </div>
-                }
+                    {listOptions( status ,router.pathname)}
                 </div>
+
+
                 <button
                     className="p-2 mt-auto w-6/12 ml-4 my-4 rounded-lg text-blue-800 border-2 border-blue-800  space-x-1 hover:bg-blue-800 hover:text-white hover:border-blue-500 whitespace-nowrap font-medium "
                     onClick={() =>

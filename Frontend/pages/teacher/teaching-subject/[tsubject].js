@@ -1,9 +1,9 @@
 import Head from "next/head";
+import React, { useState } from "react";
 import { SidePanel, Navtab } from '../../../components/utility';
 import { SubjectAttendanceTable,ShowStudents,TakeAttendance } from '../../../components/teacher'
 import { GrPrevious } from "react-icons/gr";
 import Link from "next/link";
-import React, { useState } from "react";
 
 function switchTab(tab){
     if(tab===1) return <SubjectAttendanceTable/>;
@@ -14,7 +14,6 @@ function switchTab(tab){
 }
 
 const TSubject = () => {
-    let link = { dashboard: "/teacher/dashboard", attendance: "/teacher/attendance", flag: false ,status:true }
    
     let [tab, setTab] = useState(1);
 
@@ -25,7 +24,7 @@ const TSubject = () => {
             </Head>
             <div className="min-h-screen flex">
                 <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
-                    <SidePanel link={link} />
+                    <SidePanel status={0} />
                 </div>
                 <div className="w-[82%] ">
                     <div className='border-b-2'>
