@@ -10,8 +10,7 @@ export default function DropDownCreate() {
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className="inline-flex w-full justify-center text-slate-500 p-2  text-lg  hover:text-blue-600">
-
+                <Menu.Button className="inline-flex w-full justify-center text-slate-500 text-2xl  hover:text-blue-600 p-2">
                     <BsThreeDotsVertical />
                 </Menu.Button>
             </div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Head from "next/head";
 import { SidePanel, Navtab, Calender, ScheduleCard } from '../../components/utility';
-import { Overview, StudentList, TeacherList,DropDownCreate } from '../../components/admin';
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { Overview, StudentList, TeacherList,DropDownCreate,SearchBox } from '../../components/admin';
+
+
 
 
 const dashboard = () => {
@@ -23,15 +24,20 @@ const dashboard = () => {
             <div className='w-[95%] flex justify-between'>
               <Overview />
             </div>
-            <div className='w-[95%] my-8'>
-              <div className='flex justify-between border-b-2'>
+            <div className='w-[95%] my-8 border-t rounded-2xl shadow-md overflow-x-auto'>
+              <div className='flex justify-between items-center border-b-2 '>
                 <div className='w-full flex'>
                   <span className={`px-6 py-3 font-semibold ${tab === 1 ? ' bg-blue-50 border-b-4 border-blue-700 text-blue-600' : 'text-gray-500 hover:text-blue-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(1)}>Students</span>
                   <span className={`px-6 py-3 font-semibold ${tab === 2 ? ' bg-blue-50 border-b-4 border-blue-700 text-blue-600' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}  cursor-pointer `} onClick={() => setTab(2)}>Teacher</span>
                 </div>
                <DropDownCreate/>
               </div>
-              <StudentList />
+              <SearchBox/>
+              
+              {
+                tab===1 ?( <StudentList />):( <TeacherList />)
+              }  
+             
             </div>
           </section>
 
