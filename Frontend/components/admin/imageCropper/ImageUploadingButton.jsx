@@ -8,10 +8,11 @@ const ImageUploadingButton = ({ value, onChange, ...props }) => {
         {({ onImageUpload, onImageUpdate }) => (
           <button
             
+          className='w-28 h-28 flex flex-col justify-center items-center  rounded-full border-dashed border-4'
             onClick={value ? onImageUpload : () => onImageUpdate(0)}
             {...props}
           >
-            <FiUpload className='text-4xl'/>
+            <FiUpload className='text-4xl' />
             <small>Upload</small>
           </button>
         )}

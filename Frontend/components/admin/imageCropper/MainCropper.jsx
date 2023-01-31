@@ -1,8 +1,8 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import ImageCropper from './ImageCropper';
 import ImageUploadingButton from './ImageUploadingButton';
 
-const MainCropper = () =>  {
+const MainCropper = () => {
   const [image, setImage] = useState([]);
   const [croppedImage, setCroppedImage] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -12,14 +12,30 @@ const MainCropper = () =>  {
   }
 
   return (
-    <div className='w-28 h-28 rounded-full border-dashed border-4 flex flex-col justify-center items-center text-slate-700 mx-auto my-6'>
-      <ImageUploadingButton
-        value={image}
-        onChange={(newImage) => {
-          setDialogOpen(true);
-          setImage(newImage);
-        }}
-      />
+    <div className='w-28 h-28 cursor-pointer flex flex-col justify-center items-center text-slate-700 mx-auto my-6'>
+      {croppedImage ?
+        <div className='group relative w-full h-full'>
+          <img src={croppedImage} className='rounded-full z-0' alt="blab" />
+          <div className='absolute top-0 right-0 text-white  hidden group-hover:block hover:z-10'>
+            <ImageUploadingButton
+              value={image}
+              onChange={(newImage) => {
+                setDialogOpen(true);
+                setImage(newImage);
+              }}
+            />
+          </div>
+
+        </div>
+        :
+        <ImageUploadingButton
+          value={image}
+          onChange={(newImage) => {
+            setDialogOpen(true);
+            setImage(newImage);
+          }}
+        />
+      }
       {dialogOpen && (
         <ImageCropper
           image={image.length > 0 && image[0].dataURL}
@@ -39,7 +55,6 @@ const MainCropper = () =>  {
           }}
         />
       )}
-      {croppedImage && <img src={croppedImage} alt="blab" />}
     </div>
   );
 }
@@ -48,4 +63,4 @@ const MainCropper = () =>  {
 
 
 
-    export default MainCropper
+export default MainCropper
