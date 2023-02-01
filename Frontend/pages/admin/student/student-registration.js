@@ -1,8 +1,8 @@
 import React from 'react'
 import Head from "next/head";
 import Image from "next/image";
-import { MainCropper } from '../../components/admin';
-import { ListSelect } from '../../components/utility';
+import { MainCropper } from '../../../components/admin';
+import { ListSelect } from '../../../components/utility';
 
 const studentRegistration = () => {
 
