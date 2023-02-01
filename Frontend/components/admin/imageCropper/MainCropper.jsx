@@ -12,11 +12,13 @@ const MainCropper = () => {
   }
 
   return (
-    <div className='w-28 h-28 cursor-pointer flex flex-col justify-center items-center text-slate-700 mx-auto my-6'>
+    <>
+
+    <div className='w-28 h-28 cursor-pointer flex flex-col justify-center items-center text-slate-700 mx-auto '>
       {croppedImage ?
         <div className='group relative w-full h-full'>
           <img src={croppedImage} className='rounded-full z-0' alt="blab" />
-          <div className='absolute top-0 right-0 text-white  hidden group-hover:block hover:z-10'>
+          <div className='absolute top-0 right-0 text-white  hidden group-hover:block'>
             <ImageUploadingButton
               value={image}
               onChange={(newImage) => {
@@ -56,6 +58,8 @@ const MainCropper = () => {
         />
       )}
     </div>
+      <h5 className='text-center mt-2 mb-4 font-medium'>Upload Photo*</h5>   
+    </>
   );
 }
 

@@ -8,8 +8,8 @@ const ImageCropper = ({ image, onComplete, setModel, containerStyle, ...props })
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   return (
-    <div className="w-screen h-screen absolute top-0 right-0 flex justify-center items-center">
-      <div className='w-[40%]  text-lg font-semibold bg-white border rounded-2xl p-4 shadow-md'>
+    <div className="absolute z-100 top-40 -right-1/5 w-screen  flex justify-center items-center ">
+      <div className='w-[40%]  text-lg font-semibold bg-white border-2 border-blue-600 rounded-2xl p-4 shadow-md'>
         <header className='py-4 text-xl'>Crop Image</header>
 
         <div style={containerStyle}>
@@ -29,7 +29,7 @@ const ImageCropper = ({ image, onComplete, setModel, containerStyle, ...props })
 
 
         <button
-          className='py-3 px-6 bg-blue-600 text-white rounded-md  my-2'
+          className='py-3 px-6 bg-blue-600 text-white rounded-md float-right  my-2'
           onClick={() => {
             setModel(false);
             onComplete(cropImage(image, croppedAreaPixels, console.log));
