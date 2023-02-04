@@ -55,10 +55,6 @@ const ShowDetails = () => {
                         <label htmlFor="dept" className="font-medium">Department</label>
                         <input type="text" name="dept" id="dept" className="p-2 border-b-2 block  focus:outline-none w-full" minlength="10" maxlength="10" value={'Electronics and Telecommunication'} required />
                     </div>
-                    <div className="w-full mb-6 group">
-                        <label htmlFor="class_" className="font-medium">Class</label>
-                        <input type="text" name="class_" id="class_" className="p-2 border-b-2 block  focus:outline-none w-full" value={'BE 7'} minlength="10" maxlength="10" required />
-                    </div>
                     <div className='flex justify-between'>
                         <div className='text-slate w-[70%]'>
                             <h1 className='font-semibold'>Delete this account</h1>

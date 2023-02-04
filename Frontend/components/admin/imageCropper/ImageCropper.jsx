@@ -8,7 +8,7 @@ const ImageCropper = ({ image, onComplete, setModel, containerStyle, ...props })
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   return (
-    <div className="absolute z-100 top-40 -right-1/5 w-screen  flex justify-center items-center ">
+    <div className="fixed z-[150] top-0 right-1/5 w-full h-full flex justify-center items-center ">
       <div className='w-[40%]  text-lg font-semibold bg-white border-2 border-blue-600 rounded-2xl p-4 shadow-md'>
         <header className='py-4 text-xl'>Crop Image</header>
 
