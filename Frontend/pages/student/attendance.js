@@ -14,7 +14,7 @@ const attendace = () => {
         <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
           <SidePanel status={1} />
         </div>
-        <div className="w-[82%] ">
+        <div className="w-[82%]">
           <div className='border-b-2'>
             <Navtab />
           </div>

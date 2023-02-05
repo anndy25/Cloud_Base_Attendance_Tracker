@@ -8,6 +8,7 @@ import { Overview, StudentList, TeacherList,DropDownCreate,SearchBox } from '../
 
 const dashboard = () => {
   let [tab, setTab] = useState(1);
+  let list=['All','Name','Reg. No.','Email Id'];
 
   return (
     <>
@@ -32,7 +33,7 @@ const dashboard = () => {
                 </div>
                <DropDownCreate/>
               </div>
-              <SearchBox/>
+              <SearchBox list={list}/>
               
               {
                 tab===1 ?( <StudentList />):( <TeacherList />)

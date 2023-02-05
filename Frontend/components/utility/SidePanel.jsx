@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
 import { BsClockHistory } from "react-icons/bs";
-import { GrSchedules } from "react-icons/gr";
+import { AiOutlineSchedule } from "react-icons/ai";
 
 
 const listOptions = (flag = 0, pathname) => {
@@ -17,7 +17,7 @@ const listOptions = (flag = 0, pathname) => {
                     Dashboard
                 </Link>
                 <Link href='/student/attendance' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/student/attendance' ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
-                    <BsClockHistory className="mr-3" />
+                    <BsClockHistory className="mr-3 text-2xl" />
                     Attendance
                 </Link>
 
@@ -44,7 +44,7 @@ const listOptions = (flag = 0, pathname) => {
                     Dashboard
                 </Link>
                 <Link href='/admin/schedule' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/admin/schedule' ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
-                    <GrSchedules className="mr-3" />
+                    <AiOutlineSchedule className="mr-3 text-blue-700" />
                     Schedule
                 </Link>
 

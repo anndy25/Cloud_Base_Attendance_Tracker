@@ -11,7 +11,7 @@ export default function ListSelect({data}) {
   return (
     < >
       <Listbox value={selected} onChange={setSelected}>
-        <div className="relative mt-1">
+        <div className="relative">
           <Listbox.Button className="relative z-0 w-full cursor-default  bg-white p-4 border-b-2 pl-3 pr-10 text-left  focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2  sm:text-sm">
             <span className="block truncate">{selected.name}</span>
             <span className="pointer-events-none z-0 absolute inset-y-0 right-0 flex items-center pr-2">

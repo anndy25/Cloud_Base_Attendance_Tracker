@@ -60,11 +60,9 @@ const ShowDetails = () => {
                             <h1 className='font-semibold'>Delete this account</h1>
                             <h2 className='text-sm'>Once you delete a account, there is no going back. Please be certain.</h2>
                         </div>
-
                         <div className='flex items-end'>
                             <button onClick={()=>setIsOpen(true)} className='w-full font-semibold text-sm text-red-600 border-2 px-2 py-3 border-red-600 hover:text-white hover:bg-red-600 rounded-md '>Delete Account</button>
                         </div>
-
                     </div>
                 </div>
             </div>
