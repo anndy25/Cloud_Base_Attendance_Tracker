@@ -144,9 +144,9 @@ const ShowSchedule = () => {
                         list.map((value, key) => {
 
                             return (
-                                <div key={key} className='border-2 rounded-md px-3' >
+                                <div key={key} className='border rounded-md px-3 shadow-md' >
                                     <header className='flex justify-between py-3 text-xl items-center'><span>{value.day}</span>
-                                        <div className='text-xl cursor-pointer' >
+                                        <div className='text-xl cursor-pointer ' >
                                             <RiMenuAddLine className='add' id={`${value.day}`}></RiMenuAddLine>
                                         </div>
                                     </header>
