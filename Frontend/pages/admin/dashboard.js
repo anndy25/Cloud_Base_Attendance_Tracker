@@ -6,7 +6,7 @@ import { Overview, StudentList, TeacherList,DropDownCreate,SearchBox } from '../
 
 
 
-const dashboard = () => {
+const Dashboard = () => {
   let [tab, setTab] = useState(1);
   let list=['All','Name','Reg. No.','Email Id'];
 
@@ -60,4 +60,4 @@ const dashboard = () => {
   )
 }
 
-export default dashboard
+export default Dashboard
