@@ -1,32 +1,25 @@
-import { InferSchemaType, model, Schema} from "mongoose";
+import { InferSchemaType, model, Schema } from "mongoose";
 
 export interface DepartmentDocument extends Document {
-      
-    departmentName:string,
-    intake:number,
-   
+  departmentName: string,
+  intake: number,
+
 }
 
 const departmentSchema = new Schema(
-    {
-      departmentName: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-      intake: {
-        type: Number,
-        required: true,
+  {
+    departmentName: { type: String, required: true, unique: true },
+    
+    intake: { type: Number, required: true },
+  },
+  {
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.__v;
       },
     },
-    {
-      toJSON: {
-        transform(doc, ret) {
-          delete ret.__v;
-        },
-      },
-    }
-  );
+  }
+);
 
 
 

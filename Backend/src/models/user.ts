@@ -57,113 +57,79 @@ export interface UserDocument extends Document {
 const attendanceschema = new Schema({
     personalInfo: {
 
-        fname: {
-            type: String,
-            required: true,
-        },
-        gender: {
-            type: String,
-            required: true,
-        },
-        dob: {
-            type: Date,
-        },
+        fname: { type: String, required: true },
+        gender: { type: String, required: true },
+        dob: { type: Date, required: true },
         image: {
-            url: {
-                type: String,
-                required: true
-            },
-            public_id: {
-                type: String
-            }
+            url: { etype: String, required: true },
+            publicId: { type: String, required: true }
         },
-        phoneNumber: {
-            type: String,
-            required: true,
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        role: {
-            type: String,
-            required: true
-        },
-        isAdmin: {
-            type: Boolean,
-            default: false
-        },
-        departmentId: {
-            type: Schema.Types.ObjectId,
-            ref: "departments",
-        },
+        phoneNumber: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
+        role: { type: String, required: true },
+        isAdmin: { type: Boolean, default: false }
     },
-
 
     educationalInfo: {
         regNo: { type: String },
-        departmentId: { type: Schema.Types.ObjectId },
-        classId: { type: Schema.Types.ObjectId },
+        departmentId: { type: Schema.Types.ObjectId, ref: "departments" },
+        classId: { type: Schema.Types.ObjectId, ref: "classes" },
         rollNo: { type: Number },
         semester: { type: Number },
     },
-    lectureInfo:{
-        regNo: {type:String},
+    lectureInfo: {
+        regNo: { type: String },
         schedule: {
             monday: [
-              {
-                attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
-                subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
-                from: { type: String },
-                to: { type: String }
-              }
+                {
+                    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
+                    subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+                    from: { type: String },
+                    to: { type: String }
+                }
             ],
             tuesday: [
-              {
-                attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
-                subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
-                from: { type: String },
-                to: { type: String }
-              }
+                {
+                    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
+                    subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+                    from: { type: String },
+                    to: { type: String }
+                }
             ],
             wednesday: [
-              {
-                attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
-                subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
-                from: { type: String },
-                to: { type: String }
-              }
+                {
+                    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
+                    subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+                    from: { type: String },
+                    to: { type: String }
+                }
             ],
             thursday: [
-              {
-                attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
-                subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
-                from: { type: String },
-                to: { type: String }
-              }
+                {
+                    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
+                    subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+                    from: { type: String },
+                    to: { type: String }
+                }
             ],
             friday: [
-              {
-                attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
-                subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
-                from: { type: String },
-                to: { type: String }
-              }
+                {
+                    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
+                    subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+                    from: { type: String },
+                    to: { type: String }
+                }
             ],
             saturday: [
-              {
-                attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
-                subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
-                from: { type: String },
-                to: { type: String }
-              }
+                {
+                    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
+                    subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+                    from: { type: String },
+                    to: { type: String }
+                }
             ]
-          },
+        },
     }
 
 }, {
