@@ -3,7 +3,7 @@ import { InferSchemaType, model, Schema, Types } from "mongoose";
 
 interface Content {
   subjectTeacherId?: Types.ObjectId;
-  subject?: Types.ObjectId;
+  subjectId?: Types.ObjectId;
   from?: string;
   to?: string
 }

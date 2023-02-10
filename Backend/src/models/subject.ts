@@ -11,23 +11,10 @@ export interface UserDocument extends Document {
 
 const subjectSchema = new Schema(
   {
-    subjectName: {
-      type: String,
-      required: true,
-    },
-    courseCode: {
-      type: Number,
-      required: true,
-      unique: true,
-    },
-    semester: {
-      type: Number,
-      required: true,
-    },
-    departmentId: {
-      type: Schema.Types.ObjectId,
-      ref: "departments",
-    },
+    subjectName: { type: String, required: true },
+    courseCode: { type: Number, required: true, unique: true },
+    semester: { type: Number, required: true },
+    departmentId: { type: Schema.Types.ObjectId, ref: "departments" },
   },
   {
     toJSON: {
