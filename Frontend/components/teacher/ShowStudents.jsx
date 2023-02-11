@@ -14,7 +14,7 @@ const ShowStudents = () => {
     return (
         <>
             
-                <table className="w-full text-center">
+                <table className="w-full text-center bg-white">
                     <thead className=" text-slate-800">
                         <tr>
                             <th className="p-3"><Message Component={SiNamecheap} title='Name' /></th>

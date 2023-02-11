@@ -17,16 +17,16 @@ const dashboard = () => {
         <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
           <SidePanel status={1} />
         </div>
-        <div className="w-[82%] pl-2 ">
+        <div className="w-[82%]">
           <div className='flex justify-center'>
-            <section className='w-[73%] flex flex-col items-center py-4'>
+            <section className='w-[73%] flex flex-col items-center py-4 bg-slate-50'>
               <h1 className="font-bold text-2xl text-gray-600 my-6 w-full px-4">Dashboard</h1>
-              <div className='shadow-md rounded-xl border'>
+              <div className='shadow-md rounded-xl border bg-white'>
                 <h1 className="font-bold text-lg text-gray-600 px-4 mt-4">Attendace Overview</h1>
                 <LineChart />
               </div>
               <div className='w-[50rem] my-4 '>
-                <div className='shadow-md rounded-xl border pt-4'>
+                <div className='shadow-md rounded-xl border pt-4 bg-white'>
                   <h1 className="font-bold text-lg text-gray-600 px-4 mb-4">Subject Details</h1>
                   <div className="overflow-x-auto">
                     <AttendanceTable />

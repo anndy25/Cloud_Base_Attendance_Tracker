@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { MdOutlineSubject, MdCalendarToday } from "react-icons/md";
 import { BsClockHistory} from "react-icons/bs";
+import { RiAlertFill } from "react-icons/ri";
+import { ReverseCounter } from '../utility';
+import { getFormattedDate } from '../../functions/addTime';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 
@@ -27,10 +30,11 @@ const AttendanceCard = (props) => {
 
 
   return (
-    <div className="w-full bg-white shadow-lg my-2 flex justify-evenly p-4 text-lg font-semibold text-slate-600  rounded-md">
-      <div className='flex items-center'><MdOutlineSubject></MdOutlineSubject><span className='ml-2'>Radio and Electronics</span></div>
-      <div className='flex items-center'><MdCalendarToday /> <span className='ml-2'>Tuesday, 2021 Jan</span></div>
-      <div className='flex items-center'><BsClockHistory /><span className='ml-2'>23.23 Min</span></div>
+    <div className="w-full bg-white shadow-lg my-2 flex justify-between py-4 px-12 text-lg font-semibold text-slate-600  rounded-md">
+      <div className='flex items-center'><MdOutlineSubject></MdOutlineSubject><span className='ml-2'>JavaScript</span></div>
+        <div className='flex items-center'><MdCalendarToday /> <span className='ml-2'>{getFormattedDate()}</span></div>
+        <div className='flex items-center'><BsClockHistory /> <ReverseCounter targetTime="1:40 PM" /></div>
+        <div className='flex items-center'><RiAlertFill /><span className='ml-2'>1:37 PM</span></div>
 
       <button className='p-2 bg-indigo-600 text-white w-28 rounded-lg' onClick={executeCaptcha}>check</button>
       <HCaptcha

@@ -1,14 +1,26 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import {addTime} from '../../functions/addTime';
+import { Diagonal } from '../utility';
 
 
 
 const TakeAttendance = () => {
-    const [ip, setIP] = useState('123.134.12.300');
+    const [ip, setIP] = useState('103.146.240.70');
+    const[duration,setDuration]=useState(0);
+    const[message,setMessage] = useState(0);
+    const[isOpen,setIsOpen]=useState(false);
 
-    //creating function to load ip address from the API
+    const onSubmitHandler=(e)=>{
 
+        let result=addTime(new Date().getHours(),new Date().getMinutes(),parseInt(duration))
+      
+        setMessage(`Attendance will expired at ${result}`);
+        
+        setIsOpen(true); 
+    }
 
+    function setModal(flag){ setIsOpen(flag) };
 
 
     return (
@@ -17,15 +29,16 @@ const TakeAttendance = () => {
                 <span className='font-semibold  text-blue-800 bg-blue-100 px-4 py-2 rounded-3xl'>IP : {ip}</span>
             </div>
             <h1 className="text-lg my-6 px-4 font-semibold text-gray-600">Genrate Link for Attendance!!</h1>
-            <form className='flex flex-col text-base w-full px-4'>
+            <div className='flex flex-col text-base w-full px-4' >
                 <div className="w-2/5">
-                    <label className="block text-gray-600  font-bold mb-2" for="username">
+                    <label className="block text-gray-600  font-bold mb-2" Htmlfor="username">
                         Set Duration (min)
                     </label>
-                    <input className="selection: text-gray-400 border shadow-sm focus:outline-none rounded w-full py-2 px-3" id="username" type="Number" />
+                    <input className="selection: text-gray-400 border shadow-sm focus:outline-none rounded w-full py-2 px-3" id="username" type="Number"  value={duration} onChange={(e)=>setDuration(e.target.value)}/>
                 </div>
-                <button className='bg-indigo-600 p-3 text-white rounded text-sm my-4 w-2/5'>Create Link</button>
-            </form>
+                <button className='bg-indigo-600 p-3 text-white rounded text-sm my-4 w-2/5' onClick={onSubmitHandler}>Create Link</button>
+            </div>
+            <Diagonal isOpen={isOpen} setModal={setModal} message={message}/>
         </div>
     )
 }

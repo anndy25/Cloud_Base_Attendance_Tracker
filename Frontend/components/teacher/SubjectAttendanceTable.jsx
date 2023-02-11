@@ -5,22 +5,22 @@ import { MdSubject } from "react-icons/md";
 import { BiTime } from "react-icons/bi";
 
 
-const Message = ({ Component, title }) => {
+const Message = ({ Icon, title }) => {
     return (<>
-        <div className='flex items-center justify-center'><Component /><p className='mx-2 text-center'>{title}</p></div>
+        <div className='flex items-center justify-center'><Icon /><p className='mx-2 text-center'>{title}</p></div>
     </>)
 }
 const SubjectAttendanceTable = () => {
     return (
 
         <>
-            <table className='w-full text-center'>
+            <table className='w-full text-center bg-white'>
                 <thead className=" text-slate-700 font-semibold ">
                     <tr>
-                        <th className="p-4 w-1/4 "><Message Component={BsCalendarDate} title='Date' /></th>
-                        <th  ><Message Component={BiTime} title='Time' /></th>
-                        <th  ><Message Component={MdSubject} title='Present' /></th>
-                        <th  ><Message Component={CiViewList} title='View Absent' /></th>
+                        <th className="p-4 w-1/4 "><Message Icon={BsCalendarDate} title='Date' /></th>
+                        <th  ><Message Icon={BiTime} title='Time' /></th>
+                        <th  ><Message Icon={MdSubject} title='Present' /></th>
+                        <th  ><Message Icon={CiViewList} title='View Absent' /></th>
                     </tr>
                 </thead>
                 <tbody className='text-slate-600 font-medium '>

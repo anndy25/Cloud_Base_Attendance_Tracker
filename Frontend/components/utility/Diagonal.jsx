@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-const Diagonal = ({isOpen,setModal}) => {
+const Diagonal = ({isOpen,setModal,message}) => {
    
  
     
@@ -36,7 +36,7 @@ const Diagonal = ({isOpen,setModal}) => {
                                     as="h3"
                                     className="text-lg text-center font-medium leading-6 text-gray-900"
                                 >
-                                    Do you want delete {'Aniket Satish Mane'} account permanently ?
+                                    {message}
                                 </Dialog.Title>
                                
 
