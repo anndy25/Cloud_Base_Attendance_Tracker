@@ -1,14 +1,20 @@
 import "dotenv/config";
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, Application } from "express";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
+import fileUpload from 'express-fileupload';
+import cors from "cors";
 
 
-const app = express();
+const app: Application = express();
+
 
 app.use(morgan("dev"));
-
 app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: '1mb'}));
+app.use(cors({origin: "*",credentials: true,}));
+
+app.use(fileUpload({useTempFiles: true}));
 
 
 app.use((req:Request, res: express.Response, next) => {
