@@ -5,8 +5,6 @@ import { InferSchemaType, model, Schema } from "mongoose";
 
 const studentSchema = new Schema({
 
-
-
     fname: { type: String, required: true },
     gender: { type: String, required: true },
     dob: { type: Date, required: true },
@@ -37,4 +35,4 @@ const studentSchema = new Schema({
 });
 
 type Student = InferSchemaType<typeof studentSchema>;
-export default model<Student>("users", studentSchema);
+export default model<Student>("students", studentSchema);

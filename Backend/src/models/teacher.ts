@@ -18,6 +18,7 @@ const teacherSchema = new Schema({
         publicId: { type: String, required: true }
     },
     phoneNumber: { type: String, required: true },
+    departmentId: { type: Schema.Types.ObjectId, ref: "departments" },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, required: true },

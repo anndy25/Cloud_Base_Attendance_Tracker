@@ -21,7 +21,7 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
     const { body } = req;
     const { photo }: any = req.files;
 
-    let UserModel:any;
+    let UserModel: any;
 
     if (body.role === 'student') {
         UserModel = StudentModel;
@@ -36,7 +36,7 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
         const existingEmail = await UserModel.findOne({ email: body.email })
 
         if (existingEmail) {
-            throw createHttpError(409, "A user with this email address already exists. Please log in instead.");
+            throw createHttpError(409, "An user with this email address already exists. Please log in instead.");
         }
 
         const image: Image = await cloudUpload(photo);
@@ -65,58 +65,37 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
 
 
 
+
 export const userLogin: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId, password } = req.body;
+   
+    let UserModel: any;
 
-    try {
-
-        const user: any = await StudentModel.findOne({ 'educationalInfo.regNo': userId });
-
-        if (!user) {
-            throw createHttpError(401, "Invalid credentials");
-        }
-
-        const passwordMatch: boolean = await bcrypt.compare(password, user.password);
-
-        if (!passwordMatch) {
-            throw createHttpError(401, "Invalid credentials");
-        }
-
-        const { fname, email, phoneNumber, image, role, gender, dob } = user;
-
-        const otherInfo = user.educationalInfo ? user.educationalInfo : user.lectureInfo;
-        const token: string = jwt.sign({
-            personalInfo: { fname, email, phoneNumber, image, role, gender, dob },
-            otherInfo
-        }, env.APP_SECRET, { expiresIn: "1d" });
-
-        res.status(201).json({ token });
-    } catch (error) {
-        next(error);
+    if (req.body.role === 'student') {
+        UserModel = StudentModel;
+    } else if (req.body.role === 'teacher') {
+        UserModel = TeacherModel;
+    } else {
+        UserModel = AdminModel;
     }
-}
-
-export const adminLogin: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const { body } = req;
 
     try {
 
-        const user = await AdminModel.findOne({ email: body.email });
+        const user = await UserModel.findOne({ email:req.body.email });
 
         if (!user) {
             throw createHttpError(401, "Invalid credentials");
         }
 
-        const passwordMatch: boolean = await bcrypt.compare(body.password, user.password);
+        const passwordMatch: boolean = await bcrypt.compare(req.body.password, user.password);
 
         if (!passwordMatch) {
             throw createHttpError(401, "Invalid credentials");
         }
 
-        const { fname, email, phoneNumber, image, gender, dob } = user;
+        const { fname, email, phoneNumber, image, gender, dob, role, _id } = user;
 
         const token: string = jwt.sign({
-            personalInfo: { fname, email, phoneNumber, image, gender, dob },
+            personalInfo: { fname, email, phoneNumber, image, gender, dob, role, _id },
         }, env.APP_SECRET, { expiresIn: "1d" });
 
         res.status(201).json({ token });
