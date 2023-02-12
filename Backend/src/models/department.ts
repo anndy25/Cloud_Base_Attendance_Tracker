@@ -1,10 +1,5 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
-export interface DepartmentDocument extends Document {
-  departmentName: string,
-  intake: number,
-
-}
 
 const departmentSchema = new Schema(
   {

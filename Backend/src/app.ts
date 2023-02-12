@@ -6,15 +6,19 @@ import fileUpload from 'express-fileupload';
 import cors from "cors";
 
 
-const app: Application = express();
+import userRoutes from "./routes/userRoutes";
+import classRoutes from "./routes/classRoutes";
 
+const app: Application = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: '1mb'}));
 app.use(cors({origin: "*",credentials: true,}));
-
 app.use(fileUpload({useTempFiles: true}));
+
+app.use("/api/users", userRoutes);
+app.use("/api/class", classRoutes);
 
 
 app.use((req:Request, res: express.Response, next) => {

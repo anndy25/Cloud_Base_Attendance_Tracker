@@ -1,13 +1,6 @@
-import { InferSchemaType, model, Schema, Types } from "mongoose";
+import { InferSchemaType, model, Schema } from "mongoose";
 
-export interface UserDocument extends Document {
 
-  subjectName: string,
-  courseCode: number,
-  semester: number,
-  departmentId: Types.ObjectId
-
-}
 
 const subjectSchema = new Schema(
   {
