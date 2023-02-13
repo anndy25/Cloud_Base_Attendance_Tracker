@@ -22,7 +22,6 @@ const studentSchema = new Schema({
     semester: { type: Number },
 
 
-
 }, {
     toJSON: {
         transform(doc, ret) {
