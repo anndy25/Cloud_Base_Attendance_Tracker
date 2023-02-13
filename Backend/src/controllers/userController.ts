@@ -69,13 +69,17 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
 export const userLogin: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
    
     let UserModel: any;
+    let APP_SECRET:string;
 
     if (req.body.role === 'student') {
         UserModel = StudentModel;
+        APP_SECRET=env.APP_STUDENT_SECRET;
     } else if (req.body.role === 'teacher') {
         UserModel = TeacherModel;
+        APP_SECRET=env.APP_TEACHER_SECRET;
     } else {
         UserModel = AdminModel;
+        APP_SECRET=env.APP_ADMIN_SECRET;
     }
 
     try {
@@ -96,7 +100,7 @@ export const userLogin: RequestHandler = async (req: Request, res: Response, nex
 
         const token: string = jwt.sign({
             personalInfo: { fname, email, phoneNumber, image, gender, dob, role, _id },
-        }, env.APP_SECRET, { expiresIn: "1d" });
+        }, APP_SECRET, { expiresIn: "1d" });
 
         res.status(201).json({ token });
     } catch (error) {

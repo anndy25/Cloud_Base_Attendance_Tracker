@@ -5,13 +5,16 @@ export default cleanEnv(process.env,{
 
     DB_URL: str(),
     WEBSITE_URL: str(),
-    APP_SECRET:str(),
+
+    SALT_ROUNDS: num(),
+    APP_ADMIN_SECRET:str(),
+    APP_STUDENT_SECRET:str(),
+    APP_TEACHER_SECRET :str(),
+
     CLOUD_NAME:str(),
     API_KEY:str(),
     API_SECRET:str(),
     FOLDER_NAME:str(),
-
-    SALT_ROUNDS: num(),
 
     PORT:port()
 
