@@ -19,8 +19,8 @@ const studentSchema = new Schema({
 
 
     regNo: { type: String },
-    departmentId: { type: Schema.Types.ObjectId, ref: "departments" },
-    classId: { type: Schema.Types.ObjectId, ref: "classes" },
+    departmentId: { type: Schema.Types.ObjectId, ref: "department" },
+    classId: { type: Schema.Types.ObjectId, ref: "class" },
     rollNo: { type: Number },
     semester: { type: Number },
 

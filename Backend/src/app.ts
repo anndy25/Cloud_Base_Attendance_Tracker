@@ -5,9 +5,10 @@ import createHttpError, { isHttpError } from "http-errors";
 import fileUpload from 'express-fileupload';
 import cors from "cors";
 
-
 import userRoutes from "./routes/userRoutes";
 import classRoutes from "./routes/classRoutes";
+import departmentRoutes from "./routes/departmentRoutes";
+import overViewRoutes from "./routes/overViewRoutes";
 
 const app: Application = express();
 
@@ -19,6 +20,8 @@ app.use(fileUpload({useTempFiles: true}));
 
 app.use("/api/users", userRoutes);
 app.use("/api/class", classRoutes);
+app.use("/api/department", departmentRoutes);
+app.use("/api/overview", overViewRoutes);
 
 
 app.use((req:Request, res: express.Response, next) => {

@@ -3,7 +3,7 @@ import env from "./util/validateEnv";
 import mongoose from "mongoose";
 const port = env.PORT;
 
-
+mongoose.set("strictQuery", false);
 mongoose.connect(env.DB_URL)
     .then(() => {
         console.log("Mongoose connected");

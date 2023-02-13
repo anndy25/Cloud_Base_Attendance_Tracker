@@ -1,6 +1,5 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
-
 const departmentSchema = new Schema(
   {
     departmentName: { type: String, required: true, unique: true },
@@ -15,7 +14,6 @@ const departmentSchema = new Schema(
     },
   }
 );
-
 
 
 type Department = InferSchemaType<typeof departmentSchema>;

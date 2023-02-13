@@ -1,4 +1,5 @@
-import { InferSchemaType, model, Schema } from "mongoose";
+import { InferSchemaType, model, Schema ,PopulatedDoc } from "mongoose";
+
 
 
 const timetable = {
@@ -18,7 +19,7 @@ const teacherSchema = new Schema({
         publicId: { type: String, required: true }
     },
     phoneNumber: { type: String, required: true },
-    departmentId: { type: Schema.Types.ObjectId, ref: "departments" },
+    departmentId: { type: Schema.Types.ObjectId, ref: 'department' },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, required: true },
