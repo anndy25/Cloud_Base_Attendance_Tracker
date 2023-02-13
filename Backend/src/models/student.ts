@@ -1,8 +1,5 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
-
-
-
 const studentSchema = new Schema({
 
     fname: { type: String, required: true },
