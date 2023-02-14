@@ -1,10 +1,10 @@
-import { InferSchemaType, model, Schema ,PopulatedDoc } from "mongoose";
+import { InferSchemaType, model, Schema  } from "mongoose";
 
 
 
 const timetable = {
-    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
-    subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance' },
+    subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
     from: { type: String },
     to: { type: String }
 }
@@ -42,4 +42,4 @@ const teacherSchema = new Schema({
 
 type Teacher = InferSchemaType<typeof teacherSchema>;
 
-export default model<Teacher>("teachers", teacherSchema);
+export default model<Teacher>("teacher", teacherSchema);

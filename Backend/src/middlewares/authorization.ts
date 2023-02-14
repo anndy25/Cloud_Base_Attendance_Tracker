@@ -62,10 +62,10 @@ export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
         token = req.headers.authorization.split(" ")[1];
 
     try {
-        if (!token) throw createHttpError(401, "Unauthorized teacher!");
+        if (!token) throw createHttpError(401, "Unauthorized admin!");
         jwt.verify(token, env.APP_ADMIN_SECRET, (error, payload) => {
             if (error) {
-                throw createHttpError(401, "Unauthorized teacher!");
+                throw createHttpError(401, "Unauthorized admin!");
             }
             req.body.token= payload;
             next();

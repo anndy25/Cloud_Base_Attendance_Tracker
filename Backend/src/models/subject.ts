@@ -7,7 +7,7 @@ const subjectSchema = new Schema(
     subjectName: { type: String, required: true },
     courseCode: { type: Number, required: true, unique: true },
     semester: { type: Number, required: true },
-    departmentId: { type: Schema.Types.ObjectId, ref: "departments" },
+    departmentId: { type: Schema.Types.ObjectId, ref: "department" },
   },
   {
     toJSON: {
@@ -20,4 +20,4 @@ const subjectSchema = new Schema(
 
 type Subject = InferSchemaType<typeof subjectSchema>;
 
-export default model<Subject>("subjects", subjectSchema);
+export default model<Subject>("subject", subjectSchema);

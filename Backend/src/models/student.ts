@@ -31,4 +31,4 @@ const studentSchema = new Schema({
 });
 
 type Student = InferSchemaType<typeof studentSchema>;
-export default model<Student>("students", studentSchema);
+export default model<Student>("student", studentSchema);

@@ -1,8 +1,8 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
 const schedule = {
-  subjectTeacherId: { type: Schema.Types.ObjectId, ref: 'users' },
-  subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
+  subjectTeacherId: { type: Schema.Types.ObjectId, ref: 'user' },
+  subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
   from: { type: String },
   to: { type: String }
 }
@@ -11,7 +11,7 @@ const classSchema = new Schema(
   {
     className: { type: String, required: true, unique: true },
     year: { type: String, required: true },
-    departmentId: { type: Schema.Types.ObjectId, ref: "departments" },
+    departmentId: { type: Schema.Types.ObjectId, ref: "department",require:true },
     schedule: {
       monday: [schedule],
       tuesday: [schedule],
@@ -22,8 +22,8 @@ const classSchema = new Schema(
     },
     notification: [
       {
-        subjectId: { type: Schema.Types.ObjectId, ref: 'subjects' },
-        attendanceId: { type: Schema.Types.ObjectId, ref: 'attendances' },
+        subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
+        attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance' },
         ip: { type: String },
         expired: { type: String },
         day: { type: String }

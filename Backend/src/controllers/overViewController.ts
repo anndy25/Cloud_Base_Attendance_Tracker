@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from "express";
 import StudentModel from "../models/student";
-import DepartmentModel from "../models/department";
 import TeacherModel from "../models/teacher";
+
 
 
 

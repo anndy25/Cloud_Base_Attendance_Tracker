@@ -2,8 +2,8 @@ import { InferSchemaType, model, Schema } from "mongoose";
 
 const attendanceSchema = new Schema(
     {
-        classId: { type: Schema.Types.ObjectId, ref: "classes", required: true },
-        subjectId: { type: Schema.Types.ObjectId, ref: "classes", required: true },
+        classId: { type: Schema.Types.ObjectId, ref: "class", required: true },
+        subjectId: { type: Schema.Types.ObjectId, ref: "subject", required: true },
         attendanceDetails: Schema.Types.Mixed,
 
     },
@@ -18,4 +18,4 @@ const attendanceSchema = new Schema(
 
 type Attendance = InferSchemaType<typeof attendanceSchema>;
 
-export default model<Attendance>("User", attendanceSchema);
+export default model<Attendance>("attendance", attendanceSchema);

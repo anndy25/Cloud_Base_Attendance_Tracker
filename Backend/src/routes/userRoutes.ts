@@ -8,6 +8,9 @@ const router = express.Router();
 router.post("/registration",Auth.adminAuth, UserController.createUserAccount);
 router.post("/login", UserController.userLogin);
 
+router.get("/student/:id", UserController.findOneStudent);
+router.get("/teacher/:id", UserController.findOneTeacher);
+
 
 export default router;
 

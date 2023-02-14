@@ -15,7 +15,6 @@ type Image = {
 
 }
 
-
 export const createUserAccount: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 
     const { body } = req;
@@ -61,11 +60,6 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
 
 
 
-
-
-
-
-
 export const userLogin: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
    
     let UserModel: any;
@@ -105,6 +99,39 @@ export const userLogin: RequestHandler = async (req: Request, res: Response, nex
         res.status(201).json({ token });
     } catch (error) {
         next(error);
+    }
+}
+
+export const findOneStudent = async (req: Request, res: Response, next: NextFunction) => {
+    const {id} = req.params;
+    try {
+        const student = await StudentModel.findOne({_id:id}, { password: 0 }).populate([
+            {path:'departmentId',select:'departmentName'},
+            {path:'classId',select:'className'},
+        ]);
+        if (!student) {
+            throw createHttpError(404, "Student does not exist!");
+        }
+        return  res.status(201).send({student})
+
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const findOneTeacher = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+        const teacher = await TeacherModel.findOne({_id:id}, { password: 0 }).populate([
+            {path:'departmentId',select:'departmentName'},
+        ]);
+        if (!teacher) {
+            throw createHttpError(404, "Teacher does not exist!");
+        }
+        return  res.status(201).send({teacher})
+
+    } catch (err) {
+        next(err);
     }
 }
 
