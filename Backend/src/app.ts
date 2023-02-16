@@ -10,6 +10,7 @@ import classRoutes from "./routes/classRoutes";
 import departmentRoutes from "./routes/departmentRoutes";
 import overViewRoutes from "./routes/overViewRoutes";
 import subjectRoutes from "./routes/subjectRoutes";
+import scheduleRoutes from "./routes/scheduleRoutes";
 
 const app: Application = express();
 
@@ -24,6 +25,7 @@ app.use("/api/overview", overViewRoutes);
 app.use("/api/class", classRoutes);
 app.use("/api/department", departmentRoutes);
 app.use("/api/subject", subjectRoutes);
+app.use("/api/schedule", scheduleRoutes);
 
 
 

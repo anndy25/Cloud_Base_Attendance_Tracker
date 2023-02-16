@@ -1,26 +1,39 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
+
 const schedule = {
-  subjectTeacherId: { type: Schema.Types.ObjectId, ref: 'user' },
+
   subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
   from: { type: String },
   to: { type: String }
+
 }
 
 const classSchema = new Schema(
   {
     className: { type: String, required: true, unique: true },
     year: { type: String, required: true },
-    departmentId: { type: Schema.Types.ObjectId, ref: "department",require:true },
-    schedule: {
+    departmentId: { type: Schema.Types.ObjectId, ref: "department",  required: true, },
+    semester: { type: Number, required: true },
+    classSubjects:
+    {
+      type: Map,
+      of: {
+        subjectTeacher: {  },
+        attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance',  required: true }
+      }
+
+    }
+    ,
+    schedules: {
       monday: [schedule],
       tuesday: [schedule],
-      wednesday:[schedule],
+      wednesday: [schedule],
       thursday: [schedule],
       friday: [schedule],
       saturday: [schedule]
     },
-    notification: [
+    notifications: [
       {
         subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
         attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance' },

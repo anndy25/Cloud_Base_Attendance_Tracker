@@ -1,0 +1,85 @@
+import { Document, model, Model, Schema, Types } from 'mongoose';
+
+interface ScheduleDoc extends Document {
+  subjectId: Types.ObjectId;
+  from: string;
+  to: string;
+}
+
+const scheduleSchema = new Schema<ScheduleDoc>({
+  subjectId: { type: Types.ObjectId, ref: 'subject' },
+  from: { type: String },
+  to: { type: String }
+});
+
+const Schedule: Model<ScheduleDoc> = model<ScheduleDoc>('Schedule', scheduleSchema);
+
+interface ClassSubjectDoc {
+  subjectId: Types.ObjectId;
+  subjectTeacherId: Types.ObjectId;
+  attendanceId: Types.ObjectId;
+}
+
+interface NotificationDoc {
+  subjectId: Types.ObjectId;
+  attendanceId: Types.ObjectId;
+  ip: string;
+  expired: string;
+  day: string;
+}
+
+interface ClassDoc extends Document {
+  className: string;
+  year: string;
+  departmentId: Types.ObjectId;
+  semester: number;
+  classSubject: ClassSubjectDoc[];
+  schedule: {
+    monday: Types.ObjectId[];
+    tuesday: Types.ObjectId[];
+    wednesday: Types.ObjectId[];
+    thursday: Types.ObjectId[];
+    friday: Types.ObjectId[];
+    saturday: Types.ObjectId[];
+  };
+  notification: NotificationDoc[];
+}
+
+const classSchema = new Schema<ClassDoc>({
+  className: { type: String, required: true, unique: true },
+  year: { type: String, required: true },
+  departmentId: { type: Types.ObjectId, ref: 'department', required: true },
+  semester: { type: Number, required: true },
+  classSubject: [{
+    subjectId: { type: Types.ObjectId, ref: 'subject' },
+    subjectTeacherId: { type: Types.ObjectId, ref: 'teacher' },
+    attendanceId: { type: Types.ObjectId, ref: 'attendance' }
+  }],
+  schedule: {
+    monday: [{ type: Types.ObjectId, ref: 'Schedule' }],
+    tuesday: [{ type: Types.ObjectId, ref: 'Schedule' }],
+    wednesday: [{ type: Types.ObjectId, ref: 'Schedule' }],
+    thursday: [{ type: Types.ObjectId, ref: 'Schedule' }],
+    friday: [{ type: Types.ObjectId, ref: 'Schedule' }],
+    saturday: [{ type: Types.ObjectId, ref: 'Schedule' }]
+  },
+  notification: [
+    {
+      subjectId: { type: Types.ObjectId, ref: 'subject' },
+      attendanceId: { type: Types.ObjectId, ref: 'attendance' },
+      ip: { type: String },
+      expired: { type: String },
+      day: { type: String }
+    }
+  ]
+}, {
+  toJSON: {
+    transform(doc, ret) {
+      delete ret.__v;
+    },
+  },
+});
+
+const Class: Model<ClassDoc> = model<ClassDoc>('class', classSchema);
+
+export { Class, Schedule };

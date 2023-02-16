@@ -9,6 +9,7 @@ export const addClass = async (req: Request, res: Response, next: NextFunction) 
     try {
 
         const classInfo = req.body;
+       
         const isClassExist = await ClassModel.findOne({ className: classInfo.className })
 
         if (isClassExist) {
@@ -28,7 +29,7 @@ export const addClass = async (req: Request, res: Response, next: NextFunction) 
 export const getClasses = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-        const classes = await ClassModel.find({}, { schedule: 0, notification: 0 }).populate({ path: 'departmentId', select: "departmentName" });
+        const classes = await ClassModel.find({}, { schedules: 0, notifications: 0 }).populate({ path: 'departmentId', select: "departmentName" });
         const strength = await StudentModel.aggregate([
             {
                 $group: {
@@ -45,21 +46,6 @@ export const getClasses = async (req: Request, res: Response, next: NextFunction
 
 }
 
-export const getSchedule = async (req: Request, res: Response, next: NextFunction) => {
 
-    const { id } = req.params;
 
-    try {
 
-        const schedule = await ClassModel.findById(id, { notification: 0}).populate({ path: 'departmentId', select: "departmentName" });
-
-        if(!schedule){
-            throw createHttpError(409, "Class does not exist!");
-        }
-        return res.status(201).json({ schedule });
-    }
-    catch (e) {
-        next(e);
-    }
-
-}

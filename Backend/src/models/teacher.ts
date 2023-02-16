@@ -1,10 +1,8 @@
-import { InferSchemaType, model, Schema  } from "mongoose";
-
-
+import { InferSchemaType, model, Schema } from "mongoose";
 
 const timetable = {
-    attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance' },
     subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
+    classId: { type: Schema.Types.ObjectId, ref: 'class' },
     from: { type: String },
     to: { type: String }
 }
@@ -23,7 +21,13 @@ const teacherSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, required: true },
-    regNo: { type: String,require:true },
+    regNo: { type: String, required: true },
+    lectures: [
+        {
+            classId: { type: Schema.Types.ObjectId, ref: "class", required: true },
+            subjectId: { type: Schema.Types.ObjectId, ref: "subject", required: true },
+            attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance', required: true }
+        }],
     schedule: {
         monday: [timetable],
         tuesday: [timetable],
