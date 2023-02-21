@@ -9,7 +9,7 @@ import Head from "next/head";
 import Link from "next/link";
 import axios from 'axios';
 
-import {setUserInfo} from "../../functions/localStrorage"
+import { setUserInfo } from "../../functions/localStrorage"
 
 const validationSchema = yup.object({
   email: yup
@@ -34,10 +34,9 @@ const formInputList = [
 
 const options = {
   position: "top-left",
-  autoClose: 1500,
-  hideProgressBar: false,
+  autoClose: 2000,
+  hideProgressBar: true,
   closeOnClick: true,
-  pauseOnHover: true,
   draggable: true,
   progress: undefined,
   theme: "colored",
@@ -90,7 +89,7 @@ const login = () => {
 
 
                   if (response.status === 201 && response.data) {
-                   
+
                     toast.success("Login sucessfull!", options);
                     setUserInfo(response.data.token)
                     // window.location.href = `/${role}/dashboard`;
@@ -98,7 +97,11 @@ const login = () => {
                   }
 
                 } catch (error) {
-                  toast.error(error.response.data.error, options)
+                  if (error.status) {
+                    toast.error(error.response.data.error, options)
+                  } else {
+                    toast.error("Server error!", options)
+                  }
                 }
               }
               }

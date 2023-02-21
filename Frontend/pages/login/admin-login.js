@@ -1,11 +1,14 @@
-import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import * as yup from "yup";
 import Image from "next/image";
-import Link from "next/link";
 import Head from "next/head";
+import Link from "next/link";
+import axios from 'axios';
+
+import { setUserInfo } from "../../functions/localStrorage"
 
 const validationSchema = yup.object({
     email: yup
@@ -27,7 +30,18 @@ const formInputList = [
     },
 ];
 
+const options = {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+}
+
 const login = () => {
+    const router = useRouter();
     return (
         <>
             <Head>
@@ -61,8 +75,6 @@ const login = () => {
                         <h1 className="font-bold text-4xl w-3/4 tracking-wide mb-16">
                             Admin Login
                         </h1>
-                        
-
                         <Formik
                             initialValues={{
                                 email: "",
@@ -71,8 +83,28 @@ const login = () => {
                             onSubmit={async (values) => {
                                 const { email, password } = values;
                                 try {
-                                    window.location.reload();
-                                } catch (err) { }
+                                    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/users/login`, {
+                                        email: email,
+                                        password: password,
+                                        role: 'admin'
+                                    });
+
+
+                                    if (response.status === 201 && response.data) {
+
+                                        toast.success("Login sucessfull!", options);
+                                        setUserInfo(response.data.token)
+                                        // window.location.href = `/${role}/dashboard`;
+                                        router.push(`/admin/dashboard`);
+                                    }
+
+                                } catch (error) {
+                                    if (error.status) {
+                                        toast.error(error.response.data.error, options)
+                                    } else {
+                                        toast.error("Server error!", options)
+                                    }
+                                }
                             }}
                             validationSchema={validationSchema}
                         >
@@ -124,7 +156,9 @@ const login = () => {
                         </Formik>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
+
         </>
     );
 };
