@@ -26,98 +26,105 @@ const formInputList = [
 ];
 
 const login = () => {
+  let [user, setUser] = React.useState('Student');
   return (
     <>
-  <Head><title>Alpha: User Login</title></Head>
-    <div className="flex w-screen h-screen">
-      <div className="h-full w-1/2  text-slate-700">
-        <div className="w-3/4 mx-auto mt-12 flex  items-center">
-          <div className="h-16 w-12 relative">
-            <Image
-              src="/logo.png"
-              alt="Picture of the author"
-               layout="fill"
-            />
+      <Head><title>Alpha: User Login</title></Head>
+      <div className="flex w-screen h-screen">
+        <div className="h-full w-1/2  text-slate-700">
+          <div className="w-3/4 mx-auto mt-12 flex  items-center">
+            <div className="h-16 w-12 relative">
+              <Image
+                src="/logo.png"
+                alt="Picture of the author"
+                layout="fill"
+              />
+            </div>
+
+            <div className="font-bold text-4xl ml-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-blue-800 italic">Alpha</div>
           </div>
 
-          <div className="font-bold text-4xl ml-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-blue-800 italic">Alpha</div>
-        </div>
-        <div className="flex flex-col h-3/4 justify-end items-center w-full">
-          <h1 className="font-bold text-4xl w-3/4 tracking-wide mb-16">
-            User Login
-          </h1>
+          <div className=' w-3/4 mx-auto mb-10 mt-20'>
+            <span className={`px-6 py-3 font-semibold ${user === 'Student' ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setUser('Student')}>Student</span>
+            <span className={`px-4 py-3 font-semibold   ${user === 'Teacher' ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setUser('Teacher')}>Teacher</span>
+           
+          </div>
+          <div className="flex flex-col  items-center w-full">
 
-          <Formik
-            initialValues={{
-              email: "",
-              password: "",
-            }}
-            onSubmit={async (values) => {
-              const { email, password } = values;
-              try {
-                window.location.reload();
-              } catch (err) {}
-            }}
-            validationSchema={validationSchema}
-          >
-            <Form
-              className="flex flex-col items-center justify-center w-3/4 mb-12"
-              autoComplete="nope"
+            <h1 className="font-bold text-4xl w-3/4 tracking-wide mb-16">
+              {user} Login
+            </h1>
+
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              onSubmit={async (values) => {
+                const { email, password } = values;
+                try {
+                  window.location.reload();
+                } catch (err) { }
+              }}
+              validationSchema={validationSchema}
             >
-              {formInputList.map((item, index) => (
-                <div key={index} className="w-full">
-                  <label
-                    htmlFor={item.name}
-                    className={`mt-5 w-full font-bold ${
-                      item.required
-                        ? "after:content-['*'] after:ml-0.5 after:text-red-500"
-                        : null
-                    } `}
-                  >
-                    {item.label}
-                  </label>
-                  <Field
-                    className="my-4 w-full h-15 py-2 px-3 rounded-md border border-slate-300 shadow-sm bg-gray-50 placeholder-slate-400 focus:outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500 invalid:border-red-500 
-                focus:invalid:border-red-500 focus:invalid:ring-red-500 selection:bg-amber-500 selection:text-white "
-                    type={item.type}
-                    name={item.name}
-                    placeholder={item.label}
-                    maxLength={item.maxLength}
-                    autoComplete="off"
-                  />
-                  <ErrorMessage
-                    className="italic w-full text-red-500 text-sm "
-                    name={item.name}
-                    component="div"
-                  />
-                </div>
-              ))}
-              {/* Submit Button */}
-              <button
-                className="p-3 w-full mt-5 h-15 text-white font-bold tracking-wider bg-gradient-to-r from-blue-500 to-indigo-700 rounded-2xl hover:drop-shadow-lg"
-                type="submit"
+              <Form
+                className="flex flex-col items-center justify-center w-3/4 mb-12"
+                autoComplete="nope"
               >
-               Login
-              </button>
-              <Link href="/login/admin-login">
-              <p className="text-center my-4 text-indigo-500 hover:cursor-pointer">
-                      Login as an Admin?
-              </p>                    
+                {formInputList.map((item, index) => (
+                  <div key={index} className="w-full">
+                    <label
+                      htmlFor={item.name}
+                      className={`mt-5 w-full font-bold ${item.required
+                          ? "after:content-['*'] after:ml-0.5 after:text-red-500"
+                          : null
+                        } `}
+                    >
+                      {item.label}
+                    </label>
+                    <Field
+                      className="my-4 w-full h-15 py-2 px-3 rounded-md border border-slate-300 shadow-sm bg-gray-50 placeholder-slate-400 focus:outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500 invalid:border-red-500 
+                focus:invalid:border-red-500 focus:invalid:ring-red-500 selection:bg-amber-500 selection:text-white "
+                      type={item.type}
+                      name={item.name}
+                      placeholder={item.label}
+                      maxLength={item.maxLength}
+                      autoComplete="off"
+                    />
+                    <ErrorMessage
+                      className="italic w-full text-red-500 text-sm "
+                      name={item.name}
+                      component="div"
+                    />
+                  </div>
+                ))}
+                {/* Submit Button */}
+                <button
+                  className="p-3 w-full mt-5  text-white font-bold tracking-wider bg-gradient-to-r from-blue-500 to-indigo-700 rounded-2xl hover:drop-shadow-lg"
+                  type="submit"
+                >
+                  Login
+                </button>
+                <Link href="/login/admin-login">
+                  <p className="text-center my-4 text-indigo-500 hover:cursor-pointer">
+                    Login as an Admin?
+                  </p>
                 </Link>
-            </Form>
-          </Formik>
+              </Form>
+            </Formik>
+          </div>
+        </div>
+        <div className="h-full w-1/2  flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-700">
+          <Image
+            src="/user-login.svg"
+            className="mt-12"
+            alt="Picture of the author"
+            width={550}
+            height={600}
+          />
         </div>
       </div>
-      <div className="h-full w-1/2  flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-700">
-        <Image
-          src="/user-login.svg"
-          className="mt-12"
-          alt="Picture of the author"
-          width={550}
-          height={600}
-        />
-      </div>
-    </div>
     </>
   );
 };
