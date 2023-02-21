@@ -1,9 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useRouter } from 'next/router';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import * as yup from "yup";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
+import axios from 'axios';
+
+import {setUserInfo} from "../../functions/localStrorage"
 
 const validationSchema = yup.object({
   email: yup
@@ -25,8 +31,20 @@ const formInputList = [
   },
 ];
 
+
+const options = {
+  position: "top-left",
+  autoClose: 1500,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+}
 const login = () => {
-  let [user, setUser] = React.useState('Student');
+  const router = useRouter();
+  let [user, setUser] = useState('Student');
   return (
     <>
       <Head><title>Alpha: User Login</title></Head>
@@ -44,10 +62,10 @@ const login = () => {
             <div className="font-bold text-4xl ml-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-blue-800 italic">Alpha</div>
           </div>
 
-          <div className=' w-3/4 mx-auto mb-10 mt-20'>
-            <span className={`px-6 py-3 font-semibold ${user === 'Student' ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setUser('Student')}>Student</span>
-            <span className={`px-4 py-3 font-semibold   ${user === 'Teacher' ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setUser('Teacher')}>Teacher</span>
-           
+          <div className=' w-3/4 mx-auto mb-10 mt-[4.6rem]'>
+            <span className={`px-6 py-3 font-semibold ${user === 'Student' ? 'text-white bg-indigo-600' : 'text-indigo-600 bg-slate-100'}  cursor-pointer `} onClick={() => setUser('Student')}>Student</span>
+            <span className={`px-4 py-3 font-semibold   ${user === 'Teacher' ? 'text-white bg-indigo-600  ' : 'text-indigo-600 bg-slate-100'}  cursor-pointer`} onClick={() => setUser('Teacher')}>Teacher</span>
+
           </div>
           <div className="flex flex-col  items-center w-full">
 
@@ -61,11 +79,29 @@ const login = () => {
                 password: "",
               }}
               onSubmit={async (values) => {
+                const role = user.toLowerCase();
                 const { email, password } = values;
                 try {
-                  window.location.reload();
-                } catch (err) { }
-              }}
+                  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/users/login`, {
+                    email: email,
+                    password: password,
+                    role
+                  });
+
+
+                  if (response.status === 201 && response.data) {
+                   
+                    toast.success("Login sucessfull!", options);
+                    setUserInfo(response.data.token)
+                    // window.location.href = `/${role}/dashboard`;
+                    router.push(`/${role}/dashboard`);
+                  }
+
+                } catch (error) {
+                  toast.error(error.response.data.error, options)
+                }
+              }
+              }
               validationSchema={validationSchema}
             >
               <Form
@@ -77,8 +113,8 @@ const login = () => {
                     <label
                       htmlFor={item.name}
                       className={`mt-5 w-full font-bold ${item.required
-                          ? "after:content-['*'] after:ml-0.5 after:text-red-500"
-                          : null
+                        ? "after:content-['*'] after:ml-0.5 after:text-red-500"
+                        : null
                         } `}
                     >
                       {item.label}
@@ -101,7 +137,7 @@ const login = () => {
                 ))}
                 {/* Submit Button */}
                 <button
-                  className="p-3 w-full mt-5  text-white font-bold tracking-wider bg-gradient-to-r from-blue-500 to-indigo-700 rounded-2xl hover:drop-shadow-lg"
+                  className="p-3 w-full mt-5  text-white font-bold tracking-wider bg-indigo-600 rounded-2xl hover:drop-shadow-lg"
                   type="submit"
                 >
                   Login
@@ -115,7 +151,7 @@ const login = () => {
             </Formik>
           </div>
         </div>
-        <div className="h-full w-1/2  flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-700">
+        <div className="h-full w-1/2  flex justify-center items-center bg-gradient-to-r from-indigo-500 to-indigo-800">
           <Image
             src="/user-login.svg"
             className="mt-12"
@@ -124,6 +160,7 @@ const login = () => {
             height={600}
           />
         </div>
+        <ToastContainer />
       </div>
     </>
   );

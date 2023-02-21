@@ -1,5 +1,7 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import * as yup from "yup";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,7 +34,7 @@ const login = () => {
                 <title>Alpha: Admin Login</title>
             </Head>
             <div className="flex w-screen h-screen">
-                <div className="h-full w-1/2  flex justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-700">
+                <div className="h-full w-1/2  flex justify-center items-center bg-gradient-to-r from-indigo-500 to-indigo-700">
                     <Image
                         src="/admin-login.svg"
                         className="mt-12"
@@ -107,7 +109,7 @@ const login = () => {
                                 ))}
                                 {/* Submit Button */}
                                 <button
-                                    className="p-3 w-full mt-5 text-white font-bold tracking-wider bg-gradient-to-r from-blue-500 to-indigo-700 rounded-2xl hover:drop-shadow-lg"
+                                    className="p-3 w-full mt-5 text-white font-bold tracking-wider bg-indigo-600 rounded-2xl hover:drop-shadow-lg"
                                     type="submit"
                                 >
                                     Login

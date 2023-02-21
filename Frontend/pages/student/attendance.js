@@ -24,7 +24,7 @@ const attendace = () => {
             </div>
             <h1 className="font-bold text-2xl text-gray-600">Mark Your Attendace!!</h1>
             <div className='py-4'>
-              {/* <AttendanceCard /> */}
+              <AttendanceCard />
               <AttendanceExpired/>
             </div>
           </div>
