@@ -94,9 +94,13 @@ export const userLogin: RequestHandler = async (req: Request, res: Response, nex
 
         const token: string = jwt.sign({
             personalInfo: { fname, email, phoneNumber, image, gender, dob, role, _id },
-        }, APP_SECRET, { expiresIn: "1d" });
+        }, APP_SECRET);
 
-        res.status(201).json({ token });
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        })
+       return res.status(201).json({ token });
     } catch (error) {
         next(error);
     }
@@ -128,6 +132,7 @@ export const findOneTeacher = async (req: Request, res: Response, next: NextFunc
         if (!teacher) {
             throw createHttpError(404, "Teacher does not exist!");
         }
+
         return  res.status(201).send({teacher})
 
     } catch (err) {
