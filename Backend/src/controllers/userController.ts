@@ -152,6 +152,11 @@ export const findOneTeacher = async (req: Request, res: Response, next: NextFunc
 }
 
 
+// export const logout=async(req: Request, res: Response, next: NextFunction)=>{
+//     req
+// }
+
+
 
 
 

@@ -7,11 +7,12 @@ import env from "../util/validateEnv";
 
 export const studentAuth = (req: Request, res: Response, next: NextFunction) => {
 
-    const cookie:string = req.cookies['token'];
+    const cookie:any = req.headers.cookies;
+   
     
     try {
         if (!cookie) throw createHttpError(401, "Unauthorized student!");
-        jwt.verify(cookie, env.APP_STUDENT_SECRET, (error, payload) => {
+        jwt.verify(cookie, env.APP_STUDENT_SECRET, (error:any, payload:any) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized student!");
             }
@@ -26,13 +27,11 @@ export const studentAuth = (req: Request, res: Response, next: NextFunction) => 
 
 export const teacherAuth = (req: Request, res: Response, next: NextFunction) => {
 
-
-
-    const cookie:string = req.cookies['token'];
+    const cookie:any= req.headers.cookies;
 
     try {
         if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
-        jwt.verify(cookie, env.APP_TEACHER_SECRET, (error, payload) => {
+        jwt.verify(cookie, env.APP_TEACHER_SECRET, (error:any, payload:any) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized teacher!");
             }
@@ -45,14 +44,12 @@ export const teacherAuth = (req: Request, res: Response, next: NextFunction) => 
     }
 }
 export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
-    
-    console.log(req.cookies.auth)
-    const cookie:string = req.cookies['auth'];
 
+    const cookie:any= req.headers.cookies;
     
     try {
         if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
-        jwt.verify(cookie, env.APP_ADMIN_SECRET, (error, payload) => {
+        jwt.verify(cookie, env.APP_ADMIN_SECRET, (error:any, payload:any) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized admin!");
             }
@@ -64,3 +61,5 @@ export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
         next(e);
     }
 }
+
+ 
