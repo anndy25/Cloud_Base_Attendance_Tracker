@@ -16,27 +16,25 @@ const options = {
   theme: "colored",
 }
 
-const Dashboard = ({ token }) => {
+const Dashboard = ({ cookie }) => {
 
 
-
-  // const { data, isLoading } = useQuery("admin-overview",adminOverview,
-  // {
-  //   refetchOnMount: false,
-  //   refetchOnWindowFocus: false,
-  // });
-  console.log(token)
-
+  
+  const { data, isLoading } = useQuery("admin-overview",()=>adminOverview(cookie),
+  {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+  
+  console.log(data);
+  
   let [tab, setTab] = useState(1);
-  let list = ['All', 'Name', 'Reg. No.', 'Email Id'];
 
+  
+  
 
-  // if(isLoading) return (<h1>Loading...</h1>)
-
-
-  // console.log(data);
-  //  const [students,setStudents]= useState(data.students);
-  //  const [teachers,setTeachers]= useState(data.teachers);
+   const [students,setStudents]= useState(data.students);
+   const [teachers,setTeachers]= useState(data.teachers);
 
 
   return (
@@ -49,10 +47,10 @@ const Dashboard = ({ token }) => {
           <SidePanel status={3} />
         </div>
         <div className='w-[82%] flex'>
-          <section className='w-[74%] min-h-screen  px-4 flex flex-col items-center'>
+          <section className='w-[90%] min-h-screen  px-4 flex flex-col items-center'>
             <h1 className="font-bold text-2xl text-gray-600 my-6 w-full px-4">Dashboard</h1>
             <div className='w-[95%] flex justify-between'>
-              <Overview />
+              <Overview  students={students} teachers={teachers} />
             </div>
             <div className='w-[95%] my-8 border-t rounded-2xl shadow-md overflow-x-auto'>
               <div className='flex justify-between items-center border-b-2 '>
@@ -62,16 +60,16 @@ const Dashboard = ({ token }) => {
                 </div>
                 <DropDownCreate />
               </div>
-              <SearchBox list={list} />
+              <SearchBox  />
 
               {
-                tab === 1 ? (<StudentList />) : (<TeacherList />)
+                tab === 1 ? (<StudentList students={students}  />) : (<TeacherList teachers={teachers} />)
               }
 
             </div>
           </section>
 
-          <aside className='w-1/4 border-l'>
+          {/* <aside className='w-1/5 border-l'>
             <div className='border-b-2'>
               <Navtab />
             </div>
@@ -82,7 +80,7 @@ const Dashboard = ({ token }) => {
               <ScheduleCard />
             </div>
 
-          </aside>
+          </aside> */}
         </div>
       </div>
     </>
@@ -90,25 +88,29 @@ const Dashboard = ({ token }) => {
 }
 
 
-async function adminOverview() {
+async function adminOverview(cookie) {
 
   try {
-    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/overview/admin`);
-    console.log(data);
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/overview/admin`, {
+      withCredentials: true,
+      headers: {
+        cookies: cookie || " "
+      }
+    });
     return data;
   }
-  catch (error) {
 
+  catch (error) {
+      console.log(error)
   }
 }
 
 export async function getServerSideProps(context) {
 
-  // const queryClient = new QueryClient();
-  // console.log(req.cookies.token)
-  const cookies = context.req.headers.cookie;
+  const queryClient = new QueryClient();
+  const cookie = context.req.cookies.auth;
 
-  if (!cookies.auth) {
+  if (!cookie) {
     return {
       redirect: {
         destination: '/login/admin-login',
@@ -117,22 +119,12 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/overview/admin`, {
-    withCredentials: true,
-    headers: {
-      cookies: cookies.auth || ""
-    }
+  await queryClient.prefetchQuery("admin-overview",()=> adminOverview(cookie));
 
-  });
-
-
-  // await queryClient.prefetchQuery("admin-overview",()=> adminOverview(req));
-  console.log(data);
   return {
     props: {
-      // dehydratedState: dehydrate(queryClient),
-      token: data
-
+      dehydratedState: dehydrate(queryClient),
+      cookie:cookie
     },
   };
 }

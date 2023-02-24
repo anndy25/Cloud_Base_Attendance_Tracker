@@ -11,6 +11,6 @@ export const setUserInfo = (data) => {
   };
 
   export const logout = () => {
-    destroyCookie(null, 'token');
+    destroyCookie(null, 'auth');
     localStorage.removeItem("userInfo");
   };

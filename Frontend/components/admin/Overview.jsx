@@ -3,7 +3,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoIosPeople } from "react-icons/io";
 
-const Overview = () => {
+const Overview = ({students,teachers}) => {
     return (
         <>
             <div className='w-1/4 flex items-center justify-evenly shadow-md py-4 rounded-xl'>
@@ -12,7 +12,7 @@ const Overview = () => {
                 </div>
                 <div className="ml-2">
                     <h5 className='text-slate-500 font-bold'>Students</h5>
-                    <h3 className='text-3xl font-bold'>225</h3>
+                    <h3 className='text-3xl font-bold'>{students.length}</h3>
                 </div>
             </div>
             <div className='w-1/4 flex items-center justify-evenly shadow-md py-4 rounded-xl'>
@@ -21,7 +21,7 @@ const Overview = () => {
                 </div>
                 <div className="ml-2">
                     <h5 className='text-slate-500 font-bold'>Teacher</h5>
-                    <h3 className='text-3xl font-bold'>113</h3>
+                    <h3 className='text-3xl font-bold'>{teachers.length}</h3>
                 </div>
             </div>
             <div className='w-1/4 flex items-center justify-evenly shadow-md py-4 rounded-xl'>

@@ -1,7 +1,8 @@
 import React from 'react'
 import { DropDownMenu } from '../utility'
 
-const SearchBox = ({list}) => {
+const SearchBox = () => {
+    let list = ['All', 'Name', 'Reg. No.', 'Email Id'];
     return (
         <div className='my-4 ml-1'>
             <DropDownMenu list={list} />

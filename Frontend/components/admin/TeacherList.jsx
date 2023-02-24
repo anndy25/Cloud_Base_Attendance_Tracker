@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TeacherList = () => {
+const TeacherList = ({ teachers }) => {
   return (
     <>
       <table className="w-full text-left">
@@ -15,30 +15,23 @@ const TeacherList = () => {
         </thead>
         <tbody className='text-slate-600 font-medium'>
 
-          <tr
-            className=" odd:bg-blue-50"
-          >
-            <td className="p-1 cursor-pointer flex  items-center ">
-              <div className="w-12 h-12 rounded-full border-2  mr-2"></div>
-              <span>Aniket Mane</span>
-            </td>
-            <td>E2k20206521</td>
-            <td >Computer Eng.</td>
-            <td >9657387724</td>
-            <td >aniketsmd310@gmail.com</td>
-          </tr>
-          <tr
-            className=" odd:bg-blue-50"
-          >
-            <td className="p-1 cursor-pointer flex  items-center ">
-              <div className="w-12 h-12 rounded-full border-2  mr-2"></div>
-              <span>Aniket Mane</span>
-            </td>
-            <td>E2k20206521</td>
-            <td >E&Tc Eng.</td>
-            <td >9657387724</td>
-            <td >aniketsmd310@gmail.com</td>
-          </tr>
+          {
+            teachers.map((teacher, key) => {
+              return (
+                <tr className=" odd:bg-blue-50" key={key}>
+                  <td className="p-1 cursor-pointer flex  items-center ">
+                    <div className="w-12 h-12 rounded-full border-2  mr-2"></div>
+                    <span>{teacher.fname}</span>
+                  </td>
+                  <td>{teacher.regNo}</td>
+                  <td >{teacher.departmentId.departmentName}</td>
+                  <td >{teacher.phoneNumber}</td>
+                  <td >{teacher.email}</td>
+                </tr>
+
+              )
+            })
+          }
 
         </tbody>
       </table>

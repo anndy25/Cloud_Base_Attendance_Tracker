@@ -95,7 +95,7 @@ const login = () => {
                                     setUserInfo(response.data.token)
                                     // window.location.href = `/${role}/dashboard`;
                           
-                                    router.push(`/admin/dashboard`);
+                                    // router.push(`/admin/dashboard`);
 
 
                                 } catch (error) {
