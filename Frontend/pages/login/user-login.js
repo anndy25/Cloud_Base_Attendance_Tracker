@@ -1,14 +1,13 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useRouter } from 'next/router';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import Router  from 'next/router';
+
+import { toast } from 'react-toastify';
 import * as yup from "yup";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import axios from 'axios';
-
 import { setUserInfo } from "../../functions/localStrorage"
 
 const validationSchema = yup.object({
@@ -34,7 +33,7 @@ const formInputList = [
 
 const options = {
   position: "top-left",
-  autoClose: 2000,
+  autoClose: 1000,
   hideProgressBar: true,
   closeOnClick: true,
   draggable: true,
@@ -42,7 +41,7 @@ const options = {
   theme: "colored",
 }
 const login = () => {
-  const router = useRouter();
+
   let [user, setUser] = useState('Student');
   return (
     <>
@@ -85,19 +84,17 @@ const login = () => {
                     email: email,
                     password: password,
                     role
-                  });
-
-
-                  if (response.status === 201 && response.data) {
+                  });                 
 
                     toast.success("Login sucessfull!", options);
                     setUserInfo(response.data.token)
                     // window.location.href = `/${role}/dashboard`;
-                    router.push(`/${role}/dashboard`);
-                  }
+                    Router.push(`/${role}/dashboard`);
+                  
 
                 } catch (error) {
-                  if (error.status) {
+               
+                  if (error.response.status===401) {
                     toast.error(error.response.data.error, options)
                   } else {
                     toast.error("Server error!", options)
@@ -163,7 +160,7 @@ const login = () => {
             height={600}
           />
         </div>
-        <ToastContainer />
+       
       </div>
     </>
   );

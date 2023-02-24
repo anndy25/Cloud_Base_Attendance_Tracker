@@ -6,9 +6,11 @@ import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
 import { BsClockHistory } from "react-icons/bs";
 import { AiOutlineSchedule } from "react-icons/ai";
+import { logout } from '../../functions/localStrorage';
 
 
 const listOptions = (flag = 0, pathname) => {
+
     if (flag === 1) {
         return (
             <>
@@ -87,6 +89,8 @@ const SidePanel = ({ status }) => {
                             confirmButtonColor: "red",
                         }).then((result) => {
                             if (result.isConfirmed) {
+                                logout();
+                                router.push('/');
 
                             }
                         })

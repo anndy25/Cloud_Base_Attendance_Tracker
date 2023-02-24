@@ -1,7 +1,7 @@
 import jwt_decode from "jwt-decode";
+import { destroyCookie } from 'nookies';
 
 export const setUserInfo = (data) => {
-    localStorage.setItem("token", data);
     localStorage.setItem("userInfo", JSON.stringify(jwt_decode(data)));
   };
 
@@ -11,7 +11,6 @@ export const setUserInfo = (data) => {
   };
 
   export const logout = () => {
-    localStorage.removeItem("token");
+    destroyCookie(null, 'token');
     localStorage.removeItem("userInfo");
-    navigate("/");
   };

@@ -1,14 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from "next/head";
 import { SidePanel, Navtab, Calender, ScheduleCard } from '../../components/utility';
-import { Overview, StudentList, TeacherList,DropDownCreate,SearchBox } from '../../components/admin';
+import { Overview, StudentList, TeacherList, DropDownCreate, SearchBox } from '../../components/admin';
+import { dehydrate, QueryClient, useQuery } from 'react-query';
+import axios from 'axios';
+import { parseCookies } from 'nookies';
+import { toast } from 'react-toastify';
+
+const options = {
+  position: "top-center",
+  hideProgressBar: true,
+  closeOnClick: true,
+  draggable: true,
+  progress: undefined,
+  theme: "colored",
+}
+
+const Dashboard = ({ token }) => {
 
 
 
+  // const { data, isLoading } = useQuery("admin-overview",adminOverview,
+  // {
+  //   refetchOnMount: false,
+  //   refetchOnWindowFocus: false,
+  // });
+  console.log(token)
 
-const Dashboard = () => {
   let [tab, setTab] = useState(1);
-  let list=['All','Name','Reg. No.','Email Id'];
+  let list = ['All', 'Name', 'Reg. No.', 'Email Id'];
+
+
+  // if(isLoading) return (<h1>Loading...</h1>)
+
+
+  // console.log(data);
+  //  const [students,setStudents]= useState(data.students);
+  //  const [teachers,setTeachers]= useState(data.teachers);
+
 
   return (
     <>
@@ -31,14 +60,14 @@ const Dashboard = () => {
                   <span className={`px-6 py-3 font-semibold ${tab === 1 ? ' bg-blue-50 border-b-4 border-blue-700 text-blue-600' : 'text-gray-500 hover:text-blue-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(1)}>Students</span>
                   <span className={`px-6 py-3 font-semibold ${tab === 2 ? ' bg-blue-50 border-b-4 border-blue-700 text-blue-600' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}  cursor-pointer `} onClick={() => setTab(2)}>Teacher</span>
                 </div>
-               <DropDownCreate/>
+                <DropDownCreate />
               </div>
-              <SearchBox list={list}/>
-              
+              <SearchBox list={list} />
+
               {
-                tab===1 ?( <StudentList />):( <TeacherList />)
-              }  
-             
+                tab === 1 ? (<StudentList />) : (<TeacherList />)
+              }
+
             </div>
           </section>
 
@@ -58,6 +87,54 @@ const Dashboard = () => {
       </div>
     </>
   )
+}
+
+
+async function adminOverview() {
+
+  try {
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/overview/admin`);
+    console.log(data);
+    return data;
+  }
+  catch (error) {
+
+  }
+}
+
+export async function getServerSideProps(context) {
+
+  // const queryClient = new QueryClient();
+  // console.log(req.cookies.token)
+  const cookies = context.req.headers.cookie;
+
+  if (!cookies.auth) {
+    return {
+      redirect: {
+        destination: '/login/admin-login',
+        permanent: false,
+      },
+    };
+  }
+
+  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/overview/admin`, {
+    withCredentials: true,
+    headers: {
+      cookies: cookies.auth || ""
+    }
+
+  });
+
+
+  // await queryClient.prefetchQuery("admin-overview",()=> adminOverview(req));
+  console.log(data);
+  return {
+    props: {
+      // dehydratedState: dehydrate(queryClient),
+      token: data
+
+    },
+  };
 }
 
 export default Dashboard

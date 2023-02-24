@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import * as yup from "yup";
 import Image from "next/image";
 import Head from "next/head";
@@ -32,7 +32,7 @@ const formInputList = [
 
 const options = {
     position: "top-right",
-    autoClose: 2000,
+    autoClose: 1000,
     hideProgressBar: true,
     closeOnClick: true,
     draggable: true,
@@ -87,19 +87,20 @@ const login = () => {
                                         email: email,
                                         password: password,
                                         role: 'admin'
+                                    },{
+                                        withCredentials: true,
                                     });
 
+                                    toast.success("Login sucessfull!", options);
+                                    setUserInfo(response.data.token)
+                                    // window.location.href = `/${role}/dashboard`;
+                          
+                                    router.push(`/admin/dashboard`);
 
-                                    if (response.status === 201 && response.data) {
-
-                                        toast.success("Login sucessfull!", options);
-                                        setUserInfo(response.data.token)
-                                        // window.location.href = `/${role}/dashboard`;
-                                        router.push(`/admin/dashboard`);
-                                    }
 
                                 } catch (error) {
-                                    if (error.status) {
+
+                                    if (error.response.status === 401) {
                                         toast.error(error.response.data.error, options)
                                     } else {
                                         toast.error("Server error!", options)
@@ -156,7 +157,7 @@ const login = () => {
                         </Formik>
                     </div>
                 </div>
-                <ToastContainer />
+
             </div>
 
         </>
