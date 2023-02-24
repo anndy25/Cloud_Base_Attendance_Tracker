@@ -3,7 +3,6 @@ import { MdSubject } from "react-icons/md";
 import { BiBook } from "react-icons/bi";
 import { BsPercent } from "react-icons/bs";
 import { FaChalkboardTeacher } from "react-icons/fa";
-
 import Image from "next/image";
 
 const Message = ({ Component, title }) => {

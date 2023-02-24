@@ -1,18 +1,24 @@
 import React from 'react'
 import { FaRegBell } from "react-icons/fa";
+import Image from "next/image";
+import { getUserInfo } from "../../functions/localStrorage"
+
 
 const Navtab = () => {
+    const userInfo = getUserInfo();
     return (
         <>
 
             <div className="h-[9.4%] p-2 w-full">
                 <nav>
                     <div className="flex justify-end items-center">
-                        <FaRegBell className='h-6 w-6 mr-4 hover:cursor-pointer' />
-                        <div className={`h-12 text-white font-semibold w-12 rounded-full ring-2 ring-white uppercase border flex justify-center items-center cursor-pointer shadow-lg bg-cyan-600`}>
-                            <p>
-                                AM
-                            </p>
+                        <FaRegBell className='h-6 w-6 hover:cursor-pointer' />
+                        <div className={`  font-semibold  flex justify-center items-center cursor-pointer`}>
+                            <Image
+                                src={userInfo.image.url}
+                                width="120" height="120"
+                                className="ring-2 ring-white w-12 h-12 border mx-2 rounded-full" alt='user image' />
+                                <small className='w-1/2 truncate'>{userInfo.email}</small>
                         </div>
                     </div>
                 </nav>

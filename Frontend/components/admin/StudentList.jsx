@@ -1,17 +1,20 @@
 import React from 'react'
-import { DropDownMenu } from '../utility'
+import Image from "next/image";
+import Link from "next/link";
+
 
 const StudentList = ({ students }) => {
+   
     return (
         <>
 
             <table className="w-full text-left">
                 <thead className=" text-slate-700">
                     <tr>
-                        <th className="p-3 w-[26%]">Name</th>
-                        <th className='w-[30%]'>Reg. Id</th>
+                        <th className="p-3 w-[25%]">Name</th>
+                        <th className='w-[15%]'>Reg. Id</th>
                         <th className='w-[30%]'>Department</th>
-                        <th className=''>Class</th>
+                        <th className='w-[8%]'>Class</th>
                         <th >Email Id</th>
                     </tr>
                 </thead>
@@ -20,11 +23,14 @@ const StudentList = ({ students }) => {
                     {
                         students.map((student, key) => {
                             return (
-
                                 <tr className=" odd:bg-blue-50" key={key}>
                                     <td className="p-1 cursor-pointer flex  items-center ">
-                                        <div className="w-12 h-12 rounded-full border-2  mr-2"></div>
-                                        <span>{student.fname}</span>
+                                        <Image
+                                            src={student.image.url}
+                                            width="120" height="120"
+                                            className="w-12 h-12 border mx-2 rounded-full" alt='student image' />
+
+                                        <Link className='hover:text-slate-800' href={`/admin/student/${student._id}`}>{student.fname}</Link>
                                     </td>
                                     <td>{student.regNo}</td>
                                     <td >{student.departmentId.departmentName}</td>
@@ -34,7 +40,6 @@ const StudentList = ({ students }) => {
                             )
                         })
                     }
-
 
                 </tbody>
             </table>
