@@ -7,7 +7,7 @@ import env from "../util/validateEnv";
 
 export const studentAuth = (req: Request, res: Response, next: NextFunction) => {
 
-    const cookie:string = req.cookies['jwt'];
+    const cookie:string = req.cookies['token'];
     
     try {
         if (!cookie) throw createHttpError(401, "Unauthorized student!");
@@ -26,7 +26,9 @@ export const studentAuth = (req: Request, res: Response, next: NextFunction) => 
 
 export const teacherAuth = (req: Request, res: Response, next: NextFunction) => {
 
-    const cookie:string = req.cookies['jwt'];
+
+
+    const cookie:string = req.cookies['token'];
 
     try {
         if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
@@ -43,12 +45,13 @@ export const teacherAuth = (req: Request, res: Response, next: NextFunction) => 
     }
 }
 export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
+    
+    console.log(req.cookies.auth)
+    const cookie:string = req.cookies['auth'];
 
-  
-    const cookie:string = req.cookies['jwt'];
-
+    
     try {
-        if (!cookie) throw createHttpError(401, "Unauthorized admin!");
+        if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
         jwt.verify(cookie, env.APP_ADMIN_SECRET, (error, payload) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized admin!");

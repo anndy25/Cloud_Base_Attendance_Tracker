@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response, Application } from "express";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import fileUpload from 'express-fileupload';
+import cookieParser from "cookie-parser"
 import cors from "cors";
 
 import userRoutes from "./routes/userRoutes";
@@ -12,12 +13,14 @@ import overViewRoutes from "./routes/overViewRoutes";
 import subjectRoutes from "./routes/subjectRoutes";
 import scheduleRoutes from "./routes/scheduleRoutes";
 
+
 const app: Application = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true, limit: '1mb'}));
-app.use(cors({origin: "*",credentials: true,}));
+app.use(express.urlencoded({ extended: true,}));
+app.use(cookieParser())
+app.use(cors({origin: ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:4200'],credentials: true,}));
 app.use(fileUpload({useTempFiles: true}));
 
 app.use("/api/users", userRoutes);
