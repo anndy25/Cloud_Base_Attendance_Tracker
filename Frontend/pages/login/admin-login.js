@@ -8,6 +8,7 @@ import Head from "next/head";
 import Link from "next/link";
 import axios from 'axios';
 
+
 import { setUserInfo } from "../../functions/localStrorage"
 
 const validationSchema = yup.object({
@@ -95,7 +96,7 @@ const login = () => {
                                     setUserInfo(response.data.token)
                                     // window.location.href = `/${role}/dashboard`;
                           
-                                    // router.push(`/admin/dashboard`);
+                                    router.push(`/admin/dashboard`);
 
 
                                 } catch (error) {

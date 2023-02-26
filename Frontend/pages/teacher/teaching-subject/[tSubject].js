@@ -10,8 +10,8 @@ function switchTab(tab){
 
     if(tab===2) return <ShowStudents />;
 
-    if(tab===3) return <AttendanceCard />;
-    // if(tab===3) return <TakeAttendance/>;
+    // if(tab===3) return <AttendanceCard />;
+    if(tab===3) return <TakeAttendance/>;
 }
 
 const TSubject = () => {

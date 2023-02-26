@@ -4,8 +4,7 @@ import { SidePanel, Navtab, Calender, ScheduleCard } from '../../components/util
 import { Overview, StudentList, TeacherList, DropDownCreate, SearchBox } from '../../components/admin';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import axios from 'axios';
-import { parseCookies } from 'nookies';
-import { toast } from 'react-toastify';
+
 
 const options = {
   position: "top-center",

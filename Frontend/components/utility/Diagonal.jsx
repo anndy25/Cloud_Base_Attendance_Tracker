@@ -4,7 +4,6 @@ import { Fragment, useState } from 'react'
 const Diagonal = ({isOpen,setModal,message}) => {
    
  
-    
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10 w-1/2" onClose={()=>setModal(false)}>

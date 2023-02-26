@@ -24,6 +24,7 @@ const MainCropper = () => {
               onChange={(newImage) => {
                 setDialogOpen(true);
                 setImage(newImage);
+                
               }}
             />
           </div>
