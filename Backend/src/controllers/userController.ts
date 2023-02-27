@@ -5,12 +5,14 @@ import jwt from "jsonwebtoken";
 import cookie from 'cookie'
 import { cloudUpload } from "../util/cloudUpload";
 
+
 import StudentModel from "../models/student";
 import AdminModel from "../models/admin";
 import TeacherModel from "../models/teacher";
 import env from "../util/validateEnv";
 
 type Image = {
+
     url: string,
     publicId: string,
 
@@ -19,7 +21,9 @@ type Image = {
 export const createUserAccount: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 
     const { body } = req;
-    const { photo }: any = req.files;
+
+    const photo: any = req.files?.photo;
+
 
     let UserModel: any;
 
@@ -134,6 +138,26 @@ export const findOneStudent = async (req: Request, res: Response, next: NextFunc
     }
 }
 
+export const findAllStudents = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const students = await StudentModel.find({}, { _id: 1 });
+        return res.status(201).send({ students })
+
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const findAllTeachers = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const teachers = await TeacherModel.find({}, { _id: 1 });
+        return res.status(201).send({ teachers })
+
+    } catch (err) {
+        next(err);
+    }
+}
+
 export const findOneTeacher = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
@@ -151,10 +175,34 @@ export const findOneTeacher = async (req: Request, res: Response, next: NextFunc
     }
 }
 
+export const deleteTeacher = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+        await TeacherModel.findByIdAndDelete(id);
+        return res.status(201).send("Teacher account deleted")
+    } catch (err) {
+        next(err);
+    }
 
-// export const logout=async(req: Request, res: Response, next: NextFunction)=>{
-//     req
-// }
+}
+
+export const deleteStudent = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+        await StudentModel.findByIdAndDelete(id);
+        return res.status(201).send("Student account deleted")
+    } catch (err) {
+        next(err);
+    }
+
+}
+
+
+export const logout = (req: Request, res: Response, next: NextFunction) => {
+    res.clearCookie('auth');
+    return res.end('Cookie cleared!');
+}
+
 
 
 

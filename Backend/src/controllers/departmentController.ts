@@ -3,24 +3,37 @@ import DepartmentModel from "../models/department";
 import createHttpError from "http-errors";
 
 
-export const addDepartment=async(req:Request, res:Response,next:NextFunction) => {
+export const addDepartment = async (req: Request, res: Response, next: NextFunction) => {
 
-    try{
+    try {
 
-        const departmentInfo=req.body;
-        const isDepartmentExist=await DepartmentModel.findOne({departmentName:departmentInfo.departmentName})
-    
-        if(isDepartmentExist){
+        const departmentInfo = req.body;
+        const isDepartmentExist = await DepartmentModel.findOne({ departmentName: departmentInfo.departmentName })
+
+        if (isDepartmentExist) {
             throw createHttpError(409, "Department already exist.");
         }
-    
+
         await DepartmentModel.create(departmentInfo);
-        
+
         return res.status(201).json({ message: `${departmentInfo.departmentName} Department created!!` });
     }
-    catch(e){
+    catch (e) {
         next(e);
     }
 
 }
+
+export const getDepartments = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const departments = await DepartmentModel.find({});
+        return res.status(201).json({ departments });
+
+    } catch (error) {
+        next(error);
+
+    }
+}
+
+
 

@@ -7,7 +7,7 @@ import env from "../util/validateEnv";
 
 export const studentAuth = (req: Request, res: Response, next: NextFunction) => {
 
-    const cookie:any = req.headers.cookies;
+    const cookie:any= req.headers.cookies ? req.headers.cookies:req.cookies.auth;
    
     
     try {
@@ -16,7 +16,7 @@ export const studentAuth = (req: Request, res: Response, next: NextFunction) => 
             if (error) {
                 throw createHttpError(401, "Unauthorized student!");
             }
-            req.body.cookie= payload;
+           
             next();
         })
 
@@ -27,15 +27,15 @@ export const studentAuth = (req: Request, res: Response, next: NextFunction) => 
 
 export const teacherAuth = (req: Request, res: Response, next: NextFunction) => {
 
-    const cookie:any= req.headers.cookies;
-
+   const cookie:any= req.headers.cookies ? req.headers.cookies:req.cookies.auth
+    
     try {
         if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
         jwt.verify(cookie, env.APP_TEACHER_SECRET, (error:any, payload:any) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized teacher!");
             }
-            req.body.cookie= payload;
+           
             next();
         })
 
@@ -44,16 +44,16 @@ export const teacherAuth = (req: Request, res: Response, next: NextFunction) => 
     }
 }
 export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
-
-    const cookie:any= req.headers.cookies;
     
+    const cookie:any= req.headers.cookies ? req.headers.cookies:req.cookies.auth
+
     try {
         if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
         jwt.verify(cookie, env.APP_ADMIN_SECRET, (error:any, payload:any) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized admin!");
             }
-            req.body.cookie= payload;
+
             next();
         })
 

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/add-class",Auth.adminAuth, ClassController.addClass);
 
-router.get("/getAll",Auth.adminAuth, ClassController.getClasses);
+router.get("/getAll",ClassController.getClasses);
 
 
 export default router;
