@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ImageCropper from './ImageCropper';
 import ImageUploadingButton from './ImageUploadingButton';
 
-const MainCropper = () => {
-  const [image, setImage] = useState([]);
+
+const MainCropper = ({handleInputImageChang,photo}) => {
   const [croppedImage, setCroppedImage] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  
 
   function setModel(status) {
     setCroppedImage(status);
@@ -20,28 +21,30 @@ const MainCropper = () => {
           <img src={croppedImage} className='rounded-full z-0' alt="blab" />
           <div className='absolute top-0 right-0 text-white  hidden group-hover:block'>
             <ImageUploadingButton
-              value={image}
+              value={photo}
               onChange={(newImage) => {
                 setDialogOpen(true);
-                setImage(newImage);
-                
+             
+                handleInputImageChang(newImage)       
               }}
+              accept="image/*"
             />
           </div>
 
         </div>
         :
         <ImageUploadingButton
-          value={image}
+          value={photo}
           onChange={(newImage) => {
             setDialogOpen(true);
-            setImage(newImage);
+            handleInputImageChang(newImage)  
           }}
+          accept="image/*"
         />
       }
       {dialogOpen && (
         <ImageCropper
-          image={image.length > 0 && image[0].dataURL}
+          image={photo.length>0 && photo[0].dataURL}
           setModel={setModel}
           dialogOpen={dialogOpen}
           onComplete={(imagePromisse) => {

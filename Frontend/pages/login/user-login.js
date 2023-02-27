@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React,{ useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Router  from 'next/router';

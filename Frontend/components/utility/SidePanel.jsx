@@ -1,6 +1,7 @@
 import React from 'react'
 import Swal from "sweetalert2";
 import Image from "next/image";
+import axios from 'axios'
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
@@ -71,7 +72,7 @@ const SidePanel = ({ status }) => {
                     </h1>
                 </div>
                 <div className="mt-12 font-semibold text-gray-800">
-                    {listOptions( status ,router.pathname)}
+                    {listOptions(status, router.pathname)}
                 </div>
 
 
@@ -81,17 +82,20 @@ const SidePanel = ({ status }) => {
                         Swal.fire({
                             icon: "warning",
                             iconColor: "purple",
-                            title: "Do you want to Log Out?",
+                            title: "<small>Do you want to Log Out?</small>",
                             showCancelButton: true,
                             cancelButtonColor: "green",
-                            cancelButtonText: "No",
-                            confirmButtonText: "Yes",
+                            cancelButtonText: "No, cancel!",
+                            confirmButtonText: "Yes, delete it!",
                             confirmButtonColor: "red",
-                        }).then((result) => {
+                        }).then(async (result) => {
                             if (result.isConfirmed) {
                                 logout();
+                                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/users/logout`,{}, {
+                                    withCredentials: true,
+                                    credentials: "include",
+                                });
                                 router.push('/');
-
                             }
                         })
                     }

@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from 'next/router';
-import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import * as yup from "yup";
 import Image from "next/image";

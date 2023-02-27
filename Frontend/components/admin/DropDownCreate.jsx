@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Link from "next/link";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -28,28 +29,28 @@ export default function DropDownCreate() {
                     <div>
                         <Menu.Item>
                             {({ active }) => (
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/admin/student/student-registration"
                                     className={classNames(
                                         active ? 'bg-blue-100 text-blue-600' : 'text-gray-700',
                                         'block px-4 py-2 text-sm'
                                     )}
                                 >
                                     Create Student Account
-                                </a>
+                                </Link>
                             )}
                         </Menu.Item>
                         <Menu.Item>
                             {({ active }) => (
-                                <a
-                                    href="#"
+                                <Link
+                                    href="/admin/teacher/teacher-registration"
                                     className={classNames(
                                         active ? 'bg-blue-100 text-blue-600' : 'text-gray-700',
                                         'block px-4 py-2 text-sm'
                                     )}
                                 >
                                     Create Teacher Account
-                                </a>
+                                </Link>
                             )}
                         </Menu.Item>
                     </div>

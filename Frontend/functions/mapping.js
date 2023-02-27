@@ -3,6 +3,8 @@ export function classMap(classes){
     for(let i=0;i<classes.length;i++){
         classMap.set(classes[i].className,classes[i]._id);
     }
+
+    return classMap;
   
 }
 
@@ -12,4 +14,5 @@ export function  departmentMap(departments){
         departmentMap.set(departments[i].departmentName,departments[i]._id);
     }
 
+    return departmentMap;
 }

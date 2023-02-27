@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-const Diagonal = ({isOpen,setModal,message}) => {
+const Diagonal = ({isOpen,setModal,message,setConditionFlag}) => {
    
  
     return (
@@ -43,14 +43,19 @@ const Diagonal = ({isOpen,setModal,message}) => {
                                     <button
                                         type="button"
                                         className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 w-1/4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        onClick={()=>setModal(false)}
+                                        onClick={()=>{ 
+                                            setConditionFlag(true);
+                                            setModal(false)
+                                            }}
                                     >
                                         Yes 
                                     </button>
                                     <button
                                         type="button"
                                         className="inline-flex justify-center rounded-md border border-transparent  w-1/4 mx-4 bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        onClick={()=>setModal(false)}
+                                        onClick={()=>{ 
+                                            setModal(false)
+                                        }}
                                     >
                                         No
                                     </button>
