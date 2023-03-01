@@ -4,8 +4,8 @@ import * as Auth from "../middlewares/authorization"
 
 const router = express.Router();
 
-
-router.post("/registration",Auth.adminAuth, UserController.createUserAccount);
+// $$Auth.adminAuth
+router.post("/registration", UserController.createUserAccount);
 router.post("/login", UserController.userLogin);
 router.post("/logout", UserController.logout);
 

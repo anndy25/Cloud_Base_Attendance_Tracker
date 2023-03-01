@@ -6,9 +6,10 @@ const router = express.Router();
 
 // router.post("/add-Schedule",Auth.adminAuth, ScheduleController.addSchedule);
 
-router.get("/class/:id",Auth.adminAuth, ScheduleController.getSchedule);
-
+router.get("/class/:id", ScheduleController.getSchedule);
 router.put("/setClassSchedule",Auth.adminAuth, ScheduleController.setClassSchedule)
-router.put("/assignLecture/:id",Auth.adminAuth, ScheduleController.assignLecture)
+
+// $$Auth.adminAuth
+router.put("/assignLecture/:id", ScheduleController.assignLecture)
 
 export default router;

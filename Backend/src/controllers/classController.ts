@@ -29,7 +29,7 @@ export const addClass = async (req: Request, res: Response, next: NextFunction) 
 export const getClasses = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-        const classes = await ClassModel.find({}, { schedules: 0, notifications: 0 }).populate({ path: 'departmentId', select: "departmentName" });
+        const classes = await ClassModel.find({}, { schedules: 0, notifications: 0,classSubjects:0 }).populate({ path: 'departmentId', select: "departmentName" }).sort('className');
         const strength = await StudentModel.aggregate([
             {
                 $group: {

@@ -18,7 +18,6 @@ const studentSchema = new Schema({
     departmentId: { type: Schema.Types.ObjectId, ref: "department" },
     classId: { type: Schema.Types.ObjectId, ref: "class" },
     rollNo: { type: Number },
-    semester: { type: Number },
 
 
 }, {

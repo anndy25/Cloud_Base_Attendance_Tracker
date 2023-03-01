@@ -48,7 +48,7 @@ export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
     const cookie:any= req.headers.cookies ? req.headers.cookies:req.cookies.auth
 
     try {
-        if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
+        if (!cookie) throw createHttpError(401, "Unauthorized admin!");
         jwt.verify(cookie, env.APP_ADMIN_SECRET, (error:any, payload:any) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized admin!");

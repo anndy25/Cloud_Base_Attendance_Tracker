@@ -28,7 +28,7 @@ const teacherSchema = new Schema({
             subjectId: { type: Schema.Types.ObjectId, ref: "subject", required: true },
             attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance', required: true }
         }],
-    schedule: {
+    schedules: {
         monday: [timetable],
         tuesday: [timetable],
         wednesday: [timetable],
