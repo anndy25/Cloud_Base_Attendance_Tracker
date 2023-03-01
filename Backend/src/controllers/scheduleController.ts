@@ -93,33 +93,27 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
             ])
             classDetails = classDetails[0];
 
-            const { classSubjects } = await ClassModel.findByIdAndUpdate(classId,
+            const classSubjects = await ClassModel.findByIdAndUpdate(classId,
                 {
                     $set: {
-                        [`classSubjects.${subjectId}`]: {
-                            subjectTeacher: { fname, image, _id },
-                            subjectId,
-                            attendanceId
+                        [`classSubjects.${subjectId}.subjectTeacher`]: {
+                            fname, image, _id
                         }
                     }
                 },
                 { new: true, upsert: true })
-                .select("-notifications")
-                .populate([
-                    { path: 'departmentId', select: 'departmentName' },
-                ])
+                .select("classSubjects")
+
 
             //    eslint-disable-next-line prefer-const
-            let {schedules} : any = await TeacherModel.findByIdAndUpdate(subjectTeacherId, {
+            let { schedules }: any = await TeacherModel.findByIdAndUpdate(subjectTeacherId, {
                 $addToSet: {
                     "lectures": { classId, subjectId, attendanceId }
                 }
             }, { new: true })
 
-            
-            // console.log( schedules );
 
-            if(classDetails['monday'].length>0){
+            if (classDetails['monday'].length > 0) {
                 schedules['monday'].push(...classDetails['monday']);
             }
             if (classDetails['tuesday'].length > 0) {
@@ -151,8 +145,6 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                 }
             })
 
-
-
             return res.status(201).json({ classSubjects });
 
         } else {
@@ -163,7 +155,7 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                 { $addToSet: { lectures: { classId, subjectId, attendanceId: _id } } }, { new: true, upsert: true })
 
 
-            const { classSubjects } = await ClassModel.findByIdAndUpdate(classId,
+            const classSubjects = await ClassModel.findByIdAndUpdate(classId,
                 {
                     $set: {
                         [`classSubjects.${subjectId}`]: {
@@ -174,10 +166,8 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                     }
                 },
                 { new: true, upsert: true })
-                .select("-notifications")
-                .populate([
-                    { path: 'departmentId', select: 'departmentName' },
-                ])
+                .select("classSubjects")
+
 
             return res.status(201).json({ classSubjects });
         }
@@ -187,6 +177,53 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
     }
 
 }
+
+export const removeSubjectTeacher = async (req: Request, res: Response, next: NextFunction) => {
+    const classId = req.params.id;
+    const { subjectTeacherId, subjectId } = req.body;
+
+    try {
+        const isTeacherExist = await TeacherModel.findById(subjectTeacherId);
+
+        if (!isTeacherExist) {
+            throw createHttpError(409, "Teacher does not exist!");
+        }
+        const isClassExist = await ClassModel.findById(classId);
+
+        if (!isClassExist) {
+            throw createHttpError(409, "Class does not exist!");
+        }
+
+        const isSubjectExist = await SubjectModel.findById(subjectId);
+
+        if (!isSubjectExist) {
+            throw createHttpError(409, "Subject does not exist!");
+        }
+
+        await TeacherModel.findByIdAndUpdate(subjectTeacherId, {
+            $pull: {
+                "lectures": { classId, subjectId },
+                "schedules.monday": { classId, subjectId },
+                "schedules.tuesday": { classId, subjectId },
+                "schedules.wednesday": { classId, subjectId },
+                "schedules.thursday": { classId, subjectId },
+                "schedules.friday": { classId, subjectId },
+                "schedules.saturday": { classId, subjectId }
+            }
+        })
+
+        const classSubjects = await ClassModel.findByIdAndUpdate(classId,
+            {
+                $unset: { [`classSubjects.${subjectId}.subjectTeacher`]: "" }
+            }).select("classSubjects")
+
+        return res.status(201).json({ classSubjects });
+    } catch (err) {
+        next(err);
+    }
+}
+
+
 
 export const setClassSchedule = async (req: Request, res: Response, next: NextFunction) => {
     const { classId, day } = req.query;
@@ -206,7 +243,7 @@ export const setClassSchedule = async (req: Request, res: Response, next: NextFu
         }
 
 
-        await TeacherModel.findByIdAndUpdate(subjectTeacherId,
+        const schedules = await TeacherModel.findByIdAndUpdate(subjectTeacherId,
             {
                 $push:
                 {
@@ -215,7 +252,7 @@ export const setClassSchedule = async (req: Request, res: Response, next: NextFu
             },
             { upsert: true })
 
-        const classDetails = await ClassModel.findByIdAndUpdate(classId,
+        await ClassModel.findByIdAndUpdate(classId,
             {
                 $push:
                 {
@@ -223,17 +260,52 @@ export const setClassSchedule = async (req: Request, res: Response, next: NextFu
                 }
             },
             { new: true, upsert: true })
-            .select("-notifications")
-            .populate([
-                { path: 'departmentId', select: 'departmentName' },
-            ])
+            .select("schedules")
 
 
-        return res.status(201).json({ classDetails });
+        return res.status(201).json({ schedules });
 
     } catch (error) {
         next(error)
     }
+}
+
+export const changeClassSchedule = async (req: Request, res: Response, next: NextFunction) => {
+    const { classId, day,from,to } = req.query;
+    const { subjectTeacherId, subjectId } = req.body;
+    try {
+        const isTeacherExist = await TeacherModel.findById(subjectTeacherId);
+
+        if (!isTeacherExist) {
+            throw createHttpError(409, "Teacher does not exist!");
+        }
+        const isClassExist = await ClassModel.findById(classId);
+
+        if (!isClassExist) {
+            throw createHttpError(409, "Class does not exist!");
+        }
+
+        const isSubjectExist = await SubjectModel.findById(subjectId);
+
+        if (!isSubjectExist) {
+            throw createHttpError(409, "Subject does not exist!");
+        }
+
+        await TeacherModel.findByIdAndUpdate(subjectTeacherId, {
+            $pull: {[`schedules.${day}`]: { classId, subjectId,from, to  }}
+        })
+
+        const schedules = await ClassModel.findByIdAndUpdate(classId,
+            {
+                $pull: {[`schedules.${day}`]: { subjectId,from, to  }}
+            })
+            .select("schedules")
+
+        return res.status(201).json({schedules});
+    } catch (error) {
+        next(error)
+    }
+
 }
 
 

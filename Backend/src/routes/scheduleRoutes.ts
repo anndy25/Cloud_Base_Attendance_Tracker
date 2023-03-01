@@ -7,9 +7,13 @@ const router = express.Router();
 // router.post("/add-Schedule",Auth.adminAuth, ScheduleController.addSchedule);
 
 router.get("/class/:id", ScheduleController.getSchedule);
-router.put("/setClassSchedule",Auth.adminAuth, ScheduleController.setClassSchedule)
-
+// $$Auth.adminAuth
+router.put("/setClassSchedule",ScheduleController.setClassSchedule)
 // $$Auth.adminAuth
 router.put("/assignLecture/:id", ScheduleController.assignLecture)
+router.put("/updateTimeTable")
+
+router.delete("/removeTeacher/:id",ScheduleController.removeSubjectTeacher)
+
 
 export default router;
