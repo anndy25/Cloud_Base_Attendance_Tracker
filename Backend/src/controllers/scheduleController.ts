@@ -243,27 +243,27 @@ export const setClassSchedule = async (req: Request, res: Response, next: NextFu
         }
 
 
-        const schedules = await TeacherModel.findByIdAndUpdate(subjectTeacherId,
+        await TeacherModel.findByIdAndUpdate(subjectTeacherId,
             {
                 $push:
                 {
                     [`schedules.${day}`]: { subjectId, classId, from, to }
                 }
             },
-            { upsert: true })
+            )
 
-        await ClassModel.findByIdAndUpdate(classId,
+            const schedules =await ClassModel.findByIdAndUpdate(classId,
             {
                 $push:
                 {
                     [`schedules.${day}`]: { subjectId, from, to }
                 }
             },
-            { new: true, upsert: true })
+            { new: true})
             .select("schedules")
 
 
-        return res.status(201).json({ schedules });
+        return res.status(201).json(schedules);
 
     } catch (error) {
         next(error)
@@ -272,6 +272,7 @@ export const setClassSchedule = async (req: Request, res: Response, next: NextFu
 
 export const changeClassSchedule = async (req: Request, res: Response, next: NextFunction) => {
     const { classId, day,from,to } = req.query;
+    console.log(day,from,to)
     const { subjectTeacherId, subjectId } = req.body;
     try {
         const isTeacherExist = await TeacherModel.findById(subjectTeacherId);
@@ -298,10 +299,10 @@ export const changeClassSchedule = async (req: Request, res: Response, next: Nex
         const schedules = await ClassModel.findByIdAndUpdate(classId,
             {
                 $pull: {[`schedules.${day}`]: { subjectId,from, to  }}
-            })
+            },{ new: true })
             .select("schedules")
 
-        return res.status(201).json({schedules});
+        return res.status(201).json(schedules);
     } catch (error) {
         next(error)
     }

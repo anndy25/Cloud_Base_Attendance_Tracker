@@ -11,7 +11,7 @@ router.get("/class/:id", ScheduleController.getSchedule);
 router.put("/setClassSchedule",ScheduleController.setClassSchedule)
 // $$Auth.adminAuth
 router.put("/assignLecture/:id", ScheduleController.assignLecture)
-router.put("/updateTimeTable")
+router.put("/updateTimeTable",ScheduleController.changeClassSchedule)
 
 router.delete("/removeTeacher/:id",ScheduleController.removeSubjectTeacher)
 
