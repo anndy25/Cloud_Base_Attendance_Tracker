@@ -7,8 +7,6 @@ import createHttpError from "http-errors";
 import mongoose from 'mongoose';
 
 
-
-
 export const getSchedule = async (req: Request, res: Response, next: NextFunction) => {
 
     const { id } = req.params;
@@ -38,6 +36,7 @@ export const getSchedule = async (req: Request, res: Response, next: NextFunctio
     }
 
 }
+
 
 export const assignLecture = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -93,7 +92,7 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
             ])
             classDetails = classDetails[0];
 
-            const classSubjects = await ClassModel.findByIdAndUpdate(classId,
+            const data = await ClassModel.findByIdAndUpdate(classId,
                 {
                     $set: {
                         [`classSubjects.${subjectId}.subjectTeacher`]: {
@@ -102,7 +101,7 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                     }
                 },
                 { new: true, upsert: true })
-                .select("classSubjects")
+                .select("classSubjects schedules")
 
 
             //    eslint-disable-next-line prefer-const
@@ -145,7 +144,7 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                 }
             })
 
-            return res.status(201).json({ classSubjects });
+            return res.status(201).json({ classSubjects:data.classSubjects,schedules:data.schedules });
 
         } else {
 
@@ -155,7 +154,7 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                 { $addToSet: { lectures: { classId, subjectId, attendanceId: _id } } }, { new: true, upsert: true })
 
 
-            const classSubjects = await ClassModel.findByIdAndUpdate(classId,
+            const data = await ClassModel.findByIdAndUpdate(classId,
                 {
                     $set: {
                         [`classSubjects.${subjectId}`]: {
@@ -166,10 +165,10 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                     }
                 },
                 { new: true, upsert: true })
-                .select("classSubjects")
+                .select("classSubjects schedules")
 
 
-            return res.status(201).json({ classSubjects });
+            return res.status(201).json({ classSubjects:data.classSubjects,schedules:data.schedules });
         }
     }
     catch (e) {
@@ -212,12 +211,12 @@ export const removeSubjectTeacher = async (req: Request, res: Response, next: Ne
             }
         })
 
-        const classSubjects = await ClassModel.findByIdAndUpdate(classId,
+        const data = await ClassModel.findByIdAndUpdate(classId,
             {
                 $unset: { [`classSubjects.${subjectId}.subjectTeacher`]: "" }
-            }).select("classSubjects")
+            }).select("classSubjects schedules")
 
-        return res.status(201).json({ classSubjects });
+        return res.status(201).json({ classSubjects:data?.classSubjects,schedules:data?.schedules  });
     } catch (err) {
         next(err);
     }

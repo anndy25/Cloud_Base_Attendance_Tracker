@@ -3,7 +3,6 @@ import ClassModel from "../models/class";
 import StudentModel from "../models/student"
 import createHttpError from "http-errors";
 
-
 export const addClass = async (req: Request, res: Response, next: NextFunction) => {
 
     try {

@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.get("/class/:id", ScheduleController.getSchedule);
 // $$Auth.adminAuth
-router.put("/setClassSchedule",ScheduleController.setClassSchedule)
+router.put("/setClassSchedule", ScheduleController.setClassSchedule)
 // $$Auth.adminAuth
 router.put("/assignLecture/:id", ScheduleController.assignLecture)
-router.put("/updateTimeTable",ScheduleController.changeClassSchedule)
+router.put("/updateTimeTable", ScheduleController.changeClassSchedule)
 
-router.delete("/removeTeacher/:id",ScheduleController.removeSubjectTeacher)
+router.delete("/removeTeacher/:id", ScheduleController.removeSubjectTeacher)
 
 
 export default router;

@@ -2,7 +2,6 @@ import { Response, Request, NextFunction } from "express";
 import DepartmentModel from "../models/department";
 import createHttpError from "http-errors";
 
-
 export const addDepartment = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
