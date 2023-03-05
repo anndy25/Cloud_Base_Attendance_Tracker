@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Head from "next/head";
 import { SidePanel, Navtab, } from '../../components/utility';
-import { Overview, StudentList, TeacherList, DropDownCreate, SearchBox } from '../../components/admin';
+import { Overview, StudentList, TeacherList, SearchBox } from '../../components/admin';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import axios from 'axios';
 
@@ -59,9 +59,9 @@ const Dashboard = ({ cookie }) => {
                   <span className={`px-6 py-3 font-semibold ${tab === 1 ? ' bg-blue-50 border-b-4 border-blue-700 text-blue-600' : 'text-gray-500 hover:text-blue-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(1)}>Students</span>
                   <span className={`px-6 py-3 font-semibold ${tab === 2 ? ' bg-blue-50 border-b-4 border-blue-700 text-blue-600' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}  cursor-pointer `} onClick={() => setTab(2)}>Teacher</span>
                 </div>
-                <DropDownCreate />
+
               </div>
-              <SearchBox searchUsers={searchUsers} />
+              <SearchBox searchContent={searchUsers} placeholder={'"Search by Registration ID"'} />
               {
                 tab === 1 ? (<StudentList students={students} />) : (<TeacherList teachers={teachers} />)
               }

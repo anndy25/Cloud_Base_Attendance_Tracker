@@ -34,7 +34,7 @@ const AttendanceTable = () => {
                             75%
                         </td>
                         <td className="cursor-pointer flex  items-center ">
-                        <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQMFCDbUoSb21vj0jVEdBIjm3qdKUGbFjXIwf3GFKXg8b21mobjZpR1iUlPIgw_LXh40&usqp=CAU" width="120" height='120' className="w-12 h-12 border mx-2 rounded-full" />
+                        <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrQMFCDbUoSb21vj0jVEdBIjm3qdKUGbFjXIwf3GFKXg8b21mobjZpR1iUlPIgw_LXh40&usqp=CAU" width="120" height='120' className="w-12 h-12 border mx-2 rounded-full"  alt="photo"/>
                             <span>Anjali Patel</span>
                         </td>
                     </tr>

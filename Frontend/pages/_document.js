@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <link rel="icon"  href="./favicon.ico"/>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </Head>
