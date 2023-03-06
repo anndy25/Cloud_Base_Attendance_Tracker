@@ -12,7 +12,7 @@
 
   /* width */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
  
 }
 
@@ -24,7 +24,7 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888; 
-  border-radius: 25px;
+  border-radius: 8px;
 }
 
 /* Handle on hover */

@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from "next/image";
 import { MdDeleteOutline, MdOutlinePersonAddAlt } from "react-icons/md";
+import ListSelect from './ListSelect';
 import axios from "axios"
 
-const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers }) => {
+const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers, setState }) => {
+
+
+
     return (
         <>
             <table className="w-full text-left">
@@ -24,19 +28,21 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers }) => {
                                     <td className="p-3">{subject.subjectName}</td>
                                     <td>{subject.courseCode}</td>
                                     <td>{subject.semester}</td>
-                                    <td className='flex items-center p-1'>
+                                    <td className='text-slate-800'>
                                         {
                                             classSubjectList[subject._id] ?
-                                                <>
+                                                <div className='w-3/4 py-1.5 my-1 bg-white flex items-center border-2 rounded-md'>
                                                     <Image
                                                         src={classSubjectList[subject._id].subjectTeacher.image.url}
                                                         width="120" height="120"
-                                                        className="w-12 h-12 border mx-2  rounded-full" alt='student image' />
-                                                    <p>{classSubjectList[subject._id].subjectTeacher.fname}</p>
-                                                </> :
-                                                <>
-                                                    <p className='my-3'>Teacher is not assigned to course...</p>
-                                                </>
+                                                        className="w-8 h-8 border mx-2 rounded-full " alt='student image' />
+                                                    <span className='text-sm'>{classSubjectList[subject._id].subjectTeacher.fname}</span>
+                                                </div> :
+
+                                                <div className='w-3/4 my-1'>
+                                                    <ListSelect teachers={allTeachers} />
+                                                </div>
+
                                         }
                                     </td>
 
@@ -44,10 +50,9 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers }) => {
                                         classSubjectList[subject._id] ?
                                             <>
                                                 <td><MdDeleteOutline className='text-3xl cursor-pointer hover:text-red-600' /></td>
-
                                             </> :
                                             <>
-                                                <td><MdOutlinePersonAddAlt className='text-3xl cursor-pointer hover:text-teal-600' /></td>
+                                                <td><MdOutlinePersonAddAlt className='text-3xl cursor-pointer hover:text-green-600' /></td>
                                             </>
                                     }
                                 </tr>

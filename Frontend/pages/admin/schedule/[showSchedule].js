@@ -49,10 +49,10 @@ const ShowSchedule = ({ classDetails, allSubjects, allTeachers }) => {
                     </header>
                     <div className='w-[95%] mx-auto p-4 text-gray-600 mt-6'>
                         <h1 className="font-semibold text-xl text-gray-600 w-full my-6">Class Subjects</h1>
-                        <div className='mx-auto border rounded-2xl shadow-md overflow-x-auto bg-white'>
-                            <ClassSubjectList classSubjectList={classSubjectList} allSubjects={allSubjects} allTeachers={allTeachers} />
+                        <div className='mx-auto border rounded-2xl shadow-md  bg-white'>
+                            <ClassSubjectList classSubjectList={classSubjectList} setState={setState} allSubjects={allSubjects} allTeachers={allTeachers} />
                         </div>
-                        <hr className='my-8 border border-slate-400'></hr>
+                        <hr className='my-8'></hr>
                         <h1 className="font-semibold text-xl text-gray-600">Time Table</h1>
                         <div className='grid grid-cols-3 gap-4 my-6' >
                             {

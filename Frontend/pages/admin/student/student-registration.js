@@ -66,9 +66,8 @@ const studentRegistration = ({ classes, departments }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { fname, email, phoneNumber, dob, photo, gender, regNo, departmentId, classId, rollNo, semester } = formData;
+    const { fname, email, phoneNumber, dob, photo, gender, regNo, departmentId, classId, rollNo } = formData;
 
-    console.log(classMap_.get(classId));
     const data = new FormData();
     data.append('fname', fname);
     data.append('photo', photo[0].file);
@@ -80,7 +79,6 @@ const studentRegistration = ({ classes, departments }) => {
     data.append('password', "12345");
     data.append('regNo', regNo);
     data.append('role', 'student');
-    data.append('semester', semester);
     data.append('departmentId', departmentMap_.get(departmentId));
     data.append('classId', classMap_.get(classId));
 
@@ -189,10 +187,6 @@ const studentRegistration = ({ classes, departments }) => {
                   })
                 }
               </select>
-            </div>
-            <div className="w-full mb-6 group">
-              <label htmlFor="semester" className="font-medium">Semester*</label>
-              <input type="text" name="semester" id="semester" className="p-2 border-b-2 block focus:border-blue-500 focus:outline-none w-full" placeholder='eg. 1' onChange={handleInputChange} value={formData.semester} required />
             </div>
 
             <div className="w-full mb-6 group">
