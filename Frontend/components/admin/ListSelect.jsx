@@ -1,22 +1,27 @@
-import { Fragment, useState } from 'react'
+import React,{ Fragment, useState, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import Image from "next/image";
 import { BsCheck2 } from 'react-icons/bs'
 import { RiArrowUpDownLine } from 'react-icons/ri'
 
 
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ListSelect({ teachers }) {
+export default function ListSelect({ teachers, key_, setTeacherHandler }) {
   const [selected, setSelected] = useState({
     fname: "Select Teacher",
     image: { url: "/avatar.webp" }
   })
 
+  useEffect(() => {
+    setTeacherHandler(selected, key_);
+  }, [selected])
+
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={setSelected} >
       {({ open }) => (
         <>
           <div className="relative">
@@ -26,7 +31,7 @@ export default function ListSelect({ teachers }) {
                 <span className="ml-3 block truncate">{selected.fname}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                <RiArrowUpDownLine className=" text-gray-400 text-xl"  />
+                <RiArrowUpDownLine className=" text-gray-400 text-xl" />
               </span>
             </Listbox.Button>
 
@@ -52,7 +57,7 @@ export default function ListSelect({ teachers }) {
                     {({ selected, active }) => (
                       <>
                         <div className="flex items-center">
-                          <Image src={teacher.image.url} width="120" height="120" alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
+                          <Image src={teacher.image.url} width="120" height="120" alt="" className="h-8 w-8 flex-shrink-0 rounded-full" />
                           <span
                             className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                           >
@@ -67,7 +72,7 @@ export default function ListSelect({ teachers }) {
                               'absolute inset-y-0 right-0 flex items-center pr-4'
                             )}
                           >
-                            <BsCheck2 className="h-5 w-5"  />
+                            <BsCheck2 className="h-5 w-5" />
                           </span>
                         ) : null}
                       </>

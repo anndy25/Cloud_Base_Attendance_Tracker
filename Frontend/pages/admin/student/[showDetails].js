@@ -34,7 +34,13 @@ const ShowDetails = ({ student }) => {
                         timer: 2000
                       })
                 } catch (err) {
-                    console.log(err);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Server error!',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })
                 }
 
             }
@@ -43,14 +49,7 @@ const ShowDetails = ({ student }) => {
     }
 
 
-    const setConditionFlag = (flag) => {
-        setFlag(flag)
-    }
-    function setModal(condition) {
-        setIsOpen(condition)
-    }
-
-
+    
     return (
         <>
             <Head>
