@@ -30,3 +30,7 @@ export async function cloudUpload(image: any): Promise<Image> {
 
 
 }
+
+export async function cloudImageDelete(public_id:string){
+    await cloudinary.uploader.destroy(public_id);
+}

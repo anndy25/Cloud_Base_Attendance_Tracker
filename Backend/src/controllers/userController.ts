@@ -3,7 +3,7 @@ import createHttpError from "http-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from 'cookie'
-import { cloudUpload } from "../util/cloudUpload";
+import { cloudUpload, cloudImageDelete } from "../util/cloudUpload";
 
 
 import StudentModel from "../models/student";
@@ -178,7 +178,8 @@ export const findOneTeacher = async (req: Request, res: Response, next: NextFunc
 export const deleteTeacher = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
-        await TeacherModel.findByIdAndDelete(id);
+        const { image }: any = await TeacherModel.findByIdAndDelete(id);
+        cloudImageDelete(image.publicId);
         return res.status(201).send("Teacher account deleted")
     } catch (err) {
         next(err);
@@ -189,7 +190,8 @@ export const deleteTeacher = async (req: Request, res: Response, next: NextFunct
 export const deleteStudent = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
-        await StudentModel.findByIdAndDelete(id);
+        const { image }: any = await StudentModel.findByIdAndDelete(id);
+        cloudImageDelete(image.publicId);
         return res.status(201).send("Student account deleted")
     } catch (err) {
         next(err);

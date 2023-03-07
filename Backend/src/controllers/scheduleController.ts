@@ -183,11 +183,11 @@ export const removeSubjectTeacher = async (req: Request, res: Response, next: Ne
 
 
     try {
-        const isTeacherExist = await TeacherModel.findById(subjectTeacherId);
+        // const isTeacherExist = await TeacherModel.findById(subjectTeacherId);
 
-        if (!isTeacherExist) {
-            throw createHttpError(409, "Teacher does not exist!");
-        }
+        // if (!isTeacherExist) {
+        //     throw createHttpError(409, "Teacher does not exist!");
+        // }
         const isClassExist = await ClassModel.findById(classId);
 
         if (!isClassExist) {
