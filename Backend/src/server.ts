@@ -1,7 +1,7 @@
 import app from "./app";
 import env from "./util/validateEnv";
 import mongoose from "mongoose";
-const port = env.PORT;
+const port = process.env.PORT || env.PORT;
 
 mongoose.set("strictQuery", false);
 mongoose.connect(env.DB_URL)

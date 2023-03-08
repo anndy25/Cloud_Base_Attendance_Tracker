@@ -4,7 +4,9 @@
   "description": "Backend of Cloud Base Attendance Tracker",
   "main": "dist/server.js",
   "scripts": {
-    "start": "nodemon src/server.ts",
+    
+    "start": "node ./dist/server.js",
+    "build": "tsc",
     "lint": "eslinit . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
