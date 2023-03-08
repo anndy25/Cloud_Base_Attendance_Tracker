@@ -107,7 +107,7 @@ export const userLogin: RequestHandler = async (req: Request, res: Response, nex
             "Set-Cookie",
             cookie.serialize("auth", token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV !== "development",
+                secure: false,
                 sameSite: "none",
                 maxAge: 24 * 60 * 60 * 1000,
                 path: "/"
