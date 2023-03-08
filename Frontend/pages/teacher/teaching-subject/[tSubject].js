@@ -14,7 +14,7 @@ function switchTab(tab){
     if(tab===3) return <TakeAttendance/>;
 }
 
-const tSubject = () => {
+const TSubject = () => {
    
     let [tab, setTab] = useState(1);
 
@@ -56,4 +56,4 @@ const tSubject = () => {
     )
 }
 
-export default tSubject
+export default TSubject
