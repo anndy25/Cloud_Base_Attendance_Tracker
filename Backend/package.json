@@ -7,6 +7,7 @@
     
     "start": "node ./dist/server.js",
     "build": "tsc",
+    "dev": "node ./src/server.ts",
     "lint": "eslinit . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
