@@ -110,6 +110,7 @@ export const userLogin: RequestHandler = async (req: Request, res: Response, nex
                 secure: process.env.NODE_ENV !== "development",
                 sameSite: "strict",
                 maxAge: 24 * 60 * 60 * 1000,
+                domain:'.vercel.app',
                 path: "/"
             })
         );
