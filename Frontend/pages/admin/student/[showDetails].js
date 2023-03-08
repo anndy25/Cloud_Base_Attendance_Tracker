@@ -132,7 +132,7 @@ export async function getStaticProps({ params }) {
         props: {
             student,
         },
-        // revalidate: 30,
+        revalidate: 7200,
     };
 }
 
