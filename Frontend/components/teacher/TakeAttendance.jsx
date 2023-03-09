@@ -1,26 +1,24 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import {addTime} from '../../functions/addTime';
-import { Diagonal } from '../utility';
+import { addTime } from '../../functions/addTime';
+
 
 
 
 const TakeAttendance = () => {
+
     const [ip, setIP] = useState('103.146.240.70');
-    const[duration,setDuration]=useState(0);
-    const[message,setMessage] = useState(0);
-    const[isOpen,setIsOpen]=useState(false);
+    const [duration, setDuration] = useState(0);
 
-    const onSubmitHandler=(e)=>{
+    const onSubmitHandler = (e) => {
 
-        let result=addTime(new Date().getHours(),new Date().getMinutes(),parseInt(duration))
-      
+        let result = addTime(new Date().getHours(), new Date().getMinutes(), parseInt(duration))
+
         setMessage(`Attendance will expired at ${result}`);
-        
-        setIsOpen(true); 
+
+        setIsOpen(true);
     }
 
-    function setModal(flag){ setIsOpen(flag) };
 
 
     return (
@@ -34,11 +32,11 @@ const TakeAttendance = () => {
                     <label className="block text-gray-600  font-bold mb-2" Htmlfor="username">
                         Set Duration (min)
                     </label>
-                    <input className="selection: text-gray-400 border shadow-sm focus:outline-none rounded w-full py-2 px-3" id="username" type="Number"  value={duration} onChange={(e)=>setDuration(e.target.value)}/>
+                    <input className="selection: text-gray-400 border shadow-sm focus:outline-none rounded w-full py-2 px-3" id="username" type="Number" value={duration} onChange={(e) => setDuration(e.target.value)} />
                 </div>
                 <button className='bg-indigo-600 p-3 text-white rounded text-sm my-4 w-2/5' onClick={onSubmitHandler}>Create Link</button>
             </div>
-            <Diagonal isOpen={isOpen} setModal={setModal} message={message}/>
+
         </div>
     )
 }
