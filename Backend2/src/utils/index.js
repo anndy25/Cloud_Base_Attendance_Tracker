@@ -42,7 +42,7 @@ module.exports.ValidatePassword = async (enteredPassword, savedPassword) => {
 };
 
 module.exports.GenerateSignature = async (payload) => {
-        return await jwt.sign(payload, APP_SECRET, { expiresIn: "1d" });
+        return jwt.sign(payload, APP_SECRET, { expiresIn: "1d" });
 }
 module.exports.ValidateSignature = async (req) => {
         const signature = req.get("Authorization");

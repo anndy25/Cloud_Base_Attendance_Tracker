@@ -30,17 +30,15 @@ const Schedule = ({ classes, totalStudent }) => {
         <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-blue-200">
           <SidePanel status={3} />
         </div>
-        <div className='w-[82%] min-h-screen'>
+        <div className='w-[82%] min-h-screen bg-slate-50'>
           <aside className='w-full border-l'>
-            <div className='border-b-2'>
+            <div className='shadow-md bg-white'>
               <Navtab />
             </div>
             <div className='p-6'>
-              <h1 className="font-bold text-2xl text-gray-600">Time Table</h1>
-              <div className='w-4/5 mx-auto  pt-4 my-8 border-2 rounded-2xl shadow-lg overflow-x-auto'>
-                <div className='pl-12'>
-                  <SearchBox searchContent={searchClass} placeholder={'"Search by Class Name"'} />
-                </div>
+              <h1 className="font-semibold text-2xl text-gray-600">All Classes of College</h1>
+              <div className='w-4/5 mx-auto  pt-4 my-8 border rounded-2xl shadow-lg overflow-x-auto bg-white'>
+                <SearchBox searchContent={searchClass} placeholder={'"Search by Class Name"'} />
                 <ScheduleTable classes_={classes_} totalStudent={totalStudent} />
               </div>
             </div>

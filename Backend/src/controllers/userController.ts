@@ -102,21 +102,6 @@ export const userLogin: RequestHandler = async (req: Request, res: Response, nex
             APP_SECRET
         );
 
-
-        res.setHeader(
-            "Set-Cookie",
-            cookie.serialize("auth", token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV !== "development",
-                sameSite: "strict",
-                maxAge: 24 * 60 * 60 * 1000,
-                domain:'cloud-base-attendance-tracker.vercel.app',
-                path: "/"
-            })
-        );
-
-
-
         return res.status(201).json({ token });
     } catch (error) {
         next(error);

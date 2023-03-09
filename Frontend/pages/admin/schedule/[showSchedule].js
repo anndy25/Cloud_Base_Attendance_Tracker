@@ -113,7 +113,7 @@ const ShowSchedule = ({ classDetails, allSubjects, allTeachers, classId }) => {
                                                 {schedules[day].map((lecture, key) => {
 
                                                     return (
-                                                        <div key={key} className={`group relative p-2 text-white bg-gradient-to-r from-indigo-700 to-indigo-500 cursor-pointer  border-2 border-white rounded-md`}>
+                                                        <div key={key} className={`group relative p-2 text-white bg-indigo-500 cursor-pointer  border-2 border-white rounded-md`}>
                                                             <p className='font-medium'>{lecture.from}-{lecture.to} : {subjectMap_[lecture.subjectId]}</p>
                                                             <p>{classSubjectList[lecture.subjectId].subjectTeacher.fname}</p>
                                                             <div className='absolute top-0 right-0 text-white  hidden h-full w-full group-hover:flex group-hover:justify-end group-hover:items-center' style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}>
@@ -141,16 +141,6 @@ const ShowSchedule = ({ classDetails, allSubjects, allTeachers, classId }) => {
 }
 
 export async function getServerSideProps(context) {
-    const cookie = context.req.cookies.auth;
-
-    if (!cookie) {
-        return {
-            redirect: {
-                destination: '/login/admin-login',
-                permanent: false,
-            },
-        };
-    }
 
     const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/class/${context.params.showSchedule}`);
 

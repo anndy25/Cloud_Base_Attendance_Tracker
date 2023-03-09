@@ -10,7 +10,7 @@ const StudentList = ({ students }) => {
 
             <table className="w-full text-left">
                 <thead className=" text-slate-700">
-                    <tr>
+                    <tr className='bg-indigo-50'>
                         <th className="p-3 w-[25%]">Name</th>
                         <th className='w-[15%]'>Reg. Id</th>
                         <th className='w-[30%]'>Department</th>
@@ -23,7 +23,7 @@ const StudentList = ({ students }) => {
                     {
                         students.map((student, key) => {
                             return (
-                                <tr className=" odd:bg-blue-50" key={key}>
+                                <tr className=" even:bg-indigo-50" key={key}>
                                     <td className="p-1 cursor-pointer flex  items-center ">
                                         <Image
                                             src={student.image.url}

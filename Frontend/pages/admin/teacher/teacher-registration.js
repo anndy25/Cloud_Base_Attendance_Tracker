@@ -185,10 +185,7 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-
       departments: response1.data.departments,
-     
-
     },
   };
 }

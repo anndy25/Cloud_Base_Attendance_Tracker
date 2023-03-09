@@ -15,11 +15,11 @@ const listOptions = (flag = 0, pathname) => {
     if (flag === 1) {
         return (
             <>
-                <Link href='/student/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/student/dashboard' ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
+                <Link href='/student/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/student/dashboard' ? "bg-indigo-100  text-indigo-600 border-indigo-600" : "bg-white "}`}>
                     <RxDashboard className="mr-3" />
                     Dashboard
                 </Link>
-                <Link href='/student/attendance' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/student/attendance' ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
+                <Link href='/student/attendance' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/student/attendance' ? "bg-indigo-100 text-indigo-600 border-indigo-600" : "bg-white"}`}>
                     <BsClockHistory className="mr-3 text-2xl" />
                     Attendance
                 </Link>
@@ -31,7 +31,7 @@ const listOptions = (flag = 0, pathname) => {
 
         return (
             <>
-                <Link href='/teacher/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/teacher/dashboard' ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
+                <Link href='/teacher/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/teacher/dashboard' ? "bg-indigo-100  text-indigo-600 border-indigo-600" : "bg-white "}`}>
                     <RxDashboard className="mr-3" />
                     Dashboard
                 </Link>
@@ -42,12 +42,12 @@ const listOptions = (flag = 0, pathname) => {
     else if (flag === 3) {
         return (
             <>
-                <Link href='/admin/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/admin/dashboard' ? "bg-blue-100  text-blue-800 border-blue-900" : "bg-white "}`}>
+                <Link href='/admin/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/admin/dashboard' ? "bg-indigo-100  text-indigo-600 border-indigo-600" : "bg-white "}`}>
                     <RxDashboard className="mr-3" />
                     Dashboard
                 </Link>
-                <Link href='/admin/schedule' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/admin/schedule' ? "bg-blue-100 text-blue-800 border-blue-900" : "bg-white"}`}>
-                    <AiOutlineSchedule className="mr-3 text-blue-700" />
+                <Link href='/admin/schedule' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/admin/schedule' ? "bg-indigo-100 text-indigo-600 border-indigo-600" : "bg-white"}`}>
+                    <AiOutlineSchedule className="mr-3" />
                     Schedule
                 </Link>
 
@@ -67,7 +67,7 @@ const SidePanel = ({ status }) => {
                     <div className="h-full w-12 relative">
                         <Image src="/logo.png" alt="Picture of the author" layout="fill" />
                     </div>
-                    <h1 className="ml-3 italic font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-800 to-blue-900">
+                    <h1 className="ml-3 italic font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-800 to-indigo-900">
                         Alpha
                     </h1>
                 </div>
@@ -77,7 +77,7 @@ const SidePanel = ({ status }) => {
 
 
                 <button
-                    className="p-2 mt-auto w-6/12 ml-4 my-4 rounded-lg text-blue-800 border-2 border-blue-800  space-x-1 hover:bg-blue-800 hover:text-white hover:border-blue-500 whitespace-nowrap font-medium "
+                    className="p-2 mt-auto w-6/12 ml-4 my-4 rounded-lg text-indigo-800 border-2 border-indigo-600  space-x-1 hover:bg-indigo-800 hover:text-white hover:border-indigo-500 whitespace-nowrap font-medium "
                     onClick={() =>
                         Swal.fire({
                             icon: "warning",

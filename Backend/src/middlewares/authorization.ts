@@ -7,16 +7,20 @@ import env from "../util/validateEnv";
 
 export const studentAuth = (req: Request, res: Response, next: NextFunction) => {
 
-    const cookie:any= req.headers.cookies ? req.headers.cookies:req.cookies.auth;
-   
-    
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith("Bearer")
+    )
+        token = req.headers.authorization.split(" ")[1];
+
     try {
-        if (!cookie) throw createHttpError(401, "Unauthorized student!");
-        jwt.verify(cookie, env.APP_STUDENT_SECRET, (error:any, payload:any) => {
+        if (!token) throw createHttpError(401, "Unauthorized student!");
+        jwt.verify(token, env.APP_STUDENT_SECRET, (error, payload) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized student!");
             }
-           
+
             next();
         })
 
@@ -27,15 +31,20 @@ export const studentAuth = (req: Request, res: Response, next: NextFunction) => 
 
 export const teacherAuth = (req: Request, res: Response, next: NextFunction) => {
 
-   const cookie:any= req.headers.cookies ? req.headers.cookies:req.cookies.auth
-    
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith("Bearer")
+    )
+        token = req.headers.authorization.split(" ")[1];
+
     try {
-        if (!cookie) throw createHttpError(401, "Unauthorized teacher!");
-        jwt.verify(cookie, env.APP_TEACHER_SECRET, (error:any, payload:any) => {
+        if (!token) throw createHttpError(401, "Unauthorized teacher!");
+        jwt.verify(token, env.APP_TEACHER_SECRET, (error, payload) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized teacher!");
             }
-           
+
             next();
         })
 
@@ -44,12 +53,17 @@ export const teacherAuth = (req: Request, res: Response, next: NextFunction) => 
     }
 }
 export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
-    
-    const cookie:any= req.headers.cookies ? req.headers.cookies:req.cookies.auth
+
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith("Bearer")
+    )
+        token = req.headers.authorization.split(" ")[1];
 
     try {
-        if (!cookie) throw createHttpError(401, "Unauthorized admin!");
-        jwt.verify(cookie, env.APP_ADMIN_SECRET, (error:any, payload:any) => {
+        if (!token) throw createHttpError(401, "Unauthorized admin!");
+        jwt.verify(token, env.APP_ADMIN_SECRET, (error, payload) => {
             if (error) {
                 throw createHttpError(401, "Unauthorized admin!");
             }
@@ -61,5 +75,3 @@ export const adminAuth = (req: Request, res: Response, next: NextFunction) => {
         next(e);
     }
 }
-
- 

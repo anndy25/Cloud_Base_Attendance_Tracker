@@ -5,9 +5,9 @@ import Link from "next/link";
 const TeacherList = ({ teachers }) => {
   return (
     <>
-      <table className="w-full text-left">
+      <table className="w-full text-left ">
         <thead className="text-slate-700">
-          <tr>
+          <tr className='bg-indigo-50'>
             <th className="p-3 w-[25%]">Name</th>
             <th className="w-[13%]">Reg. Id</th>
             <th className="w-[25%]">Department</th>
@@ -18,13 +18,14 @@ const TeacherList = ({ teachers }) => {
         <tbody className="text-slate-600 font-medium">
           {teachers.map((teacher, key) => {
             return (
-              <tr className="odd:bg-indigo-50" key={key} >
+              <tr className="even:bg-indigo-50" key={key} >
                 <td className="p-1 cursor-pointer flex items-center">
                   <Image
                     src={teacher.image.url}
                     width="120"
                     height="120"
                     className="w-12 h-12 border mx-2 rounded-full"
+                    alt="teacher image"
                   />
                   <Link className='hover:text-slate-800' href={`/admin/teacher/${teacher._id}`}>{teacher.fname}</Link>
                 </td>
