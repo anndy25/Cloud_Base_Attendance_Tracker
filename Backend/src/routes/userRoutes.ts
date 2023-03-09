@@ -7,7 +7,6 @@ const router = express.Router();
 // $$Auth.adminAuth
 router.post("/registration", UserController.createUserAccount);
 router.post("/login", UserController.userLogin);
-router.post("/logout", UserController.logout);
 
 router.get("/student/:id", UserController.findOneStudent);
 router.get("/teacher/:id", UserController.findOneTeacher);

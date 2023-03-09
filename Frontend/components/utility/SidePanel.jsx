@@ -1,7 +1,6 @@
 import React from 'react'
 import Swal from "sweetalert2";
 import Image from "next/image";
-import axios from 'axios'
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
@@ -77,7 +76,7 @@ const SidePanel = ({ status }) => {
 
 
                 <button
-                    className="p-2 mt-auto w-6/12 ml-4 my-4 rounded-lg text-indigo-800 border-2 border-indigo-600  space-x-1 hover:bg-indigo-800 hover:text-white hover:border-indigo-500 whitespace-nowrap font-medium "
+                    className="p-2 mt-auto w-6/12 ml-4 my-4 rounded-lg text-indigo-600 border-2 border-indigo-600  space-x-1 hover:bg-indigo-600 hover:text-white hover:border-indigo-700 whitespace-nowrap font-medium "
                     onClick={() =>
                         Swal.fire({
                             icon: "warning",
@@ -91,10 +90,6 @@ const SidePanel = ({ status }) => {
                         }).then(async (result) => {
                             if (result.isConfirmed) {
                                 logout();
-                                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/users/logout`,{}, {
-                                    withCredentials: true,
-                                    credentials: "include",
-                                });
                                 router.push('/');
                             }
                         })

@@ -7,6 +7,6 @@ export const setUserInfo = (data) => {
 
 
 export const logout = () => {
-  ocalStorage.removeItem("token");
+  localStorage.removeItem("token");
   localStorage.removeItem("userInfo");
 };

@@ -2,7 +2,6 @@ import { Response, Request, RequestHandler, NextFunction } from "express";
 import createHttpError from "http-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import cookie from 'cookie'
 import { cloudUpload, cloudImageDelete } from "../util/cloudUpload";
 
 
@@ -187,10 +186,7 @@ export const deleteStudent = async (req: Request, res: Response, next: NextFunct
 }
 
 
-export const logout = (req: Request, res: Response, next: NextFunction) => {
-    res.clearCookie('auth');
-    return res.end('Cookie cleared!');
-}
+
 
 
 
