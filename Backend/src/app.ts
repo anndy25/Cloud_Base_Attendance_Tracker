@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors";
 
 import env from "./util/validateEnv";
+import popUp from "./scheduler/popUp"
 
 import userRoutes from "./routes/userRoutes";
 import classRoutes from "./routes/classRoutes";
@@ -18,6 +19,8 @@ import attendanceRoutes from "./routes/attendanceRoutes"
 
 
 const app: Application = express();
+const router = express.Router();
+
 
 app.set("trust proxy", 1);
 app.use(morgan("dev"));
@@ -35,6 +38,7 @@ app.use("/api/subject", subjectRoutes);
 app.use("/api/schedule", scheduleRoutes);
 app.use("/api/attendance", attendanceRoutes);
 
+router.get("/", (req: Request, res: Response) => { return res.status(201).json("Welcome to Alpha!!") })
 
 app.use((req: Request, res: express.Response, next) => {
     next(createHttpError(404, "Endpoint not found"));
@@ -51,5 +55,7 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     }
     res.status(statusCode).json({ error: errorMessage });
 });
+
+popUp();
 
 export default app;

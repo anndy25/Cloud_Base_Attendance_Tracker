@@ -43,7 +43,6 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
         const image: Image = await cloudUpload(photo);
         body.image = image;
 
-
         const passwordHashed = await bcrypt.genSalt(env.SALT_ROUNDS)
         const hashedpassword = await bcrypt.hash(body.password, passwordHashed);
 
