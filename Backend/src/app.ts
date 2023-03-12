@@ -30,6 +30,7 @@ app.use(cookieParser())
 app.use(cors({ origin: [env.WEBSITE_URL, 'http://localhost:3000'], credentials: true }));
 app.use(fileUpload({ useTempFiles: true }));
 
+router.get("/", (req: Request, res: Response) => { return res.status(201).json("Welcome to Alpha!!") })
 app.use("/api/users", userRoutes);
 app.use("/api/overview", overViewRoutes);
 app.use("/api/class", classRoutes);
@@ -38,7 +39,6 @@ app.use("/api/subject", subjectRoutes);
 app.use("/api/schedule", scheduleRoutes);
 app.use("/api/attendance", attendanceRoutes);
 
-router.get("/", (req: Request, res: Response) => { return res.status(201).json("Welcome to Alpha!!") })
 
 app.use((req: Request, res: express.Response, next) => {
     next(createHttpError(404, "Endpoint not found"));
