@@ -2,13 +2,11 @@ import { Response, Request, RequestHandler, NextFunction } from "express";
 import createHttpError from "http-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { cloudUpload, cloudImageDelete } from "../util/cloudUpload";
-
-
 import StudentModel from "../models/student";
 import AdminModel from "../models/admin";
 import TeacherModel from "../models/teacher";
 import env from "../util/validateEnv";
+import { cloudUpload, cloudImageDelete } from "../util/cloudUpload";
 
 type Image = {
 

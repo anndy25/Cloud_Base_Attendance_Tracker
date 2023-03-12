@@ -14,10 +14,11 @@ const studentSchema = new Schema({
     password: { type: String, required: true },
     role: { type: String, required: true },
 
-    regNo: { type: String, required:true },
+    regNo: { type: String, required: true },
     departmentId: { type: Schema.Types.ObjectId, ref: "department" },
     classId: { type: Schema.Types.ObjectId, ref: "class" },
     rollNo: { type: Number },
+    status: { type:Schema.Types.Mixed, default: {} }
 
 
 }, {

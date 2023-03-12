@@ -13,16 +13,16 @@ const classSchema = new Schema(
   {
     className: { type: String, required: true, unique: true },
     year: { type: String, required: true },
-    departmentId: { type: Schema.Types.ObjectId, ref: "department",  required: true, },
+    departmentId: { type: Schema.Types.ObjectId, ref: "department", required: true, },
     semester: { type: Number, required: true },
     classSubjects:
     {
       type: Map,
       of: {
-        subjectTeacher: {  },
-        attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance',  required: true }
-      }
-
+        subjectTeacher: {},
+        attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance', required: true }
+      },
+      default: {}
     }
     ,
     schedules: {
@@ -38,8 +38,7 @@ const classSchema = new Schema(
         subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
         attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance' },
         ip: { type: String },
-        expired: { type: String },
-        day: { type: String }
+        expiredAt: { type: String },
       }
     ]
   },

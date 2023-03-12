@@ -14,6 +14,7 @@ import departmentRoutes from "./routes/departmentRoutes";
 import overViewRoutes from "./routes/overViewRoutes";
 import subjectRoutes from "./routes/subjectRoutes";
 import scheduleRoutes from "./routes/scheduleRoutes";
+import attendanceRoutes from "./routes/attendanceRoutes"
 
 
 const app: Application = express();
@@ -21,10 +22,10 @@ const app: Application = express();
 app.set("trust proxy", 1);
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true,}));
+app.use(express.urlencoded({ extended: true, }));
 app.use(cookieParser())
-app.use(cors({origin: [env.WEBSITE_URL,'http://localhost:3000'],credentials: true}));
-app.use(fileUpload({useTempFiles: true}));
+app.use(cors({ origin: [env.WEBSITE_URL, 'http://localhost:3000'], credentials: true }));
+app.use(fileUpload({ useTempFiles: true }));
 
 app.use("/api/users", userRoutes);
 app.use("/api/overview", overViewRoutes);
@@ -32,10 +33,10 @@ app.use("/api/class", classRoutes);
 app.use("/api/department", departmentRoutes);
 app.use("/api/subject", subjectRoutes);
 app.use("/api/schedule", scheduleRoutes);
+app.use("/api/attendance", attendanceRoutes);
 
 
-
-app.use((req:Request, res: express.Response, next) => {
+app.use((req: Request, res: express.Response, next) => {
     next(createHttpError(404, "Endpoint not found"));
 });
 

@@ -4,7 +4,13 @@ const attendanceSchema = new Schema(
     {
         classId: { type: Schema.Types.ObjectId, ref: "class", required: true },
         subjectId: { type: Schema.Types.ObjectId, ref: "subject", required: true },
-        attendanceDetails: Schema.Types.Mixed,
+        attendanceDetails:
+            [
+                {
+                    date: { type: String, required: true },
+                    presentStudents: [{ type: Schema.Types.ObjectId, ref: 'student', default: [] }]
+                }
+            ]
 
     },
     {
