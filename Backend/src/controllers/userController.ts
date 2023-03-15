@@ -48,9 +48,9 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
 
         body.password = hashedpassword;
 
-        await UserModel.create(body);
+        const user= await UserModel.create(body);
 
-        return res.status(201).json({ message: `${body.fname} account created!!` });
+        return res.status(201).json({ message: `${body.fname} account created!!`,id:user._id});
 
     } catch (e) {
         next(e);
@@ -111,9 +111,7 @@ export const findOneStudent = async (req: Request, res: Response, next: NextFunc
             { path: 'departmentId', select: 'departmentName' },
             { path: 'classId', select: 'className' },
         ]);
-        if (!student) {
-            throw createHttpError(404, "Student does not exist!");
-        }
+        
         return res.status(201).send({ student })
 
     } catch (err) {
@@ -147,9 +145,7 @@ export const findOneTeacher = async (req: Request, res: Response, next: NextFunc
         const teacher = await TeacherModel.findOne({ _id: id }, { password: 0 }).populate([
             { path: 'departmentId', select: 'departmentName' },
         ]);
-        if (!teacher) {
-            throw createHttpError(404, "Teacher does not exist!");
-        }
+       
 
         return res.status(201).send({ teacher })
 

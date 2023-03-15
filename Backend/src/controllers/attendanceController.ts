@@ -265,11 +265,8 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
             }
         }
 
-
         return res.status(201).json({ absentStudents });
-
-
-
+        
     } catch (err) {
         next(err);
     }

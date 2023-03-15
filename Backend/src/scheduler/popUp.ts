@@ -11,11 +11,12 @@ function formatDateTime(date:Date):string {
   }
 
  const popUp = async () => {
-    cron.schedule('0 10 * * *', async () => {
+    cron.schedule('*/59 * * * *', async () => {
         try {
 
-            await ClassModel.updateMany({}, { $set: { notifications: [] } });
-            await StudentModel.updateMany({}, { $set: { status: {} } });
+            // console.log("1min")
+            // await ClassModel.updateMany({}, { $set: { notifications: [] } });
+            // await StudentModel.updateMany({}, { $set: { status: {} } });
             console.log(`deleted old data in notifications ${formatDateTime(new Date())}`);
 
         } catch (err) {
