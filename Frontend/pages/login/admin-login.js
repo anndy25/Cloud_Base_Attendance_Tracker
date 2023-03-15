@@ -32,7 +32,7 @@ const formInputList = [
 ];
 
 const options = {
-    position: "top-right",
+    position: "top-center",
     autoClose: 1000,
     hideProgressBar: true,
     closeOnClick: true,

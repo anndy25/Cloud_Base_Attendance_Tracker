@@ -3,51 +3,26 @@ import Head from "next/head";
 import { useRouter } from 'next/router';
 
 import { SidePanel, Navtab, Loader, Error, } from '../../components/utility';
-import { Overview, StudentList, TeacherList, SearchBox ,DropDownCreate} from '../../components/admin';
-import { useQuery } from 'react-query';
+import { Overview, StudentList, TeacherList, SearchBox, DropDownCreate } from '../../components/admin';
 import Swal from "sweetalert2";
 import axios from 'axios';
 
-const Dashboard = () => {
-  const router = useRouter();
-  const { data, isLoading, isError, error } = useQuery("admin-overview", adminOverview,
-    {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    });
+const Dashboard = ({data}) => {
 
+  // const router = useRouter();
+ 
   const [tab, setTab] = useState(1);
-  const [students, setStudents] = useState([]);
-  const [teachers, setTeachers] = useState([]);
+  const [students, setStudents] = useState(data.students);
+  const [teachers, setTeachers] = useState(data.teachers);
+  
+  // useEffect(() => {
+  //   if (data) {
+  //     setStudents(data.students);
+  //     setTeachers(data.teachers);
+  //   }
+  // }, [data]);
 
-  useEffect(() => {
-    if (data) {
-      setStudents(data.students);
-      setTeachers(data.teachers);
-    }
-  }, [data]);
-
-  if (isLoading) {
-    return <Loader />
-  }
-  if (isError) {
-    if (error && error.response && error.response.status === 401) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Access Denied, Please Login Again!',
-        showConfirmButton: false,
-        timer: 2000
-      })
-      router.push('/login/admin-login')
-      return "";
-    } else {
-      return <Error />
-    }
-  }
-
-
-
+  
 
   function filterData(data, search) {
     if (search === "") {
@@ -79,7 +54,7 @@ const Dashboard = () => {
           <div className='shadow-md bg-white'>
             <Navtab />
           </div>
-          <section className='w-[90%] min-h-screen  px-4 flex flex-col items-center '>
+          <section className='w-11/12 min-h-screen mx-auto flex flex-col items-center '>
             <h1 className="font-bold text-2xl text-gray-600 my-6 w-full px-4">Dashboard</h1>
             <div className='w-[95%] flex justify-between'>
               <Overview students={data.students} teachers={data.teachers} />
@@ -106,22 +81,17 @@ const Dashboard = () => {
   )
 }
 
+export async function getStaticProps(context) {
 
-async function adminOverview() {
+  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/overview/admin`);
 
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/overview/admin`, {
-    withCredentials: true,
-    headers: {
-      authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-
-  return data;
+  return {
+    props: {
+     data
+    },
+  };
 
 }
-
-
-
 
 
 

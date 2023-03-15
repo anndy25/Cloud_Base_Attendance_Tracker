@@ -1,8 +1,9 @@
 import React from 'react';
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from 'next/router';
 
 const TeacherList = ({ teachers }) => {
+  const router = useRouter();
   return (
     <>
       <table className="w-full text-left ">
@@ -18,7 +19,7 @@ const TeacherList = ({ teachers }) => {
         <tbody className="text-slate-600 font-medium">
           {teachers.map((teacher, key) => {
             return (
-              <tr className="even:bg-indigo-50" key={key} >
+              <tr className=" even:bg-indigo-50 cursor-pointer hover:text-indigo-600" key={key} onClick={() => router.push(`/admin/teacher/${teacher._id}`)}>
                 <td className="p-1 cursor-pointer flex items-center">
                   <Image
                     src={teacher.image.url}
@@ -27,7 +28,7 @@ const TeacherList = ({ teachers }) => {
                     className="w-12 h-12 border mx-2 rounded-full"
                     alt="teacher image"
                   />
-                  <Link className='hover:text-slate-800' href={`/admin/teacher/${teacher._id}`}>{teacher.fname}</Link>
+                  <p>{teacher.fname}</p>
                 </td>
                 <td>{teacher.regNo}</td>
                 <td ><p className='w-[95%] truncate'>{teacher.departmentId.departmentName}</p></td>

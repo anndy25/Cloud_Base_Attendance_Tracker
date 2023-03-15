@@ -7,7 +7,7 @@ const Overview = ({students,teachers}) => {
     return (
         <>
             <div className='border w-1/4 flex items-center justify-evenly shadow-md py-4 rounded-xl bg-white'>
-                <div className=' text-white font-bold p-5 bg-gradient-to-t from-cyan-200 to-cyan-500 text-4xl rounded-3xl'>
+                <div className=' text-white font-bold p-5 bg-gradient-to-t from-indigo-400 to-indigo-600 text-4xl rounded-3xl'>
                     <BsFillPeopleFill />
                 </div>
                 <div className="ml-2">
@@ -16,7 +16,7 @@ const Overview = ({students,teachers}) => {
                 </div>
             </div>
             <div className='border w-1/4 flex items-center justify-evenly shadow-md py-4 rounded-xl bg-white'>
-                <div className='text-white font-bold p-5 bg-gradient-to-t from-amber-200 to-amber-500 text-4xl rounded-3xl'>
+                <div className='text-white font-bold p-5 bg-gradient-to-t from-indigo-400 to-indigo-600 text-4xl rounded-3xl'>
                     <FaChalkboardTeacher />
                 </div>
                 <div className="ml-2">
@@ -25,7 +25,7 @@ const Overview = ({students,teachers}) => {
                 </div>
             </div>
             <div className='border w-1/4 flex items-center justify-evenly shadow-md py-4 rounded-xl bg-white'>
-                <div className='text-white font-bold p-5 bg-gradient-to-t from-teal-200 to-teal-500 text-4xl rounded-3xl'>
+                <div className='text-white font-bold p-5 bg-gradient-to-t from-indigo-400 to-indigo-600 text-4xl rounded-3xl'>
                     <IoIosPeople />
                 </div>
                 <div className="ml-2">

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Link from "next/link";
 import { GrPrevious } from "react-icons/gr";
-
+import Swal from "sweetalert2";
 import { MainCropper } from '../../../components/admin';
 import { departmentMap } from "../../../functions/mapping"
 
@@ -74,7 +74,7 @@ const teacherRegistration = ({ departments }) => {
     data.append('dob', dob);
     data.append('password', "12345");
     data.append('regNo', regNo);
-    data.append('role', 'teacher');  
+    data.append('role', 'teacher');
     data.append('departmentId', departmentMap_.get(departmentId));
 
     try {
@@ -86,9 +86,18 @@ const teacherRegistration = ({ departments }) => {
         },
       });
 
+      await axios.post(`/api/revalidateUser?role=teacher&id=${response.data.id}`);
+
       if (response.status === 201) {
-        toast.success(response.data.message, options);
-        router.reload();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 2500
+        });
+
+        timeOut(3000)
       } else {
         toast.warn("Server error!", options);
       }
@@ -103,6 +112,10 @@ const teacherRegistration = ({ departments }) => {
     }
 
   };
+
+  function timeOut(timer) {
+    setTimeout(() => { router.reload(); }, timer);
+  }
 
   return (
     <>
@@ -167,8 +180,8 @@ const teacherRegistration = ({ departments }) => {
                 }
               </select>
             </div>
-        
-            <button className='px-2 py-3 bg-gradient-to-r from-blue-500 to-indigo-700 w-full rounded-lg text-white mb-12'>Create Student Account</button>
+
+            <button className='px-2 py-3 bg-indigo-600 w-full rounded-lg text-white mb-12'>Create Teacher Account</button>
           </form>
 
         </div>

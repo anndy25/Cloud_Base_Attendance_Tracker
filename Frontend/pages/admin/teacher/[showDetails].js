@@ -25,14 +25,17 @@ const ShowDetails = ({ teacher }) => {
 
                 try {
                     await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/users/teacher/${teacher._id}`);
-                    router.push("/admin/dashboard");
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Teacher account deleted!',
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
+                    const response = await axios.post(`/api/revalidateUser?role=teacher&id=${teacher._id}`);
+                    if (response.status === 201) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Teacher account deleted!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        timeOut(2500)
+                    }
                 } catch (err) {
                     console.log(err);
                 }
@@ -40,6 +43,10 @@ const ShowDetails = ({ teacher }) => {
             }
         })
 
+    }
+
+    function timeOut(timer) {
+        setTimeout(() => { location.replace('/admin/dashboard'); }, timer);
     }
 
     return (
@@ -106,7 +113,7 @@ export async function getStaticPaths() {
         paths: data.teachers.map((teacher) => ({
             params: { showDetails: teacher._id },
         })),
-        fallback: false,
+        fallback: "blocking",
     };
 
 }
@@ -115,11 +122,17 @@ export async function getStaticProps({ params }) {
     const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/users/teacher/${params.showDetails}`);
 
     const { teacher } = data;
+
+    if (!teacher) {
+        return {
+            notFound: true,
+        };
+    }
     return {
         props: {
             teacher,
         },
-        revalidate: 7200,
+
     };
 }
 

@@ -5,13 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { GrPrevious } from "react-icons/gr";
 import Swal from "sweetalert2";
-import { useRouter } from 'next/router';
 import { Navtab } from '../../../components/utility';
 import { formatDate } from "../../../functions/addTime"
 
 const ShowDetails = ({ student }) => {
-
-    const router = useRouter();
 
     async function deleteUser() {
         Swal.fire({
@@ -25,14 +22,18 @@ const ShowDetails = ({ student }) => {
             if (result.isConfirmed) {
                 try {
                     await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/users/student/${student._id}`);
-                    router.push("/admin/dashboard");
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Student account deleted!',
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
+                    const response = await axios.post(`/api/revalidateUser?role=student&id=${student._id}`);
+
+                    if (response.status === 201) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Student account deleted!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        timeOut(2500)
+                    }
                 } catch (err) {
                     Swal.fire({
                         position: 'center',
@@ -48,7 +49,9 @@ const ShowDetails = ({ student }) => {
 
     }
 
-
+    function timeOut(timer) {
+        setTimeout(() => { location.replace('/admin/dashboard'); }, timer);
+    }
 
     return (
         <>
@@ -64,7 +67,7 @@ const ShowDetails = ({ student }) => {
                 <Link href='/admin/dashboard' className='p-2 rounded-lg font-semibold justify-center items-center bg-slate-300 flex cursor-pointer w-28 m-8'><GrPrevious /> <span className='mx-1'>Go Back</span></Link>
                 <div className='w-5/12 mx-auto mb-6 border-2 border-indigo-700 rounded-2xl shadow-md bg-white'>
 
-                    <div className='w-[80%] mx-auto p-2'>
+                    <div className='w-[80%] mx-auto py-8'>
                         <Image src={student.image.url} width="120" height='120' className="w-28 h-28 border mx-auto rounded-full my-4" alt='student photo' />
                         <div className=" w-full mb-6 group">
                             <label htmlFor="full-name" className="font-medium">Full Name</label>
@@ -120,7 +123,7 @@ export async function getStaticPaths() {
         paths: data.students.map((student) => ({
             params: { showDetails: student._id },
         })),
-        fallback: false,
+        fallback: "blocking",
     };
 
 }
@@ -129,14 +132,19 @@ export async function getStaticProps({ params }) {
     const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/users/student/${params.showDetails}`);
 
     const { student } = data;
+
+    if (!student) {
+        return {
+            notFound: true,
+        };
+    }
     return {
         props: {
             student,
         },
-        revalidate: 7200,
+
     };
 }
-
 
 
 export default ShowDetails

@@ -35,9 +35,9 @@ const Schedule = ({ classes, totalStudent }) => {
             <div className='shadow-md bg-white'>
               <Navtab />
             </div>
-            <div className='p-6'>
-              <h1 className="font-semibold text-2xl text-gray-600">All Classes of College</h1>
-              <div className='w-4/5 mx-auto  pt-4 my-8 border rounded-2xl shadow-lg overflow-x-auto bg-white'>
+            <div className='p-6 w-4/5 mx-auto'>
+              <h1 className="font-semibold text-xl text-gray-600 mt-6 mb-4">All Classes of College</h1>
+              <div className='pt-4 mb-8 border rounded-2xl shadow-lg overflow-x-auto bg-white'>
                 <SearchBox searchContent={searchClass} placeholder={'"Search by Class Name"'} />
                 <ScheduleTable classes_={classes_} totalStudent={totalStudent} />
               </div>
@@ -65,7 +65,7 @@ export async function getStaticProps() {
     props: {
       classes, totalStudent
     },
-    // revalidate: 30,
+    revalidate: 30,
   };
 }
 

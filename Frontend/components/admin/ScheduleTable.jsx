@@ -1,7 +1,8 @@
 import React from 'react'
-import Link from "next/link";
+import { useRouter } from 'next/router';
 
 const ScheduleTable = ({ classes_, totalStudent }) => {
+    const router = useRouter();
     return (
         <>
             <table className="w-full text-center mt-6">
@@ -17,8 +18,8 @@ const ScheduleTable = ({ classes_, totalStudent }) => {
                     {
                         classes_.map((class_, key) => {
                             return (
-                                <tr className=" even:bg-indigo-50" key={key}>
-                                    <td className="p-3 cursor-pointer hover:text-indigo-600"><Link href={`/admin/schedule/${class_._id}`}>{class_.className}</Link></td>
+                                <tr className=" even:bg-indigo-50 cursor-pointer hover:text-indigo-600" key={key} onClick={() => router.push(`/admin/schedule/${class_._id}`)}>
+                                    <td className="p-3 cursor-pointer hover:text-indigo-600">{class_.className}</td>
                                     <td >{class_.departmentId.departmentName}</td>
                                     <td >{class_.semester}</td>
                                     <td >{totalStudent[class_._id] ? totalStudent[class_._id] : '0'}</td>

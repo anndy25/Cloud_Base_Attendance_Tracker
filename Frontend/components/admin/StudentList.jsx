@@ -1,10 +1,10 @@
 import React from 'react'
 import Image from "next/image";
-import Link from "next/link";
-
+import { useRouter } from 'next/router';
 
 const StudentList = ({ students }) => {
-   
+    const router = useRouter();
+
     return (
         <>
 
@@ -23,14 +23,13 @@ const StudentList = ({ students }) => {
                     {
                         students.map((student, key) => {
                             return (
-                                <tr className=" even:bg-indigo-50" key={key}>
-                                    <td className="p-1 cursor-pointer flex  items-center ">
+                                <tr className=" even:bg-indigo-50 cursor-pointer hover:text-indigo-600" key={key} onClick={() => router.push(`/admin/student/${student._id}`)}>
+                                    <td className="p-1 flex  items-center ">
                                         <Image
                                             src={student.image.url}
                                             width="120" height="120"
                                             className="w-12 h-12 border mx-2 rounded-full" alt='student image' />
-
-                                        <Link className='hover:text-slate-800' href={`/admin/student/${student._id}`}>{student.fname}</Link>
+                                        <p>{student.fname}</p>
                                     </td>
                                     <td>{student.regNo}</td>
                                     <td >{student.departmentId.departmentName}</td>
