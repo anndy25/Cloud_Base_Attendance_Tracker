@@ -20,6 +20,9 @@ Map.prototype.getOrElse = function <K, V>(key: K, defaultValue: V): V {
     return this.has(key) ? this.get(key) : defaultValue;
 };
 
+function isMongooseObject(obj: any): boolean {
+    return obj instanceof mongoose.Document;
+}
 
 export const setAttendance = async (req: Request, res: Response, next: NextFunction) => {
     const { classId, teacherId, subjectId } = req.query;
@@ -52,7 +55,12 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
 
         if (notification) {
             await AttendanceModel.findByIdAndUpdate(attendanceId,
-                { $push: { attendanceDetails: { date } } })
+                { $push: { attendanceDetails: { date, expiredAt } } })
+        } else {
+            await AttendanceModel.findOneAndUpdate(
+                { _id: attendanceId, "attendanceDetails.date": date },
+                { $set: { "attendanceDetails.$.expiredAt": expiredAt } }
+            )
         }
 
         return res.status(201).json({ message: "Set Attendance!" })
@@ -129,17 +137,18 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
 
 
 export const getAttendanceInfoT = async (req: Request, res: Response, next: NextFunction) => {
-    const { classId, teacherId, subjectId }: any = req.query;
+    const { classId, subjectId }: any = req.query;
+    const { teacherId } = req.body;
+
     try {
+        if (!isMongooseObject(classId) || !isMongooseObject(subjectId) || !isMongooseObject(teacherId)) {
+            throw createHttpError(409, "Id's are not mongoose object!");
+        }
+
         const isTeacherExist = await TeacherModel.findById(teacherId);
 
         if (!isTeacherExist) {
             throw createHttpError(409, "Teacher does not exist!");
-        }
-        const isClassExist = await ClassModel.findById(classId);
-
-        if (!isClassExist) {
-            throw createHttpError(409, "Class does not exist!");
         }
 
         const data: any = await ClassModel.aggregate([
@@ -159,6 +168,7 @@ export const getAttendanceInfoT = async (req: Request, res: Response, next: Next
             }])
 
         return res.status(201).json({ notifications: data[0].notifications, ip: req.ip });
+
     } catch (err) {
         next(err);
     }
@@ -167,6 +177,8 @@ export const getAttendanceInfoT = async (req: Request, res: Response, next: Next
 export const getAttendanceInfoS = async (req: Request, res: Response, next: NextFunction) => {
     const { classId, studentId } = req.query;
     try {
+
+
         const isStudentExist = await StudentModel.findById(studentId);
 
         if (!isStudentExist) {
@@ -190,9 +202,19 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
 export const getAttendanceDetails = async (req: Request, res: Response, next: NextFunction) => {
 
     const { classId, subjectId }: any = req.query;
+    const { teacherId } = req.body;
 
     try {
 
+        if (!isMongooseObject(classId) || !isMongooseObject(subjectId) || !isMongooseObject(teacherId)) {
+            throw createHttpError(409, "Id's are not mongoose object!");
+        }
+
+        const isTeacherExist = await TeacherModel.findById(teacherId);
+
+        if (!isTeacherExist) {
+            throw createHttpError(409, "Teacher does not exist!");
+        }
 
         const isSubjectExist = await SubjectModel.findById(subjectId);
 
@@ -266,7 +288,7 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
         }
 
         return res.status(201).json({ absentStudents });
-        
+
     } catch (err) {
         next(err);
     }

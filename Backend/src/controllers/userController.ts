@@ -48,9 +48,9 @@ export const createUserAccount: RequestHandler = async (req: Request, res: Respo
 
         body.password = hashedpassword;
 
-        const user= await UserModel.create(body);
+        const user = await UserModel.create(body);
 
-        return res.status(201).json({ message: `${body.fname} account created!!`,id:user._id});
+        return res.status(201).json({ message: `${body.fname} account created!!`, id: user._id });
 
     } catch (e) {
         next(e);
@@ -98,7 +98,7 @@ export const userLogin: RequestHandler = async (req: Request, res: Response, nex
             APP_SECRET
         );
 
-        return res.status(201).json({ token });
+        return res.status(201).json({ token, _id });
     } catch (error) {
         next(error);
     }
@@ -111,7 +111,7 @@ export const findOneStudent = async (req: Request, res: Response, next: NextFunc
             { path: 'departmentId', select: 'departmentName' },
             { path: 'classId', select: 'className' },
         ]);
-        
+
         return res.status(201).send({ student })
 
     } catch (err) {
@@ -145,7 +145,7 @@ export const findOneTeacher = async (req: Request, res: Response, next: NextFunc
         const teacher = await TeacherModel.findOne({ _id: id }, { password: 0 }).populate([
             { path: 'departmentId', select: 'departmentName' },
         ]);
-       
+
 
         return res.status(201).send({ teacher })
 

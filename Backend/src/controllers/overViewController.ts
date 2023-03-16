@@ -36,26 +36,23 @@ export const teacherOverview = async (req: Request, res: Response, next: NextFun
     const id = req.params.id;
     const day = req.query.day;
     try {
-        const response = await TeacherModel.findById(id)
+        const overview = await TeacherModel.findById(id)
             .populate({
                 path: 'lectures',
                 populate: [
                     { path: 'classId', select: 'className semester year' },
-                    { path: 'subjectId', select: 'subjectName' },
+                    { path: 'subjectId', select: 'subjectName shortForm ' },
                 ]
             })
             .populate({
                 path: `schedules.${day}.subjectId schedules.${day}.classId`,
-                select: 'subjectName className'
+                select: 'subjectName className shortForm'
             })
             .select(`schedules.${day} lectures`)
             .lean();
 
-        if (!response) {
-            throw createHttpError(409, "Teacher does not exist!");
-        }
-
-        return res.status(201).json(response);
+        
+        return res.status(201).json(overview);
     } catch (err) {
         next(err);
     }
