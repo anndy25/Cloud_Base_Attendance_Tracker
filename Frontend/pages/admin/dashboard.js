@@ -23,7 +23,6 @@ const Dashboard = ({data}) => {
   // }, [data]);
 
   
-
   function filterData(data, search) {
     if (search === "") {
       return data;

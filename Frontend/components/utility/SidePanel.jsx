@@ -30,7 +30,7 @@ const listOptions = (flag = 0, pathname) => {
 
         return (
             <>
-                <Link href='/teacher/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/teacher/dashboard' ? "bg-indigo-100  text-indigo-600 border-indigo-600" : "bg-white "}`}>
+                <Link href='/teacher/dashboard' className={`pl-6 border-r-4  flex items-center py-2  bg-indigo-100  text-indigo-600 border-indigo-600`}>
                     <RxDashboard className="mr-3" />
                     Dashboard
                 </Link>

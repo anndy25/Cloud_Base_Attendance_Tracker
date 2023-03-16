@@ -41,7 +41,7 @@ export default function Calender() {
   }
 
   return (
-    <div className="my-4 shadow-md p-1 rounded-lg">
+    <div className="shadow-md px-4 py-5 border rounded-lg">
       <div >
         <div>
           <div >
@@ -103,7 +103,7 @@ export default function Calender() {
                         'text-gray-400',
                       isEqual(day, selectedDay) &&
                         isToday(day) &&
-                        'bg-blue-600',
+                        'bg-indigo-600',
                       isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         'bg-gray-900',

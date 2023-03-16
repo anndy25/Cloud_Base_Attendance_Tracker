@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React,{ useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import Router  from 'next/router';
-
+import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import * as yup from "yup";
 import Image from "next/image";
@@ -33,7 +32,7 @@ const formInputList = [
 
 
 const options = {
-  position: "top-left",
+  position: "top-center",
   autoClose: 1000,
   hideProgressBar: true,
   closeOnClick: true,
@@ -42,7 +41,7 @@ const options = {
   theme: "colored",
 }
 const login = () => {
-
+  const router = useRouter();
   let [user, setUser] = useState('Student');
   return (
     <>
@@ -88,11 +87,10 @@ const login = () => {
                   });                 
 
                     toast.success("Login sucessfull!", options);
-                    setUserInfo(response.data.token)
+                    setUserInfo(response.data.token);
+                    router.push(`/${role}/${response.data._id}`)
                     // window.location.href = `/${role}/dashboard`;
-                    Router.push(`/${role}/dashboard`);
-                  
-
+                   
                 } catch (error) {
                
                   if (error.response.status===401) {

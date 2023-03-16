@@ -1,8 +1,28 @@
 import React from 'react'
 
-const ScheduleCard = () => {
+function convertToAmPm(time24) {
+  let hour = parseInt(time24.substring(0, 2));
+  let minute = time24.substring(3, 5);
+  let amPm = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12 || 12;
+  return `${hour}:${minute} ${amPm}`;
+}
+
+const ScheduleCard = ({ schedules }) => {
   return (
-    <div className="font-medium border-blue-700 border p-2 my-4 rounded-2xl bg-blue-100 text-blue-700 "><span className="pl-2 ">1 PM- 2 PM</span><span className="mx-2">: DBMS</span></div>
+    <>
+      {
+        schedules.map((schedule, key) => {
+          return (
+            <div key={key} className={`p-2 text-indigo-600  bg-indigo-50 cursor-pointer  border border-indigo-600 rounded-md`}>
+              <div>{convertToAmPm(schedule.from)}-{convertToAmPm(schedule.to)} : {schedule.subjectId.shortForm}       ({schedule.classId.className})</div>
+              <p></p>
+            </div>
+          )
+        }
+        )
+      }
+    </>
   )
 }
 

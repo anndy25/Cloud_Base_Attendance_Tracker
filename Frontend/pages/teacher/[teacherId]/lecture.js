@@ -1,21 +1,24 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import { SidePanel, Navtab } from '../../../components/utility';
-import { SubjectAttendanceTable,ShowStudents,TakeAttendance,AttendanceCard } from '../../../components/teacher'
 import { GrPrevious } from "react-icons/gr";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
-function switchTab(tab){
-    if(tab===1) return <SubjectAttendanceTable/>;
+import { SubjectAttendanceTable, ShowStudents, TakeAttendance, AttendanceCard } from '../../../components/teacher'
+import { SidePanel, Navtab } from '../../../components/utility';
 
-    if(tab===2) return <ShowStudents />;
+function switchTab(tab) {
+    if (tab === 1) return <SubjectAttendanceTable />;
+
+    if (tab === 2) return <ShowStudents />;
 
     // if(tab===3) return <AttendanceCard />;
-    if(tab===3) return <TakeAttendance/>;
+    if (tab === 3) return <TakeAttendance />;
 }
 
 const TSubject = () => {
-   
+
+    const router = useRouter()
     let [tab, setTab] = useState(1);
 
     return (
@@ -39,12 +42,12 @@ const TSubject = () => {
                         </header>
                         <div className='mx-auto w-10/12 shadow-md rounded-2xl border mt-12 mb-6 bg-white'>
                             <div className='flex justify-center'>
-                                <span className={`px-6 py-3.5 font-semibold ${tab === 1 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={()=>setTab(1)}>Sheet</span>
-                                <span className={`px-4 py-3.5 font-semibold   ${tab === 2 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={()=>setTab(2)}>Students</span>
-                                <span className={`px-4 py-3.5 font-semibold  ${tab === 3 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={()=>setTab(3)} >Attendance</span>
+                                <span className={`px-6 py-3.5 font-semibold ${tab === 1 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(1)}>Sheet</span>
+                                <span className={`px-4 py-3.5 font-semibold   ${tab === 2 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(2)}>Students</span>
+                                <span className={`px-4 py-3.5 font-semibold  ${tab === 3 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(3)} >Attendance</span>
                             </div>
                             <div className='overflow-x-auto  border-t'>
-                               {switchTab(tab)}
+                                {switchTab(tab)}
                             </div>
 
                         </div>
@@ -54,6 +57,28 @@ const TSubject = () => {
             </div>
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+
+    const { teacherId, classId, subjectId } = context.params;
+
+    try {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/attendance/getDetails?classId=${day}`)
+        if (!data) {
+            return {
+                notFound: true,
+            };
+        }
+
+        return { props: { schedules: data.schedules[day], lectures: data.lectures, teacherId: data._id }, revalidate: 20, };
+
+    } catch (err) {
+        return {
+            notFound: true,
+        };
+    }
+
 }
 
 export default TSubject

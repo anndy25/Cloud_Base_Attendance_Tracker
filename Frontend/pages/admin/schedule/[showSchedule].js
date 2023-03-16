@@ -140,6 +140,7 @@ const ShowSchedule = ({ classDetails, allSubjects, allTeachers, classId }) => {
     )
 }
 
+
 export async function getServerSideProps(context) {
 
     const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/class/${context.params.showSchedule}`);
