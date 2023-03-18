@@ -3,7 +3,7 @@ import { MdOutlineSubject, MdCalendarToday } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
 import { RiAlertFill } from "react-icons/ri";
 import { ReverseCounter } from '../utility';
-import { getFormattedDate } from '../../functions/addTime';
+import { getFormattedDate } from '../../functions/time';
 
 const AttendanceCard = () => {
   return (

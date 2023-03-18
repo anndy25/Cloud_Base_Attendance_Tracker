@@ -1,45 +1,183 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { addTime } from '../../functions/addTime';
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import axios from 'axios';
+import { addTime } from '../../functions/time';
+import Swal from "sweetalert2";
+import { MdOutlineSubject, MdCalendarToday, MdNetworkWifi } from "react-icons/md";
+import { BsClockHistory } from "react-icons/bs";
 
+import { getFormattedDate, getCurrentDate } from '../../functions/time';
 
-
-
-const TakeAttendance = () => {
-
-    const [ip, setIP] = useState('103.146.240.70');
-    const [duration, setDuration] = useState(0);
-
-    const onSubmitHandler = (e) => {
-
-        let result = addTime(new Date().getHours(), new Date().getMinutes(), parseInt(duration))
-
-        setMessage(`Attendance will expired at ${result}`);
-
-        setIsOpen(true);
-    }
-
-
-
+const ShowAttendanceCard = ({ props }) => {
+    const { attendanceDetails, setFlagHandler, subjectName } = props;
     return (
-        <div className='min-h-[24rem] p-6'>
-            <div>
-                <span className='font-semibold  text-blue-800 bg-blue-100 px-4 py-2 rounded-3xl'>IP : {ip}</span>
-            </div>
-            <h1 className="text-lg my-6 px-4 font-semibold text-gray-600">Genrate Link for Attendance!!</h1>
-            <div className='flex flex-col text-base w-full px-4' >
-                <div className="w-2/5">
-                    <label className="block text-gray-600  font-bold mb-2" Htmlfor="username">
-                        Set Duration (min)
-                    </label>
-                    <input className="selection: text-gray-400 border shadow-sm focus:outline-none rounded w-full py-2 px-3" id="username" type="Number" value={duration} onChange={(e) => setDuration(e.target.value)} />
-                </div>
-                <button className='bg-indigo-600 p-3 text-white rounded text-sm my-4 w-2/5' onClick={onSubmitHandler}>Create Link</button>
-            </div>
+        <>
+            <div className="w-full  bg-blue-50 text-slate-600  shadow-lg flex justify-between p-4 font-semibold     rounded-b-md">
 
-        </div>
+                <div className='flex items-center'><MdOutlineSubject></MdOutlineSubject>
+                    <span className='ml-2'>{subjectName}</span>
+                </div>
+
+                <div className='flex items-center'>
+                    <MdNetworkWifi /> <span className='ml-2'>{attendanceDetails.ip}</span>
+                </div>
+                <div className='flex items-center'>
+                    <MdCalendarToday /><span className='ml-2'>{getFormattedDate()}</span>
+                </div>
+                <div className='flex items-center'>
+                    <BsClockHistory />
+                    <span className='ml-2'>{attendanceDetails.expiredAt}</span>
+                </div>
+                <div className='flex items-center'>
+                    <button className='bg-indigo-600 text-white px-3 py-2 rounded-md' onClick={() => setFlagHandler(true)}>Update</button>
+                </div>
+            </div>
+        </>
     )
 }
+
+const SetAttendanceCard = ({ props }) => {
+    const router = useRouter();
+    const [time, setTime] = useState({ min: 0, sec: 0 })
+    const { subjectId, teacherId, classId } = router.query;
+    const { setStateHandler, ip, attendanceId, setFlagHandler, attendanceDetails } = props;
+
+    const onClickHandler = (e) => {
+
+        const { result12hr, result24hr } = addTime(
+            new Date().getHours(),
+            new Date().getMinutes(),
+            new Date().getSeconds(),
+            parseInt(time.min),
+            parseInt(time.sec)
+        );
+
+        Swal.fire({
+            title: `<small>Attendance will expired at ${result12hr}</small>`,
+            showCancelButton: true,
+            cancelButtonText: "No, cancel!",
+            confirmButtonText: "Yes, confirm it!",
+            confirmButtonColor: "#4f46e5",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const date = getCurrentDate();
+                try {
+                    const response = await axios.put(
+                        `${process.env.NEXT_PUBLIC_API_URL}/api/attendance/setAttendance`,
+                        {
+                            ip,
+                            expiredAt: result24hr,
+                            date,
+                            attendanceId,
+                            classId,
+                            teacherId,
+                            subjectId,
+                        }
+                    );
+
+                    if (response.status === 201) {
+
+                        setStateHandler({ ip, expiredAt: result24hr, date: getCurrentDate(), attendanceId });
+                        setFlagHandler(false);
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Attendance Set!",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+
+
+                } catch (err) {
+                    console.log(err);
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Server error!",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            }
+        });
+    };
+
+
+    const onChangeHandler = (e) => {
+        const { value, name } = e.target;
+        setTime((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    }
+
+    return (
+        <>
+            <div className='p-6'>
+                {
+                    attendanceDetails && <button className='bg-indigo-600 text-white px-3 py-2 rounded-md float-right' onClick={() => setFlagHandler(false)} >Cancle</button>
+                }
+                <div>
+                    <span className='font-semibold  text-blue-800 bg-blue-100 px-4 py-2 rounded-3xl'>IP : {ip}</span>
+                </div>
+                <h1 className="text-lg my-6 px-4 font-semibold text-gray-600">Genrate Link for Attendance!!</h1>
+                <div className='flex flex-col text-base w-full px-4' >
+                    <div className="w-1/2">
+                        <label className="block text-gray-600  font-bold mb-2" htmlFor="username">
+                            Set Duration
+                        </label>
+                        <div className="flex my-4">
+                            <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
+                                Minute
+                            </span>
+                            <input type="number" name='min' id="website-admin" className="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5" placeholder="min" value={time.min} onChange={onChangeHandler} />
+
+                            <span className="ml-6 inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md">
+                                Second
+                            </span>
+                            <input type="number" name='sec' id="website-admin" className=" rounded-none rounded-r-lg bg-gray-50 border text-gray-900 flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5" placeholder="sec" value={time.sec} onChange={onChangeHandler} />
+                        </div>
+                    </div>
+                    <button className='bg-indigo-600 p-3 text-white rounded text-sm my-4 w-1/2' onClick={onClickHandler}>Create Link</button>
+                </div>
+            </div>
+        </>
+    )
+}
+
+const TakeAttendance = ({ noty }) => {
+
+
+    const { notification, ip, subjectName, attendanceId } = noty;
+
+
+    const isNull = notification ? false : true
+    const [attendanceDetails, setAttendanceDetails] = useState(notification);
+    const [flag, setFlag] = useState(isNull);
+
+    function setStateHandler(value) {
+        setAttendanceDetails(value);
+        setFlag(true);
+    }
+
+    function setFlagHandler(flag) {
+        setFlag(flag)
+    }
+
+    return (
+        <>
+
+            {
+                flag ?
+                    <SetAttendanceCard props={{ setStateHandler, ip, attendanceId, setFlagHandler, attendanceDetails }} /> :
+                    <ShowAttendanceCard props={{ setFlagHandler, attendanceDetails, subjectName }} />
+            }
+        </>
+    )
+}
+
 
 
 
