@@ -56,6 +56,6 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     res.status(statusCode).json({ error: errorMessage });
 });
 
-popUp();
+// popUp();
 
 export default app;
