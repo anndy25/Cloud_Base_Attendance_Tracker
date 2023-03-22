@@ -9,16 +9,17 @@ import { SubjectAttendanceTable, ShowStudents, TakeAttendance, AttendanceCard } 
 import { SidePanel, Navtab } from '../../../components/utility';
 
 function switchTab(tab, attendanceDetails, studentDetails, noty) {
-    // if (tab === 1) return <SubjectAttendanceTable attendanceDetails={attendanceDetails} />;
+    if (tab === 1) return <SubjectAttendanceTable props={attendanceDetails} />;
 
-    // if (tab === 2) return <ShowStudents studentDetails={studentDetails} />;
+    if (tab === 2) return <ShowStudents studentDetails={studentDetails} />;
 
     if (tab === 3) return <TakeAttendance noty={noty} />;
 }
 
 const TSubject = ({ students, details, className, attendanceMap, subjectName, noty }) => {
 
-    const router = useRouter()
+    const router = useRouter();
+    const {teacherId}=router.query;
     let [tab, setTab] = useState(1);
 
     return (
@@ -35,7 +36,7 @@ const TSubject = ({ students, details, className, attendanceMap, subjectName, no
                         <Navtab />
                     </div>
                     <div className='p-6 min-h-[90%] '>
-                        <Link href='/teacher/dashboard' className='p-2 rounded-lg mb-4 font-semibold justify-center items-center bg-slate-200 flex cursor-pointer w-28'><GrPrevious /> <span className='mx-1'>Go Back</span></Link>
+                        <Link href={`/teacher/${teacherId}`} className='p-2 rounded-lg mb-4 font-semibold justify-center items-center bg-slate-200 flex cursor-pointer w-28'><GrPrevious /> <span className='mx-1'>Go Back</span></Link>
                         <header className='flex font-semibold'>
                             <span className='bg-blue-100 text-blue-800 px-4 py-2 rounded-3xl'>{subjectName}</span>
                             <span className='bg-blue-100 text-blue-800 px-4 py-2 mx-4 rounded-3xl'>{className}</span>

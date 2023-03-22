@@ -1,19 +1,9 @@
 import React from 'react'
 import Image from "next/image";
-import { TbNumbers } from "react-icons/tb";
-import { SiNamecheap } from "react-icons/si";
-import { MdOutlineMailOutline } from "react-icons/md";
-import { BsFillFileSpreadsheetFill } from "react-icons/bs";
-import { CiViewList } from "react-icons/ci";
 
-const Message = ({ Component, title }) => {
-    return (<>
-        <div className='flex items-center justify-center'><Component /><p className='mx-2'>{title}</p></div>
-    </>)
-}
 const ShowStudents = ({ studentDetails }) => {
 
-    const { students,tLecture, attendanceMap } = studentDetails
+    const { students, tLecture, attendanceMap } = studentDetails
 
     return (
         <>
@@ -21,11 +11,11 @@ const ShowStudents = ({ studentDetails }) => {
             <table className="w-full text-center bg-white">
                 <thead className=" text-slate-800">
                     <tr className="bg-indigo-50">
-                        <th className="p-3 w-1/4"><Message Component={SiNamecheap} title='Name' /></th>
-                        <th ><Message Component={TbNumbers} title='Roll No.' /></th>
-                        <th ><Message Component={MdOutlineMailOutline} title='Email' /></th>
-                        <th ><Message Component={BsFillFileSpreadsheetFill} title='Reg. Id' /></th>
-                        <th ><Message Component={CiViewList} title='Presenty' /></th>
+                        <th className="p-3 w-1/4">Name</th>
+                        <th >Roll No.</th>
+                        <th >Email</th>
+                        <th >Reg. Id</th>
+                        <th >Presenty</th>
                     </tr>
                 </thead>
                 <tbody className='text-slate-600 font-medium'>
@@ -38,7 +28,7 @@ const ShowStudents = ({ studentDetails }) => {
 
                             return (
                                 <tr className=" even:bg-blue-50 hover:text-indigo-600 cursor-pointer" key={key}>
-                                   
+
                                     <td className="px-2 py-1 flex items-center ">
                                         <Image
                                             src={student.image.url}
