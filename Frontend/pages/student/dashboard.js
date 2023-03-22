@@ -6,7 +6,7 @@ import { AttendanceTable } from './../../components/student';
 
 
 const dashboard = () => {
-
+const schedules=[{from:"12 am",to:"12 pm",subjectId:{shortForm:123}}]
   
   return (
     <>
@@ -43,7 +43,7 @@ const dashboard = () => {
               <div className='pl-5'>
                 <Calender />
                 <h1 className="text-lg mt-2">{`Today's Schedule`}</h1>
-                <ScheduleCard />
+                <ScheduleCard schedules={schedules} />
               </div>
 
             </aside>
