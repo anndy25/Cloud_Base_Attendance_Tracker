@@ -6,7 +6,7 @@ import Link from "next/link";
 import { GrPrevious } from "react-icons/gr";
 import Swal from "sweetalert2";
 import { Navtab } from '../../../components/utility';
-import { formatDate } from "../../../functions/addTime"
+import { formatDate } from "../../../functions/time"
 
 const ShowDetails = ({ student }) => {
 

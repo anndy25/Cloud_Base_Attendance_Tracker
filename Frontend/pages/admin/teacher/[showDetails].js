@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { GrPrevious } from "react-icons/gr";
 
 import { Navtab } from '../../../components/utility';
-import { formatDate } from "../../../functions/addTime"
+import { formatDate } from "../../../functions/time"
 
 const ShowDetails = ({ teacher }) => {
     const router = useRouter();
