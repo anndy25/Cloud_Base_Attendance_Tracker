@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdOutlineSubject, MdCalendarToday,MdPendingActions } from "react-icons/md";
 import { RiAlertFill } from "react-icons/ri";
-import { getFormattedDate } from '../../functions/addTime';
+import { getFormattedDate } from '../../functions/time';
 
 const AttendanceExpired = () => {
     return (
