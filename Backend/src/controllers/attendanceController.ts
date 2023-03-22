@@ -256,12 +256,12 @@ export const getAttendanceDetails = async (req: Request, res: Response, next: Ne
 }
 
 export const absentStudents = async (req: Request, res: Response, next: NextFunction) => {
+
     const { date, subjectId, classId }: any = req.query;
-    const { teacherId } = req.body;
 
     try {
 
-        if (!mongoose.isValidObjectId(classId) || !mongoose.isValidObjectId(subjectId) || !mongoose.isValidObjectId(teacherId)) {
+        if (!mongoose.isValidObjectId(classId) || !mongoose.isValidObjectId(subjectId)) {
             throw createHttpError(409, "Id's does not exist!");
         }
 
@@ -271,7 +271,7 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
             throw createHttpError(409, "Subject does not exist!");
         }
 
-        const isClassExist: any = await ClassModel.findById(classId, { classSubjects: 1, _id: 0 });
+        const isClassExist: any = await ClassModel.findById(classId, { classSubjects: 1,className:1, _id: 0 });
 
         if (!isClassExist) {
             throw createHttpError(409, "Subject does not exist!");
@@ -282,13 +282,18 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
             { $match: { _id: new mongoose.Types.ObjectId(attendanceId) } },
             { $unwind: '$attendanceDetails' },
             { $match: { 'attendanceDetails.date': date } },
-            { $project: { _id: 0, presentStudents: '$attendanceDetails.presentStudents' } }
+            { $project: {  presentStudents: '$attendanceDetails.presentStudents' } }
         ]);
 
+      
+        if(response.length===0){
+            throw createHttpError(409, "Attendance does not exist!");
+        }
+
+        const absentStudents = []; 
         const pStudents = new Set(response[0].presentStudents);
 
         const students: any = await StudentModel.find({ classId }, { fname: 1, image: 1, regNo: 1, rollNo: 1 });
-        const absentStudents = [];
 
         for (let i = 0; i < students.length; i++) {
             if (!pStudents.has(students[i]._id + "")) {
@@ -296,7 +301,7 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
             }
         }
 
-        return res.status(201).json({ absentStudents });
+        return res.status(201).json({ absentStudents,className:isClassExist.className,subjectName:isSubjectExist.subjectName });
 
     } catch (err) {
         next(err);
