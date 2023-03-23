@@ -11,7 +11,7 @@ function formatDateTime(date:Date):string {
   }
 
  const scheduler = async () => {
-    cron.schedule('*/59 * * * *', async () => {
+    cron.schedule('*/1 * * * *', async () => {
         try {
 
             // console.log("1min")
