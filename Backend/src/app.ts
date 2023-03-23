@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors";
 
 import env from "./util/validateEnv";
-import popUp from "./scheduler/popUp"
+
 
 import userRoutes from "./routes/userRoutes";
 import classRoutes from "./routes/classRoutes";
@@ -56,6 +56,6 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     res.status(statusCode).json({ error: errorMessage });
 });
 
-// popUp();
+
 
 export default app;

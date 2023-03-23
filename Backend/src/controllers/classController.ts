@@ -8,7 +8,7 @@ export const addClass = async (req: Request, res: Response, next: NextFunction) 
     try {
 
         const classInfo = req.body;
-       
+
         const isClassExist = await ClassModel.findOne({ className: classInfo.className })
 
         if (isClassExist) {
@@ -28,7 +28,7 @@ export const addClass = async (req: Request, res: Response, next: NextFunction) 
 export const getClasses = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-        const classes = await ClassModel.find({}, { schedules: 0, notifications: 0,classSubjects:0 }).populate({ path: 'departmentId', select: "departmentName" }).sort('className');
+        const classes = await ClassModel.find({}, { schedules: 0, notifications: 0, classSubjects: 0 }).populate({ path: 'departmentId', select: "departmentName" }).sort('className');
         const strength = await StudentModel.aggregate([
             {
                 $group: {
@@ -45,6 +45,18 @@ export const getClasses = async (req: Request, res: Response, next: NextFunction
 
 }
 
+export const scheduler = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+
+        await ClassModel.updateMany({}, { $set: { notifications: [] } });
+        await StudentModel.updateMany({}, { $set: { status: {} } });
+
+    } catch (err) {
+        console.log(err);
+    }
+
+}
 
 
 

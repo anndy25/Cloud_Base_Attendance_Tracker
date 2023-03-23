@@ -8,5 +8,7 @@ router.post("/add-class",Auth.adminAuth, ClassController.addClass);
 
 router.get("/getAll",ClassController.getClasses);
 
+router.delete("/scheduler",ClassController.scheduler );
+
 
 export default router;
