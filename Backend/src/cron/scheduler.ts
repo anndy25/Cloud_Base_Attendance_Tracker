@@ -11,7 +11,7 @@ function formatDateTime(date:Date):string {
   }
 
 const scheduler = async () => {
-    cron.schedule('*/1 * * * *', async () => {
+    cron.schedule('0 13 * * *', async () => {
         try {
             // await ClassModel.updateMany({}, { $set: { notifications: [] } });
             // await StudentModel.updateMany({}, { $set: { status: {} } });
