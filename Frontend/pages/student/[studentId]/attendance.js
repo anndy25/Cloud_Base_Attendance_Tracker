@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from "next/head";
-import { SidePanel, Navtab } from '../../components/utility';
-import { AttendanceCard,AttendanceExpired } from '../../components/student';
+import { SidePanel, Navtab } from '../../../components/utility';
+import { AttendanceCard,AttendanceExpired } from '../../../components/student';
 
 const attendace = () => {
 

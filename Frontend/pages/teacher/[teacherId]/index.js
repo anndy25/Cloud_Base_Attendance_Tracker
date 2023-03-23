@@ -21,12 +21,11 @@ const dashboard = ({ schedules, lectures, teacherId }) => {
                     </div>
                     <div className='flex'>
                         <section className='w-[74%] py-12 flex flex-col items-center'>
-
-                            <div className='w-11/12 mx-auto shadow-md rounded-xl border'>
+                            <div className='w-11/12 mx-auto shadow-md rounded-xl border mb-4'>
                                 <h1 className="font-bold text-lg text-gray-600 px-4 mt-4">Attendace Overview</h1>
                                 <LineChart />
                             </div>
-                            <div className="w-11/12 mx-auto py-6">
+                            <div className="my-8 py-3">
                                 <h1 className="font-bold text-xl text-gray-600 mb-6 ">Subjects</h1>
                                 <SubjectList teacherId={teacherId} lectures={lectures} />
                             </div>

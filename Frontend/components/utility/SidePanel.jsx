@@ -9,17 +9,17 @@ import { AiOutlineSchedule } from "react-icons/ai";
 import { logout } from '../../functions/localStrorage';
 
 
-const listOptions = (flag = 0, pathname) => {
+const listOptions = (flag = 0, pathname, query) => {
 
     if (flag === 1) {
         return (
             <>
-                <Link href='/student/dashboard' className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/student/dashboard' ? "bg-indigo-100  text-indigo-600 border-indigo-600" : "bg-white "}`}>
+                <Link href={`/student/${query.studentId}`} className={`pl-6 border-r-4  flex items-center py-2 ${pathname == '/student/[studentId]' ? "bg-indigo-100  text-indigo-600 border-indigo-600" : "bg-white "}`}>
                     <RxDashboard className="mr-3" />
                     Dashboard
                 </Link>
-                <Link href='/student/attendance' className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/student/attendance' ? "bg-indigo-100 text-indigo-600 border-indigo-600" : "bg-white"}`}>
-                    <BsClockHistory className="mr-3 text-2xl" />
+                <Link href={`/student/${query.studentId}/attendance`} className={`my-1 pl-6 border-r-4 flex items-center py-2 ${pathname == '/student/[studentId]/attendance' ? "bg-indigo-100 text-indigo-600 border-indigo-600" : "bg-white"}`} >
+                    <BsClockHistory className="mr-3" />
                     Attendance
                 </Link>
 
@@ -59,6 +59,8 @@ const listOptions = (flag = 0, pathname) => {
 
 const SidePanel = ({ status }) => {
     const router = useRouter();
+    const query = router.query;
+
     return (
         <>
             <div className="h-full flex flex-col border-r">
@@ -71,7 +73,7 @@ const SidePanel = ({ status }) => {
                     </h1>
                 </div>
                 <div className="mt-12 font-semibold text-gray-800">
-                    {listOptions(status, router.pathname)}
+                    {listOptions(status, router.pathname, query)}
                 </div>
 
 
