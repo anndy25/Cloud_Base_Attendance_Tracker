@@ -13,8 +13,8 @@ function formatDateTime(date:Date):string {
 const scheduler = async () => {
     cron.schedule('0 13 * * *', async () => {
         try {
-            // await ClassModel.updateMany({}, { $set: { notifications: [] } });
-            // await StudentModel.updateMany({}, { $set: { status: {} } });
+            await ClassModel.updateMany({}, { $set: { notifications: [] } });
+            await StudentModel.updateMany({}, { $set: { status: {} } });
             console.log(`deleted old data in notifications ${formatDateTime(new Date())}`);
         } catch (err) {
             console.log(err);
