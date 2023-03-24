@@ -25,7 +25,7 @@ const dashboard = ({ schedules, lectures, teacherId }) => {
                                 <h1 className="font-bold text-lg text-gray-600 px-4 mt-4">Attendace Overview</h1>
                                 <LineChart />
                             </div>
-                            <div className="my-8 py-3">
+                            <div className="py-3">
                                 <h1 className="font-bold text-xl text-gray-600 mb-6 ">Subjects</h1>
                                 <SubjectList teacherId={teacherId} lectures={lectures} />
                             </div>
