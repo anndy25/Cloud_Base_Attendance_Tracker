@@ -7,14 +7,14 @@ import { Overview, StudentList, TeacherList, SearchBox, DropDownCreate } from '.
 import Swal from "sweetalert2";
 import axios from 'axios';
 
-const Dashboard = ({data}) => {
+const Dashboard = ({ data }) => {
 
   // const router = useRouter();
- 
+
   const [tab, setTab] = useState(1);
   const [students, setStudents] = useState(data.students);
   const [teachers, setTeachers] = useState(data.teachers);
-  
+
   // useEffect(() => {
   //   if (data) {
   //     setStudents(data.students);
@@ -22,7 +22,7 @@ const Dashboard = ({data}) => {
   //   }
   // }, [data]);
 
-  
+
   function filterData(data, search) {
     if (search === "") {
       return data;
@@ -70,7 +70,6 @@ const Dashboard = ({data}) => {
               {
                 tab === 1 ? (<StudentList students={students} />) : (<TeacherList teachers={teachers} />)
               }
-
             </div>
           </section>
 
@@ -86,7 +85,7 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-     data
+      data
     },
   };
 

@@ -47,7 +47,11 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
 
         const notification = await ClassModel.findOneAndUpdate(
             { _id: classId, "notifications.subjectId": { $ne: subjectId } },
-            { $push: { "notifications": { attendanceId, subjectId, ip, expiredAt } } },
+            {
+                $push: { "notifications": { attendanceId, subjectId, ip, expiredAt } },
+                $inc: { totalLectures: 1 }
+            },
+
             { new: true }
         )
 
@@ -87,7 +91,6 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
         if (!isClassExist) {
             throw createHttpError(409, "Class does not exist!");
         }
-
         const subject: any = await ClassModel.aggregate([
             { $match: { "_id": new mongoose.Types.ObjectId(classId) } },
             {
@@ -122,8 +125,13 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
             { $addToSet: { "attendanceDetails.$.presentStudents": studentId } });
 
 
-        const status = await StudentModel.findByIdAndUpdate(
-            studentId, { $set: { [`status.${subjectId}`]: true } }, { new: true, upsert: true }).select("status -_id");
+        const status = await StudentModel.findByIdAndUpdate(studentId,
+            {
+                $set: { [`attendanceLog.${subjectId}.status`]: true, },
+                $inc: { [`attendanceLog.${subjectId}.totalAttendance`]: 1, },
+            },
+            { new: true, upsert: true })
+            .select("status -_id");
 
 
         return res.status(201).json(status)
@@ -179,7 +187,6 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
 
     try {
 
-
         const isStudentExist = await StudentModel.findById(studentId);
 
         if (!isStudentExist) {
@@ -194,7 +201,7 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
         const data = await ClassModel.findById(classId, { notifications: 1, _id: 0 });
 
 
-        return res.status(201).json({ notifications: data?.notifications, status: isStudentExist.status, ip: req.ip });
+        return res.status(201).json({ notifications: data?.notifications, attendanceLog: isStudentExist.attendanceLog, ip: req.ip });
 
     } catch (err) {
         next(err)
@@ -231,7 +238,6 @@ export const getAttendanceDetails = async (req: Request, res: Response, next: Ne
         }
 
         const attendanceId = isClassExist.classSubjects.get(subjectId).attendanceId;
-
 
         const students = await StudentModel.find({ classId },
             { fname: 1, image: 1, email: 1, rollNo: 1, regNo: 1 });
@@ -271,7 +277,7 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
             throw createHttpError(409, "Subject does not exist!");
         }
 
-        const isClassExist: any = await ClassModel.findById(classId, { classSubjects: 1,className:1, _id: 0 });
+        const isClassExist: any = await ClassModel.findById(classId, { classSubjects: 1, className: 1, _id: 0 });
 
         if (!isClassExist) {
             throw createHttpError(409, "Subject does not exist!");
@@ -282,15 +288,15 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
             { $match: { _id: new mongoose.Types.ObjectId(attendanceId) } },
             { $unwind: '$attendanceDetails' },
             { $match: { 'attendanceDetails.date': date } },
-            { $project: {  presentStudents: '$attendanceDetails.presentStudents' } }
+            { $project: { presentStudents: '$attendanceDetails.presentStudents' } }
         ]);
 
-      
-        if(response.length===0){
+
+        if (response.length === 0) {
             throw createHttpError(409, "Attendance does not exist!");
         }
 
-        const absentStudents = []; 
+        const absentStudents = [];
         const pStudents = new Set(response[0].presentStudents);
 
         const students: any = await StudentModel.find({ classId }, { fname: 1, image: 1, regNo: 1, rollNo: 1 });
@@ -301,11 +307,12 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
             }
         }
 
-        return res.status(201).json({ absentStudents,className:isClassExist.className,subjectName:isSubjectExist.subjectName });
+        return res.status(201).json({ absentStudents, className: isClassExist.className, subjectName: isSubjectExist.subjectName });
 
     } catch (err) {
         next(err);
     }
 }
+
 
 

@@ -20,7 +20,8 @@ const classSchema = new Schema(
       type: Map,
       of: {
         subjectTeacher: {},
-        attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance', required: true }
+        attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance', required: true },
+        totalLectures: { type: Number, default: 0 }
       },
       default: {}
     }
@@ -39,6 +40,7 @@ const classSchema = new Schema(
         attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance' },
         ip: { type: String },
         expiredAt: { type: String },
+
       }
     ]
   },

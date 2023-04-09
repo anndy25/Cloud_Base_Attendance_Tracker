@@ -1,7 +1,19 @@
 import { Response, Request, NextFunction } from "express";
+import mongoose from 'mongoose';
 import ClassModel from "../models/class";
 import StudentModel from "../models/student"
 import createHttpError from "http-errors";
+
+interface Schedule {
+    subjectId: {
+        _id: string;
+        subjectName: string;
+        shortForm: string;
+    };
+    from: string;
+    to: string;
+    _id: string;
+}
 
 export const addClass = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -45,6 +57,51 @@ export const getClasses = async (req: Request, res: Response, next: NextFunction
 
 }
 
+
+export const getClassTimetable = async (req: Request, res: Response, next: NextFunction) => {
+    const { day, studentId }: any = req.query;
+    try {
+        if (!mongoose.isValidObjectId(studentId)) {
+            throw createHttpError(409, "Id's does not exist!");
+        }
+        const isStudentExist = await StudentModel.findById(studentId, { classId: 1 });
+
+        if (!isStudentExist) {
+            throw createHttpError(409, "Teacher does not exist!");
+        }
+
+        const { classId } = isStudentExist;
+
+        const schedule: any = await ClassModel.findById(classId).
+            populate({
+                path: `schedules.${day}.subjectId`,
+                select: 'subjectName className shortForm'
+            })
+            .select(`schedules.${day}`)
+            .lean();
+
+
+        // Sort the schedules by the 'from' time
+        schedule.schedules[day].sort((a: Schedule, b: Schedule) => {
+            const timeA = parseInt(a.from.replace(':', ''));
+            const timeB = parseInt(b.from.replace(':', ''));
+            if (timeA < timeB) {
+                return -1;
+            }
+            if (timeA > timeB) {
+                return 1;
+            }
+            return 0;
+        });
+
+        return res.status(200).json(schedule);
+
+    } catch (err) {
+        next(err);
+    }
+
+}
+
 export const scheduler = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
@@ -57,6 +114,7 @@ export const scheduler = async (req: Request, res: Response, next: NextFunction)
     }
 
 }
+
 
 
 

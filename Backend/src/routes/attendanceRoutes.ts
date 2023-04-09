@@ -12,4 +12,6 @@ router.get('/getInfoS',AttendanceController.getAttendanceInfoS);
 router.get('/getDetails',AttendanceController.getAttendanceDetails);
 router.get('/absentStudents',AttendanceController.absentStudents);
 
+
+
 export default router;

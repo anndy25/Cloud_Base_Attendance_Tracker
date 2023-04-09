@@ -7,8 +7,8 @@ const attendanceSchema = new Schema(
         attendanceDetails:
             [
                 {
-                    date: { type: String, required: true },
-                    expiredAt: { type: String, required: true },
+                    date: { type: String},
+                    expiredAt: { type: String },
                     presentStudents: [{ type: Schema.Types.ObjectId, ref: 'student', default: [] }]
                 }
             ]

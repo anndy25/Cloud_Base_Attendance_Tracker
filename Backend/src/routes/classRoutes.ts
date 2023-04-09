@@ -7,8 +7,10 @@ const router = express.Router();
 router.post("/add-class",Auth.adminAuth, ClassController.addClass);
 
 router.get("/getAll",ClassController.getClasses);
+router.get("/timetable",ClassController.getClassTimetable);
 
 router.delete("/scheduler",ClassController.scheduler );
+
 
 
 export default router;

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axios from "axios"
 import Swal from 'sweetalert2'
 
+
 const options = {
     position: "top-center",
     autoClose: 2000,
@@ -30,7 +31,7 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers, classId,
 
     }
 
-    const onAddHandler = async (subjectId, attendanceId, key) => {
+    const onAddHandler = async (subjectId, attendanceId = -1, key) => {
         if (!courseTeacher[key]) {
             toast.warn("Please select teacher!", options);
         }
@@ -48,7 +49,7 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers, classId,
                         const { data } = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/assignLecture/${classId}`,
                             { subjectTeacherId: courseTeacher[key].id, subjectId, attendanceId }, { withCredentials: true });
 
-                        console.log(data)
+
                         setState(data);
                         Swal.fire({
                             position: 'top-center',
@@ -77,7 +78,7 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers, classId,
 
 
     const removeTeacher = async (subjectId, subjectTeacherId) => {
-        
+
         try {
             Swal.fire({
                 title: `<small>Do you want to remove course teacher?</small>`,
@@ -136,7 +137,7 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers, classId,
                     {
                         allSubjects.map((subject, key) => {
                             let attendanceId
-                            if ( classSubjectList && classSubjectList[subject._id]) attendanceId = classSubjectList[subject._id].attendanceId;
+                            if (classSubjectList && classSubjectList[subject._id]) attendanceId = classSubjectList[subject._id].attendanceId;
                             return (
                                 <tr className=" odd:bg-blue-50" key={key}>
                                     <td className="p-3">{subject.subjectName}</td>

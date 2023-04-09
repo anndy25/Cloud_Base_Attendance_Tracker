@@ -110,21 +110,23 @@ const ShowSchedule = ({ classDetails, allSubjects, allTeachers, classId }) => {
                                             </header>
                                             <section className='py-2'>
 
-                                                {schedules[day].map((lecture, key) => {
+                                                {
+                                                    schedules[day].map((lecture, key) => {
+                                                        const teacherName = classSubjectList[lecture.subjectId].subjectTeacher ? classSubjectList[lecture.subjectId].subjectTeacher.fname : "Not Selected";
+                                                       
+                                                        return (
+                                                            <div key={key} className={`group relative p-2 text-white bg-indigo-500 cursor-pointer  border-2 border-white rounded-md`}>
+                                                                <p className='font-medium'>{lecture.from}-{lecture.to} : {subjectMap_[lecture.subjectId]}</p>
+                                                                <p>{teacherName}</p>
+                                                                <div className='absolute top-0 right-0 text-white  hidden h-full w-full group-hover:flex group-hover:justify-end group-hover:items-center' style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}>
+                                                                    <MdSystemUpdateAlt className='text-2xl hover:text-teal-500' />
 
-                                                    return (
-                                                        <div key={key} className={`group relative p-2 text-white bg-indigo-500 cursor-pointer  border-2 border-white rounded-md`}>
-                                                            <p className='font-medium'>{lecture.from}-{lecture.to} : {subjectMap_[lecture.subjectId]}</p>
-                                                            <p>{classSubjectList[lecture.subjectId].subjectTeacher.fname}</p>
-                                                            <div className='absolute top-0 right-0 text-white  hidden h-full w-full group-hover:flex group-hover:justify-end group-hover:items-center' style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}>
-                                                                <MdSystemUpdateAlt className='text-2xl hover:text-teal-500' />
+                                                                    <MdDeleteOutline className=' text-2xl hover:text-red-500 mx-2' onClick={() => onDeleteHandler(day, lecture.from, lecture.to, lecture.subjectId)} />
 
-                                                                <MdDeleteOutline className=' text-2xl hover:text-red-500 mx-2' onClick={() => onDeleteHandler(day, lecture.from, lecture.to, lecture.subjectId)} />
-
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    )
-                                                })}
+                                                        )
+                                                    })}
                                             </section>
                                         </div>
                                     )
