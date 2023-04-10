@@ -38,9 +38,9 @@ const classSchema = new Schema(
       {
         subjectId: { type: Schema.Types.ObjectId, ref: 'subject' },
         attendanceId: { type: Schema.Types.ObjectId, ref: 'attendance' },
-        ip: { type: String },
-        expiredAt: { type: String },
-
+        ip: { type: String, default: "" },
+        expiredAt: { type: String, default: "" },
+        date: { type: String, default: "" }
       }
     ]
   },

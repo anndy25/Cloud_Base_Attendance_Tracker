@@ -41,7 +41,7 @@ const SetAttendanceCard = ({ props }) => {
     const router = useRouter();
     const [time, setTime] = useState({ min: 0, sec: 0 })
     const { subjectId, teacherId, classId } = router.query;
-    const { setStateHandler, ip, attendanceId, setFlagHandler, attendanceDetails } = props;
+    const { setStateHandler, ip, setFlagHandler, attendanceDetails,todayDate } = props;
 
     const onClickHandler = (e) => {
 
@@ -61,15 +61,14 @@ const SetAttendanceCard = ({ props }) => {
             confirmButtonColor: "#4f46e5",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const date = getCurrentDate();
+                
                 try {
                     const response = await axios.put(
                         `${process.env.NEXT_PUBLIC_API_URL}/api/attendance/setAttendance`,
                         {
                             ip,
                             expiredAt: result24hr,
-                            date,
-                            attendanceId,
+                            date:todayDate,
                             classId,
                             teacherId,
                             subjectId,
@@ -78,7 +77,7 @@ const SetAttendanceCard = ({ props }) => {
 
                     if (response.status === 201) {
 
-                        setStateHandler({ ip, expiredAt: result24hr, date: getCurrentDate(), attendanceId });
+                        setStateHandler({ ip, expiredAt: result24hr, date:todayDate });
                         setFlagHandler(false);
                         Swal.fire({
                             position: "center",
@@ -91,7 +90,7 @@ const SetAttendanceCard = ({ props }) => {
 
 
                 } catch (err) {
-                    console.log(err);
+
                     Swal.fire({
                         position: "center",
                         icon: "error",
@@ -117,7 +116,7 @@ const SetAttendanceCard = ({ props }) => {
         <>
             <div className='p-6'>
                 {
-                    attendanceDetails && <button className='bg-indigo-600 text-white px-3 py-2 rounded-md float-right' onClick={() => setFlagHandler(false)} >Cancle</button>
+                    attendanceDetails.date ==todayDate && <button className='bg-indigo-600 text-white px-3 py-2 rounded-md float-right' onClick={() => setFlagHandler(false)} >Cancle</button>
                 }
                 <div>
                     <span className='font-semibold  text-blue-800 bg-blue-100 px-4 py-2 rounded-3xl'>IP : {ip}</span>
@@ -150,12 +149,12 @@ const SetAttendanceCard = ({ props }) => {
 const TakeAttendance = ({ noty }) => {
 
 
-    const { notification, ip, subjectName, attendanceId } = noty;
+    const { notification, ip, subjectName } = noty;
 
-
-    const isNull = notification ? false : true
+    const [todayDate, setTodayDate] = useState(getCurrentDate());
+    const isMatch = notification.date == todayDate ? false : true
     const [attendanceDetails, setAttendanceDetails] = useState(notification);
-    const [flag, setFlag] = useState(isNull);
+    const [flag, setFlag] = useState(isMatch);
 
     function setStateHandler(value) {
         setAttendanceDetails(value);
@@ -171,7 +170,7 @@ const TakeAttendance = ({ noty }) => {
 
             {
                 flag ?
-                    <SetAttendanceCard props={{ setStateHandler, ip, attendanceId, setFlagHandler, attendanceDetails }} /> :
+                    <SetAttendanceCard props={{ setStateHandler, ip, setFlagHandler, attendanceDetails ,todayDate}} /> :
                     <ShowAttendanceCard props={{ setFlagHandler, attendanceDetails, subjectName }} />
             }
         </>

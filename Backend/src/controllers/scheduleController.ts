@@ -63,8 +63,8 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
         }
 
 
-        if (attendanceId!==-1) {
-            console.log("herer inside 1")
+        if (attendanceId) {
+            
             const { fname, image, _id } = isTeacherExist;
             // eslint-disable-next-line prefer-const
             let classDetails: any = await ClassModel.aggregate([
@@ -150,7 +150,7 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
 
         } else {
             
-            const { _id } = await AttendanceModel.create({ subjectId, classId, attendanceDetails: {} });
+            const { _id } = await AttendanceModel.create({ subjectId, classId, attendanceDetails:[] });
 
             const teacher = await TeacherModel.findByIdAndUpdate(subjectTeacherId,
                 { $addToSet: { lectures: { classId, subjectId, attendanceId: _id } } }, { new: true, upsert: true })
@@ -164,7 +164,8 @@ export const assignLecture = async (req: Request, res: Response, next: NextFunct
                             subjectId,
                             attendanceId: _id
                         }
-                    }
+                    },
+                    $push:{notifications:{attendanceId:_id,subjectId}}    
                 },
                 { new: true, upsert: true })
                 .select("classSubjects schedules")
@@ -272,7 +273,7 @@ export const setClassSchedule = async (req: Request, res: Response, next: NextFu
 
 export const changeClassSchedule = async (req: Request, res: Response, next: NextFunction) => {
     const { classId, day, from, to } = req.query;
-    console.log(day, from, to)
+   
     const { subjectTeacherId, subjectId } = req.body;
     try {
         const isTeacherExist = await TeacherModel.findById(subjectTeacherId);

@@ -21,6 +21,7 @@ const options = {
   progress: undefined,
   theme: "colored",
 }
+
 const teacherRegistration = ({ departments }) => {
   const router = useRouter();
 
@@ -60,7 +61,6 @@ const teacherRegistration = ({ departments }) => {
   }
 
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { fname, email, phoneNumber, dob, photo, gender, regNo, departmentId } = formData;
@@ -97,7 +97,6 @@ const teacherRegistration = ({ departments }) => {
           timer: 2500
         });
 
-        timeOut(3000)
       } else {
         toast.warn("Server error!", options);
       }
@@ -113,9 +112,7 @@ const teacherRegistration = ({ departments }) => {
 
   };
 
-  function timeOut(timer) {
-    setTimeout(() => { router.reload(); }, timer);
-  }
+ 
 
   return (
     <>

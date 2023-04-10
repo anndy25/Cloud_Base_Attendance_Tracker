@@ -1,19 +1,21 @@
 import React from 'react'
 import Image from "next/image";
-
+import { useRouter } from 'next/router'
 const ShowStudents = ({ studentDetails }) => {
+    const router = useRouter();
+    const {subjectId}=router.query;
 
-    const { students, tLecture, attendanceMap } = studentDetails
+    const { students,totalLecture } = studentDetails
 
     return (
         <>
 
-            <table className="w-full text-center bg-white">
+            <table className="w-full text-left bg-white">
                 <thead className=" text-slate-800">
                     <tr className="bg-indigo-50">
-                        <th className="p-3 w-1/4">Name</th>
+                        <th className="pl-5 py-3 w-1/3">Name</th>
                         <th >Roll No.</th>
-                        <th >Email</th>
+                        <th className='w-1/4'>Email</th>
                         <th >Reg. Id</th>
                         <th >Presenty</th>
                     </tr>
@@ -23,13 +25,14 @@ const ShowStudents = ({ studentDetails }) => {
                     {
                         students.map((student, key) => {
 
-                            let presenty = attendanceMap[student._id] ? (attendanceMap[student._id] / tLecture.length) * 100 : 0;
-                            presenty = Number(presenty.toFixed(2));
+                            const {attendanceLogs}=student;
+                            let presenty=attendanceLogs && attendanceLogs[subjectId] ? attendanceLogs[subjectId].totalAttendance:0;
+        
 
                             return (
                                 <tr className=" even:bg-blue-50 hover:text-indigo-600 cursor-pointer" key={key}>
 
-                                    <td className="px-2 py-1 flex items-center ">
+                                    <td className="px-3 py-1 flex items-center ">
                                         <Image
                                             src={student.image.url}
                                             width="120" height="120"

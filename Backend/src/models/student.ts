@@ -18,7 +18,7 @@ const studentSchema = new Schema({
     departmentId: { type: Schema.Types.ObjectId, ref: "department" },
     classId: { type: Schema.Types.ObjectId, ref: "class" },
     rollNo: { type: Number },
-    attendanceLog: { type:Schema.Types.Mixed, default: {} },
+    attendanceLogs: { type:Schema.Types.Mixed, default: {} },
    
 }, {
     toJSON: {

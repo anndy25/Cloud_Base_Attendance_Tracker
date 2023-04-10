@@ -102,7 +102,7 @@ const studentRegistration = ({ classes, departments }) => {
           showConfirmButton: false,
           timer: 2500
         });
-        timeOut(3000)
+        
 
       } else {
         toast.warn("Server error!", options);
@@ -119,9 +119,7 @@ const studentRegistration = ({ classes, departments }) => {
 
   };
 
-  function timeOut(timer) {
-    setTimeout(() => { router.reload(); }, timer);
-  }
+  
 
   return (
     <>

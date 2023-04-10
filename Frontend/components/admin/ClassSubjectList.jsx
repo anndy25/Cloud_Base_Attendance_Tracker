@@ -31,7 +31,7 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers, classId,
 
     }
 
-    const onAddHandler = async (subjectId, attendanceId = -1, key) => {
+    const onAddHandler = async (subjectId, attendanceId, key) => {
         if (!courseTeacher[key]) {
             toast.warn("Please select teacher!", options);
         }

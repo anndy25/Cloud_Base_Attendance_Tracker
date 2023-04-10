@@ -16,7 +16,7 @@ function switchTab(tab, attendanceDetails, studentDetails, noty) {
     if (tab === 3) return <TakeAttendance noty={noty} />;
 }
 
-const TSubject = ({ students, details, className, attendanceMap, subjectName, noty }) => {
+const TSubject = ({ students, attendanceDetails, className, subjectName, noty }) => {
 
     const router = useRouter();
     const {teacherId}=router.query;
@@ -41,7 +41,7 @@ const TSubject = ({ students, details, className, attendanceMap, subjectName, no
                             <span className='bg-blue-100 text-blue-800 px-4 py-2 rounded-3xl'>{subjectName}</span>
                             <span className='bg-blue-100 text-blue-800 px-4 py-2 mx-4 rounded-3xl'>{className}</span>
                         </header>
-                        <div className='mx-auto w-10/12 shadow-md rounded-2xl border mt-12 mb-6 bg-white bg-white'>
+                        <div className='mx-auto w-10/12 shadow-md rounded-2xl border mt-12 mb-6 bg-white'>
                             <div className='flex justify-center'>
                                 <span className={`px-6 py-3.5 font-semibold ${tab === 1 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(1)}>Sheet</span>
                                 <span className={`px-4 py-3.5 font-semibold   ${tab === 2 ? 'text-white bg-indigo-600 border-b-2 ' : 'text-gray-500 hover:text-indigo-600 hover:bg-slate-100'}  cursor-pointer `} onClick={() => setTab(2)}>Students</span>
@@ -50,9 +50,9 @@ const TSubject = ({ students, details, className, attendanceMap, subjectName, no
                             <div className='overflow-x-auto  border-t'>
                                 {
                                     switchTab(
-                                        tab, details,
-                                        { attendanceMap, students, totalLecture: details.attendanceDetails.presentStudents },
-                                        { ...noty, subjectName, attendanceId: details._id }
+                                        tab, attendanceDetails,
+                                        { students, totalLecture: attendanceDetails.attendanceDetails.presentStudents },
+                                        { ...noty, subjectName}
                                     )
                                 }
                             </div>
@@ -78,13 +78,14 @@ export async function getServerSideProps(context) {
             };
         }
 
+
         const { data: noty } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/attendance/getInfoT`, {
             params: { classId, subjectId, teacherId }
         })
 
-        const { students, details, attendanceMap, className, subjectName } = data;
+        const { students, attendanceDetails,  className, subjectName } = data;
       
-        return { props: { students, details, className, attendanceMap, subjectName, noty } };
+        return { props: { students, attendanceDetails, className, subjectName, noty } };
 
     } catch (err) {
 

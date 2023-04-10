@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors";
 
 import env from "./util/validateEnv";
-import scheduler from "./cron/scheduler"
+
 
 
 import userRoutes from "./routes/userRoutes";
@@ -20,7 +20,6 @@ import attendanceRoutes from "./routes/attendanceRoutes"
 
 const app: Application = express();
 
-scheduler();
 
 app.set("trust proxy", 1);
 app.use(morgan("dev"));

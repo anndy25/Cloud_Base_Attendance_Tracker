@@ -24,7 +24,7 @@ Map.prototype.getOrElse = function <K, V>(key: K, defaultValue: V): V {
 
 export const setAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
-    const { ip, expiredAt, date, attendanceId, classId, teacherId, subjectId } = req.body;
+    const { ip, expiredAt, date, classId, teacherId, subjectId } = req.body;
 
 
     try {
@@ -34,39 +34,49 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
         if (!isTeacherExist) {
             throw createHttpError(409, "Teacher does not exist!");
         }
+
         const isClassExist = await ClassModel.findById(classId);
 
         if (!isClassExist) {
             throw createHttpError(409, "Class does not exist!");
         }
 
-        await ClassModel.findOneAndUpdate(
+
+        const subjectNoty: any = await ClassModel.findOneAndUpdate(
             { _id: classId, "notifications.subjectId": subjectId },
-            { $set: { "notifications.$.ip": ip, "notifications.$.expiredAt": expiredAt } }
-        )
-
-        const notification = await ClassModel.findOneAndUpdate(
-            { _id: classId, "notifications.subjectId": { $ne: subjectId } },
             {
-                $push: { "notifications": { attendanceId, subjectId, ip, expiredAt } },
-                $inc: { totalLectures: 1 }
+                $set: { "notifications.$.ip": ip, "notifications.$.expiredAt": expiredAt, "notifications.$.date": date }
             },
-
-            { new: true }
+            { projection: { "notifications": 1 } }
         )
 
+        const { notifications } = subjectNoty;
+        let index = 0;
+        for (let i = 0; i < notifications.length; i++) {
+            if (notifications[i].subjectId == subjectId) {
+                index = i;
+                break;
+            }
+        }
+        
 
-        if (notification) {
-            await AttendanceModel.findByIdAndUpdate(attendanceId,
-                { $push: { attendanceDetails: { date, expiredAt } } })
-        } else {
+        if (notifications[index].date == date) {
+           
             await AttendanceModel.findOneAndUpdate(
-                { _id: attendanceId, "attendanceDetails.date": date },
+                { _id: notifications[index].attendanceId, "attendanceDetails.date": date },
                 { $set: { "attendanceDetails.$.expiredAt": expiredAt } }
+            )
+        } else {
+
+            await AttendanceModel.findByIdAndUpdate(notifications[index].attendanceId,
+                { $push: { attendanceDetails: { date, expiredAt } } })
+
+            await ClassModel.updateOne({_id:classId},
+                { $inc: { ['classSubjects.' + subjectId + '.totalLectures']: 1 } },
             )
         }
 
-        return res.status(201).json({ message: "Attendance Set!" })
+        return res.status(201).json({message:"Attendance is Activated"})
 
     } catch (err) {
         next(err);
@@ -200,8 +210,7 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
 
         const data = await ClassModel.findById(classId, { notifications: 1, _id: 0 });
 
-
-        return res.status(201).json({ notifications: data?.notifications, attendanceLog: isStudentExist.attendanceLog, ip: req.ip });
+        return res.status(201).json({ notifications: data?.notifications, attendanceLogs: isStudentExist.attendanceLogs, ip: req.ip });
 
     } catch (err) {
         next(err)
@@ -240,21 +249,11 @@ export const getAttendanceDetails = async (req: Request, res: Response, next: Ne
         const attendanceId = isClassExist.classSubjects.get(subjectId).attendanceId;
 
         const students = await StudentModel.find({ classId },
-            { fname: 1, image: 1, email: 1, rollNo: 1, regNo: 1 });
+            { password:0,departmentId:0,gender:0,dob:0 });
 
-        const details: any = await AttendanceModel.findById(attendanceId, { attendanceDetails: 1 });
+        const attendanceDetails: any = await AttendanceModel.findById(attendanceId, { attendanceDetails: 1 });
 
-        const freqMap = new Map<string, number>();
-
-        const { attendanceDetails } = details;
-        for (let i = 0; i < attendanceDetails.length; i++) {
-            for (let j = 0; j < attendanceDetails[i].presentStudents.length; j++) {
-                freqMap.set(attendanceDetails[i].presentStudents[j], freqMap.getOrElse(attendanceDetails[i].presentStudents[j], 0) + 1)
-            }
-        }
-
-
-        return res.status(201).json({ students, details, attendanceMap: Object.fromEntries(freqMap), className: isClassExist.className, subjectName: isSubjectExist.subjectName })
+        return res.status(201).json({ students, attendanceDetails, className: isClassExist.className, subjectName: isSubjectExist.subjectName })
 
     } catch (err) {
         next(err);

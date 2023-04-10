@@ -9,7 +9,7 @@ const attendanceSchema = new Schema(
                 {
                     date: { type: String},
                     expiredAt: { type: String },
-                    presentStudents: [{ type: Schema.Types.ObjectId, ref: 'student', default: [] }]
+                    presentStudents: [{ type: Schema.Types.ObjectId, ref: 'student' }]
                 }
             ]
 
