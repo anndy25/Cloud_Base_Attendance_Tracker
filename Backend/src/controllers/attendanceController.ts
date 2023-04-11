@@ -10,17 +10,6 @@ import TeacherModel from "../models/teacher";
 import SubjectModel from "../models/subject";
 
 
-declare global {
-    interface Map<K, V> {
-        getOrElse(key: K, defaultValue: V): V;
-    }
-}
-
-Map.prototype.getOrElse = function <K, V>(key: K, defaultValue: V): V {
-    return this.has(key) ? this.get(key) : defaultValue;
-};
-
-
 
 export const setAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -208,9 +197,9 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
             throw createHttpError(409, "Class does not exist!");
         }
 
-        const data = await ClassModel.findById(classId, { notifications: 1, _id: 0 });
+        const classInfo = await ClassModel.findById(classId, { notifications: 1,classSubjects:1, _id: 0 });
 
-        return res.status(201).json({ notifications: data?.notifications, attendanceLogs: isStudentExist.attendanceLogs, ip: req.ip });
+        return res.status(201).json({classInfo, attendanceLogs: isStudentExist.attendanceLogs, ip: req.ip });
 
     } catch (err) {
         next(err)
