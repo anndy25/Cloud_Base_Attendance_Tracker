@@ -102,18 +102,7 @@ export const getClassTimetable = async (req: Request, res: Response, next: NextF
 
 }
 
-export const scheduler = async (req: Request, res: Response, next: NextFunction) => {
 
-    try {
-
-        await ClassModel.updateMany({}, { $set: { notifications: [] } });
-        await StudentModel.updateMany({}, { $set: { status: {} } });
-
-    } catch (err) {
-        console.log(err);
-    }
-
-}
 
 
 

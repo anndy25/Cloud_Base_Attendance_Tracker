@@ -10,7 +10,6 @@ import TeacherModel from "../models/teacher";
 import SubjectModel from "../models/subject";
 
 
-
 export const setAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
     const { ip, expiredAt, date, classId, teacherId, subjectId } = req.body;
@@ -47,10 +46,10 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
                 break;
             }
         }
-        
+
 
         if (notifications[index].date == date) {
-           
+
             await AttendanceModel.findOneAndUpdate(
                 { _id: notifications[index].attendanceId, "attendanceDetails.date": date },
                 { $set: { "attendanceDetails.$.expiredAt": expiredAt } }
@@ -60,12 +59,12 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
             await AttendanceModel.findByIdAndUpdate(notifications[index].attendanceId,
                 { $push: { attendanceDetails: { date, expiredAt } } })
 
-            await ClassModel.updateOne({_id:classId},
+            await ClassModel.updateOne({ _id: classId },
                 { $inc: { ['classSubjects.' + subjectId + '.totalLectures']: 1 } },
             )
         }
 
-        return res.status(201).json({message:"Attendance is Activated"})
+        return res.status(201).json({ message: "Attendance is Activated" })
 
     } catch (err) {
         next(err);
@@ -182,7 +181,7 @@ export const getAttendanceInfoT = async (req: Request, res: Response, next: Next
 }
 
 export const getAttendanceInfoS = async (req: Request, res: Response, next: NextFunction) => {
-    const { classId, studentId } = req.query;
+    const { studentId } = req.query;
 
     try {
 
@@ -191,15 +190,16 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
         if (!isStudentExist) {
             throw createHttpError(409, "Student does not exist!");
         }
+        const { classId } = isStudentExist;
         const isClassExist = await ClassModel.findById(classId);
 
         if (!isClassExist) {
             throw createHttpError(409, "Class does not exist!");
         }
 
-        const classInfo = await ClassModel.findById(classId, { notifications: 1,classSubjects:1, _id: 0 });
+        const classInfo = await ClassModel.findById(classId, { notifications: 1, classSubjects: 1 });
 
-        return res.status(201).json({classInfo, attendanceLogs: isStudentExist.attendanceLogs, ip: req.ip });
+        return res.status(201).json({ classInfo, attendanceLogs: isStudentExist.attendanceLogs, ip: req.ip });
 
     } catch (err) {
         next(err)
@@ -238,10 +238,10 @@ export const getAttendanceDetails = async (req: Request, res: Response, next: Ne
         const attendanceId = isClassExist.classSubjects.get(subjectId).attendanceId;
 
         const students = await StudentModel.find({ classId },
-            { password:0,departmentId:0,gender:0,dob:0 });
+            { password: 0, departmentId: 0, gender: 0, dob: 0 });
 
         const attendanceDetails: any = await AttendanceModel.findById(attendanceId, { attendanceDetails: 1 });
-
+  
         return res.status(201).json({ students, attendanceDetails, className: isClassExist.className, subjectName: isSubjectExist.subjectName })
 
     } catch (err) {

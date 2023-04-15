@@ -97,7 +97,7 @@ const ClassSubjectList = ({ classSubjectList, allSubjects, allTeachers, classId,
                         }
                     );
 
-                    console.log(data);
+                   
                     setState(data);
                     Swal.fire({
                         position: 'top-center',
