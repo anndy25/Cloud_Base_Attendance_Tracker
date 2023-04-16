@@ -114,7 +114,6 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
         }
 
         if (hasExpired(currentTime, subject[0].notifications.expiredAt)) {
-
             throw createHttpError(406, "Time Expired!");
         }
 
@@ -123,16 +122,16 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
             { $addToSet: { "attendanceDetails.$.presentStudents": studentId } });
 
 
-        const status = await StudentModel.findByIdAndUpdate(studentId,
+        const attendanceLog = await StudentModel.findByIdAndUpdate(studentId,
             {
-                $set: { [`attendanceLog.${subjectId}.status`]: true, },
+                $set: { [`attendanceLog.${subjectId}.date`]: date, },
                 $inc: { [`attendanceLog.${subjectId}.totalAttendance`]: 1, },
             },
-            { new: true, upsert: true })
-            .select("status -_id");
+            { new: true })
+            .select("attendanceLog -_id");
 
 
-        return res.status(201).json(status)
+        return res.status(201).json(attendanceLog)
 
     } catch (err) {
         next(err);
@@ -198,7 +197,8 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
         }
 
         const classInfo = await ClassModel.findById(classId)
-            .populate({path: 'departmentId',select: 'departmentName'})
+            .populate({ path: 'departmentId', select: 'departmentName' })
+            .populate({ path: 'notifications.subjectId', select: 'subjectName' })
             .select({ notifications: 1, classSubjects: 1, className: 1, departmentId: 1 });
 
 
