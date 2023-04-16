@@ -60,6 +60,36 @@ export function getCurrentDate() {
   return `${day}-${month}-${year}`;
 }
 
+export function hasExpired(currentTime, expiredAt) {
+ 
+  const [currentHr, currentMin, currentSec] = currentTime.split(':').map(Number);
+  const [expiredHr, expiredMin, expiredSec] = expiredAt.split(':').map(Number);
+
+  if (currentHr > expiredHr) {
+    return true;
+  } else if (currentHr === expiredHr) {
+    if (currentMin > expiredMin) {
+      return true;
+    } else if (currentMin === expiredMin) {
+      if (currentSec >= expiredSec) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+
+export function convertTo12HourFormat(timeString) {
+  let [hours, minutes, seconds] = timeString.split(':').map(Number);
+  let amOrPm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12; // convert to 12-hour format
+  return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${amOrPm}`;
+}
+
+
+
 
 
 

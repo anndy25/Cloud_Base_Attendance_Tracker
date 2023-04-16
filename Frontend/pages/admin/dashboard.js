@@ -49,11 +49,11 @@ const Dashboard = ({ data }) => {
         <div className="top-0 left-0 sticky h-screen w-[18%]  overflow-x-auto shadow-xl shadow-indigo-200">
           <SidePanel status={3} />
         </div>
-        <div className='w-[82%] bg-slate-50'>
+        <div className='w-[82%]'>
           <div className='shadow-md bg-white'>
             <Navtab />
           </div>
-          <section className='w-11/12 min-h-screen mx-auto flex flex-col items-center '>
+          <section className='w-11/12 min-h-screen mx-auto flex flex-col items-center'>
             <h1 className="font-bold text-2xl text-gray-600 my-6 w-full px-4">Dashboard</h1>
             <div className='w-[95%] flex justify-between'>
               <Overview students={data.students} teachers={data.teachers} />

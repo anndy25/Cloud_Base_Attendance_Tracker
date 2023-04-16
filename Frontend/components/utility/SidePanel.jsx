@@ -87,7 +87,7 @@ const SidePanel = ({ status }) => {
                             showCancelButton: true,
                             cancelButtonColor: "green",
                             cancelButtonText: "No, cancel!",
-                            confirmButtonText: "Yes, delete it!",
+                            confirmButtonText: "Yes, logout it!",
                             confirmButtonColor: "red",
                         }).then(async (result) => {
                             if (result.isConfirmed) {
