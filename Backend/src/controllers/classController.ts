@@ -72,29 +72,33 @@ export const getClassTimetable = async (req: Request, res: Response, next: NextF
 
         const { classId } = isStudentExist;
 
-        const schedule: any = await ClassModel.findById(classId).
-            populate({
-                path: `schedules.${day}.subjectId`,
-                select: 'subjectName className shortForm'
-            })
-            .select(`schedules.${day}`)
-            .lean();
+        if (day != 'sunday') {
+            const schedule: any = await ClassModel.findById(classId).
+                populate({
+                    path: `schedules.${day}.subjectId`,
+                    select: 'subjectName className shortForm'
+                })
+                .select(`schedules.${day}`)
+                .lean();
 
 
-        // Sort the schedules by the 'from' time
-        schedule.schedules[day].sort((a: Schedule, b: Schedule) => {
-            const timeA = parseInt(a.from.replace(':', ''));
-            const timeB = parseInt(b.from.replace(':', ''));
-            if (timeA < timeB) {
-                return -1;
-            }
-            if (timeA > timeB) {
-                return 1;
-            }
-            return 0;
-        });
+            // Sort the schedules by the 'from' time
+            schedule.schedules[day].sort((a: Schedule, b: Schedule) => {
+                const timeA = parseInt(a.from.replace(':', ''));
+                const timeB = parseInt(b.from.replace(':', ''));
+                if (timeA < timeB) {
+                    return -1;
+                }
+                if (timeA > timeB) {
+                    return 1;
+                }
+                return 0;
+            });
 
-        return res.status(200).json(schedule);
+            return res.status(200).json(schedule);
+
+        }
+        return res.status(200).json({ schedule: [] });
 
     } catch (err) {
         next(err);

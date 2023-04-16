@@ -197,7 +197,10 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
             throw createHttpError(409, "Class does not exist!");
         }
 
-        const classInfo = await ClassModel.findById(classId, { notifications: 1, classSubjects: 1 });
+        const classInfo = await ClassModel.findById(classId)
+            .populate({path: 'departmentId',select: 'departmentName'})
+            .select({ notifications: 1, classSubjects: 1, className: 1, departmentId: 1 });
+
 
         return res.status(201).json({ classInfo, attendanceLogs: isStudentExist.attendanceLogs, ip: req.ip });
 
@@ -241,7 +244,7 @@ export const getAttendanceDetails = async (req: Request, res: Response, next: Ne
             { password: 0, departmentId: 0, gender: 0, dob: 0 });
 
         const attendanceDetails: any = await AttendanceModel.findById(attendanceId, { attendanceDetails: 1 });
-  
+
         return res.status(201).json({ students, attendanceDetails, className: isClassExist.className, subjectName: isSubjectExist.subjectName })
 
     } catch (err) {
