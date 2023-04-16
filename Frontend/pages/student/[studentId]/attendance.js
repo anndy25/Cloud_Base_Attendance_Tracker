@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from "next/head";
 import { MdOutlineSubject, MdCalendarToday } from "react-icons/md";
 import axios from "axios"
@@ -6,10 +6,16 @@ import { SidePanel, Navtab } from '../../../components/utility';
 import { getFormattedDate } from '../../../functions/time';
 import { AttendanceCard, AttendanceExpired } from '../../../components/student';
 
-const Attendance = ({ ip, notifications,attendanceLogs }) => {
+const Attendance = ({ ip, notifications, attendanceLogs }) => {
   const [tab, setTab] = useState(1);
 
-
+  useEffect(() => {
+    const ipCalling = async () => {
+      const { data } = await axios.get("https://api-alpha.up.railway.app/")
+      console.log(data);
+    }
+    ipCalling();
+  },[])
   return (
     <>
       <Head>
@@ -35,8 +41,8 @@ const Attendance = ({ ip, notifications,attendanceLogs }) => {
               </div>
               <div>
                 {
-                  tab === 1 ? 
-                  (<AttendanceCard  ip={ip} notifications={notifications} attendanceLogs={attendanceLogs}/>) : (<AttendanceExpired notifications={notifications} attendanceLogs={attendanceLogs}/>)
+                  tab === 1 ?
+                    (<AttendanceCard ip={ip} notifications={notifications} attendanceLogs={attendanceLogs} />) : (<AttendanceExpired notifications={notifications} attendanceLogs={attendanceLogs} />)
                 }
               </div>
             </div>
@@ -57,10 +63,10 @@ export async function getServerSideProps(context) {
     const { data: attendanceInfo } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/attendance/getInfoS`, {
       params: { studentId }
     })
-   
+
     const { notifications } = attendanceInfo.classInfo;
-    const { ip,attendanceLogs } = attendanceInfo;
-    return { props: { ip, notifications,attendanceLogs } };
+    const { ip, attendanceLogs } = attendanceInfo;
+    return { props: { ip, notifications, attendanceLogs } };
 
   }
   catch (err) {
