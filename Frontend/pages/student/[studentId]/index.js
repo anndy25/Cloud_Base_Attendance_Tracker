@@ -6,7 +6,7 @@ import { SidePanel, Navtab, Calender, LineChart, ScheduleCard } from '../../../c
 import { AttendanceTable } from '../../../components/student';
 
 
-const dashboard = ({ classInfo, schedule, allSubjects,attendanceLogs }) => {
+const dashboard = ({ classInfo, schedule, allSubjects, attendanceLogs }) => {
 
   return (
     <>
@@ -22,19 +22,23 @@ const dashboard = ({ classInfo, schedule, allSubjects,attendanceLogs }) => {
             <Navtab />
           </div>
           <div className='flex'>
-            <section className='w-[74%] py-12 flex flex-col items-center'>
+            <section className='w-[74%] pb-12  flex flex-col items-center'>
+              <div className='font-semibold w-full pl-4 py-5'>
+                <span className='bg-blue-100 text-blue-800 px-4 py-2 mx-4 rounded-3xl'>{classInfo.departmentId.departmentName}</span>
+                <span className='bg-blue-100 text-blue-800 px-4 py-2 rounded-3xl'>{classInfo.className}</span>
+              </div>
 
               <div className='w-11/12 mx-auto shadow-md rounded-xl border'>
-                <h1 className="font-bold text-lg text-gray-600 px-4 mt-4">Attendace Overview</h1>
+                <h1 className="font-bold text-lg text-gray-600 p-4">Attendace Overview</h1>
                 <LineChart />
               </div>
               <div className='w-11/12 shadow-md rounded-xl border mt-3'>
                 <div className="overflow-x-auto">
-                  <AttendanceTable classInfo={classInfo}  allSubjects={allSubjects} attendanceLogs={attendanceLogs}/>
+                  <AttendanceTable classInfo={classInfo} allSubjects={allSubjects} attendanceLogs={attendanceLogs} />
                 </div>
               </div>
             </section>
-            <aside className='w-[26%]  py-12 pr-4'>
+            <aside className='w-[26%]  pt-16 pb-12 pr-2'>
               <div className=''>
                 <Calender />
               </div>
@@ -65,11 +69,13 @@ export async function getServerSideProps(context) {
 
     const { data: allSubjects } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/subject/classSubjects/${attendanceInfo.classInfo._id}`)
 
+
     const { data: timeTable } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/class/timetable`, {
       params: { studentId, day }
     })
+    const schedule = day === 'sunday' ? [] : timeTable.schedules[day];
 
-    return { props: { classInfo:attendanceInfo.classInfo, schedule:timeTable.schedules[day], allSubjects,attendanceLogs:attendanceInfo.attendanceLogs } };
+    return { props: { classInfo: attendanceInfo.classInfo, schedule, allSubjects, attendanceLogs: attendanceInfo.attendanceLogs } };
 
   }
   catch (err) {

@@ -8,7 +8,7 @@ import Image from "next/image";
 const Message = ({ Component, title }) => {
     return (
         <>
-            <div className='flex items-center justify-center'><Component /><p className='mx-2'>{title}</p></div>
+            <div className='flex items-center'><Component /><p className='mx-2'>{title}</p></div>
         </>
     )
 }
@@ -16,22 +16,25 @@ const Message = ({ Component, title }) => {
 const AttendanceTable = ({ allSubjects, classInfo, attendanceLogs }) => {
 
     const { classSubjects } = classInfo;
-
+    function formatNumber(num) {
+        const decimalPlaces = (num % 1 !== 0) ? 2 : 0;
+        return num.toFixed(decimalPlaces);
+      }
 
     return (
         <table className="w-full text-left">
-            <thead className=" text-slate-700 bg-indigo-50 ">
+            <thead className=" text-slate-600 bg-indigo-50 font-medium">
                 <tr>
-                    <th className="p-3 w-1/4"><Message Component={BiBook} title='Subject' /></th>
+                    <th className="p-4"><Message Component={BiBook} title='Subject' /></th>
                     <th ><Message Component={MdSubject} title='Attendance' /></th>
                     <th ><Message Component={BsPercent} title='Percentage' /></th>
                     <th ><Message Component={FaChalkboardTeacher} title='Teacher' /></th>
                 </tr>
             </thead>
-            <tbody className='text-slate-600 font-medium'>
+            <tbody >
                 {allSubjects.map((subject, key) => {
 
-                    let subjectTeacher = { image: "/avatar.webp", fname: "", totalLectures: 0, totalAttendance: 0 }
+                    let subjectTeacher = { image: "/avatar.webp", fname: "", totalLectures: 0, totalAttendance: 0,percentage:0 }
                     if (classSubjects && classSubjects[subject._id]) {
 
                         subjectTeacher.totalLectures = classSubjects[subject._id].totalLectures;
@@ -41,19 +44,20 @@ const AttendanceTable = ({ allSubjects, classInfo, attendanceLogs }) => {
                         }
 
                         if (attendanceLogs[subject.id]) {
-                            subjectTeacher.totalAttendance = attendanceLogs[subject.id].totalAttendance
+                            subjectTeacher.totalAttendance = attendanceLogs[subject.id].totalAttendance;
+                            subjectTeacher.percentage=subjectTeacher.totalLectures===0  ?0: formatNumber((attendanceLogs[subject.id].totalAttendance/classSubjects[subject._id].totalLectures)*100);
                         }
-
+                        
 
                     }
                     return (
 
-                        <tr className=" even:bg-indigo-50" key={key}>
-                            <td className="p-3">{subject.subjectName}</td>
-                            <td >{subjectTeacher.totalAttendance}/{subjectTeacher.totalLectures}</td>
-                            <td >75%</td>
+                        <tr className=" even:bg-indigo-50 text-slate-600 " key={key}>
+                            <td className="px-4">{subject.subjectName}</td>
+                            <td className='px-10'>{subjectTeacher.totalAttendance}/{subjectTeacher.totalLectures}</td>
+                            <td className='px-10'>{subjectTeacher.percentage}%</td>
                             <td className="cursor-pointer flex  items-center ">
-                                <div className='w-3/4 py-1.5 my-1 bg-white flex items-center border-2 rounded-md'>
+                                <div className='my-1 px-2 py-1.5 bg-white flex items-center border-2 rounded-md w-[90%]'>
                                     <Image
                                         src={subjectTeacher.image}
                                         width="120" height="120"

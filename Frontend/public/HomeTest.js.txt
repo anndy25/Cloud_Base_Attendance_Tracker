@@ -1,0 +1,112 @@
+/********************************************************************************************* 
+ * Copyright (C) 2023 NEBULINX PVT LTD - All Rights Reserved
+ * This file and contents in it are confidential and intended for a specific purpose.
+ * Redistribution, reproduction or disclosing the contents of this file is strictly prohibited. 
+ **********************************************************************************************/
+
+/****************************************** TASK ******************************************** 
+Long back I designed a simple system to encrypt my secret texts. One fine day, suddenly my system crashed and I lost the software.
+Now, I've a encrypted message containing one secret code that I need urgently, can you help me to decrypt it?
+
+To help you I've a small piece of code to simulate the behaviour of my system. 
+It will provide you values of the encrypted message in onValueReceived(value) function.
+
+Few things you should know about my system:
+
+1. It provides one string value at a time.
+2. The data received is in reverse order.
+3. All the values are in string format containing numbers and few alphabetic characters.
+4. Meaning of alphabetic characters: 
+   (These characters are to indicate an operation and NOT expected in the output)
+   F: Add full stop (.)
+   Q: Add quote (')
+   N: Add next line character(\n)
+   S: Add single space ( )
+   H: Add 3000 to a key calculation variable (keyCal)
+   L: Subtract 200 from the key calculation variable (keyCal)
+   E: End of data
+5. You'll need a decryption key, let's call it dK
+   dK = totalCount % keyCal - 437
+   where,
+   totalCount is variable with sum of all the numbers you receive as string values.
+   keyCal is variable with value that you'll get when you perform ALL H & L alphabet operations
+6. When you subtract dK from the values you'll get ASCII code of the characters.
+   then, you'll have to convert the ASCII code to character.
+   example:
+   let's say, 
+   val = "123"
+   now,
+   charAscii = val<converted to int> - dK
+   char = charAscii<converted to character> 
+7. With all above put together you'll get a complete readable message.
+8. SIMULATION SECTION is well tested, so avoid using or modifying any variables or data from it.
+   Use CANDIDATE AREA to write your code.
+9. Avoid using .reverse() or similar api that completely reverses the collection at once. 
+   Use some data structure instead.
+
+This might help you:
+It'll be a good idea to collect and store all the values first. You can perform small operations while doing so. 
+remember 'E' indicates end of data.
+
+Looking forward to your code so I can read my secret texts again!
+*****************************************************************************************************/
+
+
+
+/****************************************** CANDIDATE AREA ********************************************/
+// Your playground
+
+function onValueReceived(value) {
+    console.log(value)
+}
+
+/****************************************************************************************************/
+
+
+
+
+/****************************************** OUTPUT SECTION ********************************************
+// Paste your output here
+
+
+****************************************************************************************************/
+
+
+
+
+
+/****************************************** SIMULATION SOURCE ********************************************/
+
+// DO NO MODIFY THIS SECTION
+// Source simulator [DO NOT USE ANY VARIABLES OR CONSTANTS FROM THIS SECTION]
+
+const _encryptedMessage = ['F','123','117','127','S','113','116','103','110','90','N',
+                          'S','F','Q','85','89','H','89','71','73','79','86','Q','S',
+                          '89','79','S','75','74','85','H','73','S','90','75','88','73',
+                          '75','L','89','S','88','91','85','95','N','S','F','116','117',
+                          '111','122','105','107','121','S','122','123','118','122','123',
+                          '117','S','107','110','122','S','116','111','S','121','111','L',
+                          '110','122','S','107','122','121','103','118','S','116','103','105',
+                          'S','123','117','95','N','S','F','113','121','103','122','S','107',
+                          '110','122','S','106','107','122','107','H','114','118','115','117',
+                          '105','S','107','124','103','110','S','123','117','95','N','S','39',
+                          '39','121','116','117','111','122','103','114','123','L','122','103',
+                          '120','109','L','116','117','73','S','50','104','120','H','107','118',
+                          '123','89','E']
+var _index = 0
+function _getNextValue() {
+    const _nextVal = _encryptedMessage[_index]
+    if(_nextVal) {
+        _index++
+        return _nextVal
+    }
+
+    return null
+}
+
+let _value = _getNextValue()
+do {
+    onValueReceived(_value)
+    _value = _getNextValue()
+} while(_value)
+/****************************************************************************************************/
