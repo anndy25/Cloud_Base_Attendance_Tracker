@@ -24,8 +24,6 @@ export function addTime(hours, minutes, seconds, addMinutes, addSeconds) {
 
 }
 
-
-
 export function getFormattedDate() {
 
   let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -39,7 +37,6 @@ export function getFormattedDate() {
   return `${day}, ${year} ${month}`;
 
 }
-
 
 export function formatDate(dateString) {
 
@@ -60,8 +57,30 @@ export function getCurrentDate() {
   return `${day}-${month}-${year}`;
 }
 
-export function hasExpired(currentTime, expiredAt) {
- 
+export function getCurrentTime() {
+  const now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+
+export function hasExpired(expiredAt) {
+  const currentTime = getCurrentTime();
   const [currentHr, currentMin, currentSec] = currentTime.split(':').map(Number);
   const [expiredHr, expiredMin, expiredSec] = expiredAt.split(':').map(Number);
 
@@ -80,6 +99,14 @@ export function hasExpired(currentTime, expiredAt) {
   return false;
 }
 
+export function convertToAmPm(time24) {
+  let hour = parseInt(time24.substring(0, 2));
+  let minute = time24.substring(3, 5);
+  let amPm = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12 || 12;
+  hour = hour.toString().padStart(2, '0'); // add leading zero if hour is single digit
+  return `${hour}:${minute} ${amPm}`;
+}
 
 export function convertTo12HourFormat(timeString) {
   let [hours, minutes, seconds] = timeString.split(':').map(Number);

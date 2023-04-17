@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios';
-import { addTime } from '../../functions/time';
 import Swal from "sweetalert2";
 import { MdOutlineSubject, MdCalendarToday, MdNetworkWifi } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
+import { addTime } from '../../functions/time';
 
 import { getFormattedDate, getCurrentDate } from '../../functions/time';
 
@@ -164,6 +164,7 @@ const TakeAttendance = ({ noty }) => {
         ipCalling();
     }, [])
 
+    
     function setStateHandler(value) {
         setAttendanceDetails(value);
         setFlag(true);

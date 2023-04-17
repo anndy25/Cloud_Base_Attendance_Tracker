@@ -1,7 +1,8 @@
 import { Response, Request, NextFunction } from "express";
 import mongoose from 'mongoose';
+import { verify } from 'hcaptcha';
 import createHttpError from "http-errors";
-
+import env from "../util/validateEnv";
 import ClassModel from "../models/class";
 import { hasExpired } from "../util/functions";
 import AttendanceModel from "../models/attendance";
@@ -16,6 +17,7 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
 
 
     try {
+
 
         const isTeacherExist = await TeacherModel.findById(teacherId);
 
@@ -75,8 +77,16 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
 export const markAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
     const { classId, subjectId }: any = req.query;
-    const { studentId, currentTime, date, attendanceId, ip } = req.body;
+    const { studentId, currentTime, date, attendanceId, ip, token } = req.body;
+    
     try {
+
+        const { success } = await verify(env.H_CAPTCHA_SECRET, token);
+
+        if (!success) {
+            return res.status(400).json({ error: "Invalid Captcha" });
+        }
+
 
         const isStudentExist = await StudentModel.findById(studentId);
 
@@ -172,7 +182,7 @@ export const getAttendanceInfoT = async (req: Request, res: Response, next: Next
                 }
             }])
 
-        return res.status(201).json({ notification: data[0].notifications,  });
+        return res.status(201).json({ notification: data[0].notifications, });
 
     } catch (err) {
         next(err);
@@ -202,7 +212,7 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
             .select({ notifications: 1, classSubjects: 1, className: 1, departmentId: 1 });
 
 
-        return res.status(201).json({ classInfo, attendanceLogs: isStudentExist.attendanceLogs});
+        return res.status(201).json({ classInfo, attendanceLogs: isStudentExist.attendanceLogs });
 
     } catch (err) {
         next(err)

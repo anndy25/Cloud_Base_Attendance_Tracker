@@ -9,6 +9,7 @@ import { MdDeleteOutline, MdSystemUpdateAlt } from "react-icons/md";
 import { Navtab, SidePanel } from '../../../components/utility';
 import { ScheduleModal, ClassSubjectList } from '../../../components/admin'
 import { subjectMap } from '../../../functions/mapping';
+import { convertToAmPm } from "../../../functions/time"
 
 
 const ShowSchedule = ({ classDetails, allSubjects, allTeachers, classId }) => {
@@ -87,12 +88,12 @@ const ShowSchedule = ({ classDetails, allSubjects, allTeachers, classId }) => {
                         <span className='bg-blue-100 text-blue-800 px-4 py-2 mx-4 rounded-3xl'>{classDetails.departmentId.departmentName}</span>
                         <span className='bg-blue-100 text-blue-800 px-4 py-2 rounded-3xl'>{classDetails.className}</span>
                     </header>
-                    <div className='w-[95%] mx-auto p-4 text-gray-600 mt-6'>
+                    <div className='w-[95%] mx-auto p-4 text-gray-600'>
                         <h1 className="font-semibold text-xl text-gray-600 w-full my-6">Class Subjects</h1>
                         <div className='mx-auto border rounded-2xl shadow-md  bg-white'>
                             <ClassSubjectList classSubjectList={classSubjectList} setState={setState} allSubjects={allSubjects} allTeachers={allTeachers} classId={classId} />
                         </div>
-                        <hr className='my-8 border-none'></hr>
+                        <hr className='my-4 border-none'></hr>
                         <h1 className="font-semibold text-xl text-gray-600">Time Table</h1>
                         <div className='grid grid-cols-3 gap-4 my-6' >
                             {
@@ -113,7 +114,7 @@ const ShowSchedule = ({ classDetails, allSubjects, allTeachers, classId }) => {
                                                 {
                                                     schedules[day].map((lecture, key) => {
                                                         const teacherName = classSubjectList[lecture.subjectId].subjectTeacher ? classSubjectList[lecture.subjectId].subjectTeacher.fname : "Not Selected";
-                                                       
+
                                                         return (
                                                             <div key={key} className={`group relative p-2 text-white bg-indigo-500 cursor-pointer  border-2 border-white rounded-md`}>
                                                                 <p className='font-medium'>{lecture.from}-{lecture.to} : {subjectMap_[lecture.subjectId]}</p>

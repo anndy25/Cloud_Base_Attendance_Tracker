@@ -24,7 +24,7 @@ const AttendanceTable = ({ allSubjects, classInfo, attendanceLogs }) => {
 
     return (
         <table className="w-full text-left">
-            <thead className="text-slate-800 bg-indigo-50 font-medium">
+            <thead className="text-slate-600 bg-indigo-50 font-normal">
                 <tr>
                     <th className="p-4">
                         <Message Component={BiBook} title='Subject' />
@@ -64,7 +64,7 @@ const AttendanceTable = ({ allSubjects, classInfo, attendanceLogs }) => {
                     }
 
                     return (
-                        <tr className="even:bg-indigo-50 text-slate-700 text-sm font-medium" key={key}>
+                        <tr className="even:bg-indigo-50 text-slate-600 text-sm font-medium" key={key}>
                             <td className="px-4">{subject.subjectName}</td>
                             <td className="px-10">{`${subjectTeacher.totalAttendance}/${subjectTeacher.totalLectures}`}</td>
                             <td className="px-10">{`${subjectTeacher.percentage}%`}</td>

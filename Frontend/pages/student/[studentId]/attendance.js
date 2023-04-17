@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Head from "next/head";
+
 import { MdOutlineSubject, MdCalendarToday } from "react-icons/md";
 import axios from "axios"
 import { SidePanel, Navtab } from '../../../components/utility';
 import { getFormattedDate } from '../../../functions/time';
 import { AttendanceCard, AttendanceExpired } from '../../../components/student';
 
-const Attendance = ({ notifications, attendanceLogs }) => {
+const Attendance = ({ notifications, attendanceLogs,classId }) => {
   const [tab, setTab] = useState(1);
   const [ip, setIp] = useState('1.1.1.1')
 
@@ -43,7 +44,7 @@ const Attendance = ({ notifications, attendanceLogs }) => {
               <div>
                 {
                   tab === 1 ?
-                    (<AttendanceCard ip={ip} notifications={notifications} attendanceLogs={attendanceLogs} />) : (<AttendanceExpired notifications={notifications} attendanceLogs={attendanceLogs} />)
+                    (<AttendanceCard ip={ip} notifications={notifications} attendanceLogs={attendanceLogs} classId={classId} />) : (<AttendanceExpired notifications={notifications} attendanceLogs={attendanceLogs} />)
                 }
               </div>
             </div>
@@ -65,9 +66,9 @@ export async function getServerSideProps(context) {
       params: { studentId }
     })
 
-    const { notifications } = attendanceInfo.classInfo;
+    const { notifications,_id:classId } = attendanceInfo.classInfo;
     const { attendanceLogs } = attendanceInfo;
-    return { props: { notifications, attendanceLogs } };
+    return { props: { notifications, attendanceLogs,classId } };
 
   }
   catch (err) {

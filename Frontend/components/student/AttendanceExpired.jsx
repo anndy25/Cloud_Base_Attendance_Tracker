@@ -5,17 +5,17 @@ import { getFormattedDate, convertTo12HourFormat, hasExpired, getCurrentDate } f
 
 const AttendanceExpired = ({ notifications, attendanceLogs }) => {
     const todaysDate = getCurrentDate();
-    const expiredAttendance = notifications.filter(({ date, expiredAt }) => todaysDate === date && hasExpired(expiredAt));
+    const expiredAttendance = notifications.filter(({ date, expiredAt }) => (todaysDate === date && hasExpired(expiredAt)));
 
     return (
         <>
-            {expiredAttendance.map(({ subjectId }, key) => {
+            {expiredAttendance.map(({ subjectId,expiredAt }, key) => {
                 const attendanceLog = attendanceLogs[subjectId._id];
                 const attendanceStatus = attendanceLog && attendanceLog.date === todaysDate ? 'Marked' : 'Not Marked';
 
                 return (
                     <div
-                        className="w-full bg-white shadow-lg my-2 flex justify-between py-3 px-12 text-lg font-semibold text-slate-600  rounded-md"
+                        className="w-full bg-white shadow-lg my-2 flex justify-between py-3 px-12  font-semibold text-slate-600  rounded-md border"
                         key={key}
                     >
                         <div className="flex items-center">
@@ -31,7 +31,7 @@ const AttendanceExpired = ({ notifications, attendanceLogs }) => {
                             <span className="ml-2">{convertTo12HourFormat(expiredAt)}</span>
                         </div>
                         <div
-                            className={`flex items-center py-2 px-6 rounded-3xl bg-${attendanceStatus === 'Marked' ? 'teal' : 'red'}-100 text-${attendanceStatus === 'Marked' ? 'teal' : 'red'}-600`}
+                            className={`flex items-center py-2 px-6 rounded-3xl bg-${attendanceStatus === 'Marked' ? 'teal' : 'red'}-200 text-${attendanceStatus === 'Marked' ? 'teal' : 'red'}-600`}
                         >
                             <MdPendingActions />
                             <span className="ml-2">{attendanceStatus}</span>
