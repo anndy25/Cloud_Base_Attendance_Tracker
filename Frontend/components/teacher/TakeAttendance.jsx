@@ -152,9 +152,9 @@ const TakeAttendance = ({ noty }) => {
 
     const [todayDate, setTodayDate] = useState(getCurrentDate());
     const [attendanceDetails, setAttendanceDetails] = useState(notification);
-    const [flag, setFlag] = useState(isMatch);
     const [ip, setIp] = useState('1.1.1.1')
     const isMatch = notification?.date == todayDate ? false : true
+    const [flag, setFlag] = useState(isMatch);
 
     useEffect(() => {
         const ipCalling = async () => {
