@@ -6,16 +6,17 @@ import { SidePanel, Navtab } from '../../../components/utility';
 import { getFormattedDate } from '../../../functions/time';
 import { AttendanceCard, AttendanceExpired } from '../../../components/student';
 
-const Attendance = ({ ip, notifications, attendanceLogs }) => {
+const Attendance = ({ notifications, attendanceLogs }) => {
   const [tab, setTab] = useState(1);
+  const [ip, setIp] = useState('1.1.1.1')
 
   useEffect(() => {
     const ipCalling = async () => {
-      const { data } = await axios.get("https://api-alpha.up.railway.app/")
-      console.log(data);
+      const { data } = await axios.get(process.env.NEXT_PUBLIC_API_URL);
+      setIp(data.ip)
     }
     ipCalling();
-  },[])
+  }, [])
   return (
     <>
       <Head>
@@ -65,8 +66,8 @@ export async function getServerSideProps(context) {
     })
 
     const { notifications } = attendanceInfo.classInfo;
-    const { ip, attendanceLogs } = attendanceInfo;
-    return { props: { ip, notifications, attendanceLogs } };
+    const { attendanceLogs } = attendanceInfo;
+    return { props: { notifications, attendanceLogs } };
 
   }
   catch (err) {

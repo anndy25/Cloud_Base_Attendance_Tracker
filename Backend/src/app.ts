@@ -29,7 +29,7 @@ app.use(cookieParser())
 app.use(cors({ origin: [env.WEBSITE_URL, 'http://localhost:3000'], credentials: true }));
 app.use(fileUpload({ useTempFiles: true }));
 
-app.get("/", (req: Request, res: Response) => { return res.status(201).json(`Welcome to Alpha!! :${req.ip}`) })
+app.get("/", (req: Request, res: Response) => { return res.status(201).json({ip:req.ip}) })
 app.use("/api/users", userRoutes);
 app.use("/api/overview", overViewRoutes);
 app.use("/api/class", classRoutes);

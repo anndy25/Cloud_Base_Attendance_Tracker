@@ -172,7 +172,7 @@ export const getAttendanceInfoT = async (req: Request, res: Response, next: Next
                 }
             }])
 
-        return res.status(201).json({ notification: data[0].notifications, ip: req.ip });
+        return res.status(201).json({ notification: data[0].notifications,  });
 
     } catch (err) {
         next(err);
@@ -202,7 +202,7 @@ export const getAttendanceInfoS = async (req: Request, res: Response, next: Next
             .select({ notifications: 1, classSubjects: 1, className: 1, departmentId: 1 });
 
 
-        return res.status(201).json({ classInfo, attendanceLogs: isStudentExist.attendanceLogs, ip: req.ip });
+        return res.status(201).json({ classInfo, attendanceLogs: isStudentExist.attendanceLogs});
 
     } catch (err) {
         next(err)
