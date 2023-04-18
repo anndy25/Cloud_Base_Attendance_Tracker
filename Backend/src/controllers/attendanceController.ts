@@ -77,15 +77,15 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
 export const markAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
     const { classId, subjectId }: any = req.query;
-    const { studentId, currentTime, date, attendanceId, ip, token } = req.body;
+    const { studentId, currentTime, date, attendanceId, ip, } = req.body;
     
     try {
 
-        const { success } = await verify(env.H_CAPTCHA_SECRET, token);
+        // const { success } = await verify(env.H_CAPTCHA_SECRET, token);
 
-        if (!success) {
-            return res.status(400).json({ error: "Invalid Captcha" });
-        }
+        // if (!success) {
+        //     return res.status(400).json({ error: "Invalid Captcha" });
+        // }
 
 
         const isStudentExist = await StudentModel.findById(studentId);
@@ -134,11 +134,11 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
 
         const attendanceLog = await StudentModel.findByIdAndUpdate(studentId,
             {
-                $set: { [`attendanceLog.${subjectId}.date`]: date, },
-                $inc: { [`attendanceLog.${subjectId}.totalAttendance`]: 1, },
+                $set: { [`attendanceLogs.${subjectId}.date`]: date, },
+                $inc: { [`attendanceLogs.${subjectId}.totalAttendance`]: 1, },
             },
             { new: true })
-            .select("attendanceLog -_id");
+            .select("attendanceLogs -_id");
 
 
         return res.status(201).json(attendanceLog)
