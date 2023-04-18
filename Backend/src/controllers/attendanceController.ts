@@ -77,15 +77,15 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
 export const markAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
     const { classId, subjectId }: any = req.query;
-    const { studentId, currentTime, date, attendanceId, ip, token } = req.body;
+    const { studentId, currentTime, date, attendanceId, ip } = req.body;
 
     try {
 
-        const { success } = await verify(env.H_CAPTCHA_SECRET, token);
+        // const { success } = await verify(env.H_CAPTCHA_SECRET, token);
 
-        if (!success) {
-            return res.status(400).json({ error: "Invalid Captcha" });
-        }
+        // if (!success) {
+        //     return res.status(400).json({ error: "Invalid Captcha" });
+        // }
 
         const isStudentExist = await StudentModel.findById(studentId);
 
@@ -140,7 +140,7 @@ export const markAttendance = async (req: Request, res: Response, next: NextFunc
             .select("attendanceLogs -_id");
 
 
-        return res.status(201).json(attendanceLog)
+        return res.status(201).json({attendanceLog})
 
     } catch (err) {
         next(err);
@@ -181,7 +181,7 @@ export const getAttendanceInfoT = async (req: Request, res: Response, next: Next
                 }
             }])
 
-        return res.status(201).json({ notification: data[0].notifications, });
+        return res.status(201).json({ notification: data[0].notifications });
 
     } catch (err) {
         next(err);
@@ -297,15 +297,19 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
         }
 
         const absentStudents = [];
-        const pStudents = new Set(response[0].presentStudents);
+     
+        const pStudents = new Set(response[0].presentStudents.map((student: any) => student.toString()));
+        console.log(pStudents);
 
         const students: any = await StudentModel.find({ classId }, { fname: 1, image: 1, regNo: 1, rollNo: 1 });
 
         for (let i = 0; i < students.length; i++) {
-            if (!pStudents.has(students[i]._id + "")) {
+            const studentId = students[i]._id.toString();
+            if (!pStudents.has(studentId)) {
                 absentStudents.push(students[i]);
             }
         }
+
 
         return res.status(201).json({ absentStudents, className: isClassExist.className, subjectName: isSubjectExist.subjectName });
 
@@ -313,6 +317,7 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
         next(err);
     }
 }
+
 
 
 
