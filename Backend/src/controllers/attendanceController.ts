@@ -77,16 +77,15 @@ export const setAttendance = async (req: Request, res: Response, next: NextFunct
 export const markAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
     const { classId, subjectId }: any = req.query;
-    const { studentId, currentTime, date, attendanceId, ip, } = req.body;
-    
+    const { studentId, currentTime, date, attendanceId, ip, token } = req.body;
+
     try {
 
-        // const { success } = await verify(env.H_CAPTCHA_SECRET, token);
+        const { success } = await verify(env.H_CAPTCHA_SECRET, token);
 
-        // if (!success) {
-        //     return res.status(400).json({ error: "Invalid Captcha" });
-        // }
-
+        if (!success) {
+            return res.status(400).json({ error: "Invalid Captcha" });
+        }
 
         const isStudentExist = await StudentModel.findById(studentId);
 
