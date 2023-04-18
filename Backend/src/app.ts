@@ -26,7 +26,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, }));
 app.use(cookieParser())
-app.use(cors({ origin: [env.WEBSITE_URL, 'http://192.168.0.102:3000'], credentials: true }));
+app.use(cors({ origin: [env.WEBSITE_URL, 'http://localhost:3000'], credentials: true }));
 app.use(fileUpload({ useTempFiles: true }));
 
 app.get("/", (req: Request, res: Response) => { return res.status(201).json({ip:req.ip}) })

@@ -299,7 +299,7 @@ export const absentStudents = async (req: Request, res: Response, next: NextFunc
         const absentStudents = [];
      
         const pStudents = new Set(response[0].presentStudents.map((student: any) => student.toString()));
-        console.log(pStudents);
+       
 
         const students: any = await StudentModel.find({ classId }, { fname: 1, image: 1, regNo: 1, rollNo: 1 });
 
