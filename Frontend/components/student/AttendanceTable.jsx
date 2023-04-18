@@ -16,7 +16,7 @@ const Message = ({ Component, title }) => {
 
 const AttendanceTable = ({ allSubjects, classInfo, attendanceLogs }) => {
     const { classSubjects } = classInfo;
-
+  
     function formatNumber(num) {
         const decimalPlaces = num % 1 !== 0 ? 2 : 0;
         return num.toFixed(decimalPlaces);
@@ -56,9 +56,10 @@ const AttendanceTable = ({ allSubjects, classInfo, attendanceLogs }) => {
                         subjectTeacher.image = image?.url ?? subjectTeacher.image;
                         subjectTeacher.totalLectures = totalLectures;
 
-                        if (attendanceLogs?.[subject.id]) {
-                            const { totalAttendance } = attendanceLogs[subject.id];
+                        if (attendanceLogs[subject._id]) {
+                            const { totalAttendance } = attendanceLogs[subject._id];
                             subjectTeacher.totalAttendance = totalAttendance;
+                          
                             subjectTeacher.percentage = totalLectures === 0 ? 0 : formatNumber((totalAttendance / totalLectures) * 100);
                         }
                     }
