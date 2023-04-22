@@ -34,6 +34,7 @@ const AttendanceCard = ({ ip, notifications, attendanceLogs, classId }) => {
         ip,
         token,
       }, { params: { classId, subjectId: studentInfo.subjectId } })
+      console.log(data);
       setAttendanceLog(data);
       setToken(null);
 

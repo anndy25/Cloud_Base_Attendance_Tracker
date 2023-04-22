@@ -15,6 +15,7 @@ const Message = ({ Component, title }) => {
 }
 
 const AttendanceTable = ({ allSubjects, classInfo, attendanceLogs }) => {
+    
     const { classSubjects } = classInfo;
   
     function formatNumber(num) {
