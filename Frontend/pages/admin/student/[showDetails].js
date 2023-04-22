@@ -32,7 +32,7 @@ const ShowDetails = ({ student }) => {
                             showConfirmButton: false,
                             timer: 2000
                         })
-                        timeOut(2500)
+                      
                     }
                 } catch (err) {
                     Swal.fire({
@@ -49,9 +49,7 @@ const ShowDetails = ({ student }) => {
 
     }
 
-    function timeOut(timer) {
-        setTimeout(() => { location.replace('/admin/dashboard'); }, timer);
-    }
+   
 
     return (
         <>

@@ -34,7 +34,7 @@ const ShowDetails = ({ teacher }) => {
                             showConfirmButton: false,
                             timer: 2000
                         })
-                        timeOut(2500)
+                       
                     }
                 } catch (err) {
                     console.log(err);
@@ -45,9 +45,6 @@ const ShowDetails = ({ teacher }) => {
 
     }
 
-    function timeOut(timer) {
-        setTimeout(() => { location.replace('/admin/dashboard'); }, timer);
-    }
 
     return (
         <>

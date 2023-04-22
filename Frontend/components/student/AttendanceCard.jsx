@@ -44,7 +44,7 @@ const AttendanceCard = ({ ip, notifications, attendanceLogs, classId }) => {
       });
       setAttendanceLog(data);
       setToken(null);
-      router.refresh();
+      router.reload();
 
     } catch (error) {
       Swal.fire(
