@@ -34,9 +34,6 @@ const AttendanceCard = ({ ip, notifications, attendanceLogs, classId }) => {
         ip,
         token,
       }, { params: { classId, subjectId: studentInfo.subjectId } })
-      console.log(data);
-      setAttendanceLog(data);
-      setToken(null);
 
       Swal.fire({
         position: "center",
@@ -45,6 +42,9 @@ const AttendanceCard = ({ ip, notifications, attendanceLogs, classId }) => {
         showConfirmButton: false,
         timer: 1500,
       });
+      setAttendanceLog(data);
+      setToken(null);
+      router.refresh();
 
     } catch (error) {
       Swal.fire(
@@ -65,7 +65,7 @@ const AttendanceCard = ({ ip, notifications, attendanceLogs, classId }) => {
     }
   }, [token])
 
-  
+
 
   const executeCaptcha = async (attendanceInfo) => {
     if (ip !== attendanceInfo.ip) {
@@ -121,7 +121,7 @@ const AttendanceCard = ({ ip, notifications, attendanceLogs, classId }) => {
                   size='invisible'
                 />
               </div>
-              {ip !== course.ip &&
+              { (ip !== course.ip && ip!=='1.1.1.1') &&
                 <p className='px-4 py-2 mx-auto w-10/12 text-center bg-orange-100 text-orange-600 font-medium rounded-md'>{`Warning: Connect to class Wifi whose IP is ${course.ip} to marke attendance of ${course.subjectId.subjectName}`}</p>
               }
             </div>
