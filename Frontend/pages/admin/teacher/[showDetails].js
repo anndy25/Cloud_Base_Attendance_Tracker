@@ -36,6 +36,8 @@ const ShowDetails = ({ teacher }) => {
                         })
                        
                     }
+
+                    router.push('/admin/dashboard')
                 } catch (err) {
                     console.log(err);
                 }
