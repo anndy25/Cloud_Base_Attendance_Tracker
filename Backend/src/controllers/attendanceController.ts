@@ -10,14 +10,12 @@ import StudentModel from "../models/student";
 import TeacherModel from "../models/teacher";
 import SubjectModel from "../models/subject";
 
-
 export const setAttendance = async (req: Request, res: Response, next: NextFunction) => {
 
     const { ip, expiredAt, date, classId, teacherId, subjectId } = req.body;
 
 
     try {
-
 
         const isTeacherExist = await TeacherModel.findById(teacherId);
 
